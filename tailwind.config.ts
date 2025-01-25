@@ -14,9 +14,10 @@ export default {
         foreground: "#ffffff",
         "text-primary": "#ffffff",
         "text-secondary": "rgba(255,255,255,0.7)",
+        "text-black": "#000000",
         card: "rgba(255,255,255,0.05)",
-        navbar: "rgba(0,0,0,0.6)",
-        "social-icon": "rgba(0,0,0,0.6)",
+        navbar: "rgba(0,0,0,0.5)",
+        "social-icon": "rgba(0,0,0,0.5)",
         border: "rgba(255,255,255,0.1)"
       },
       fontFamily: {

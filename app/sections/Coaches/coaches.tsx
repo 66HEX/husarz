@@ -55,7 +55,7 @@ const Coaches = () => {
     ];
 
     return (
-        <section id="coaches" className="py-16 bg-background">
+        <section id="coaches" className="py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="grid grid-cols-3 mb-8 gap-4 md:gap-8">
                     <h2 className="col-span-3 md:col-span-1 text-4xl md:text-6xl font-bold tracking-tight">Our Coaches</h2>

@@ -26,7 +26,7 @@ const Contact = () => {
   ];
 
   return (
-      <section id="contact" className="py-16">
+      <section id="contact" className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 xl:grid-cols-3 xl:gap-8">
             <div className="col-span-1 md:col-span-2 mb-8 xl:mb-0">

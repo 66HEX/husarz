@@ -10,7 +10,7 @@ const Hero = () => {
     };
 
     return (
-        <section id="hero" className="py-16 h-svh">
+        <section id="hero" className="py-24 h-svh">
             <div className="h-full container mx-auto px-4 md:px-8">
                 <div className="h-full grid grid-rows-[auto_1fr] gap-8">
                     <div className="grid grid-cols-2 gap-4 md:gap-8">
