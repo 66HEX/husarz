@@ -5,6 +5,7 @@ import {useRef, useState} from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
+import { useLenisContext } from "@/app/components/SmoothScrolling/smoothScrolling";
 import '@/app/config/gsap';
 
 const Navbar = () => {
@@ -14,6 +15,7 @@ const Navbar = () => {
     const toggleButtonLine2Ref = useRef(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const lenis = useLenisContext();
 
     useGSAP(() => {
         tlRef.current = gsap.timeline({ paused: true })
@@ -56,10 +58,24 @@ const Navbar = () => {
 
     const toggleMenu = () => {
         if (!menuRef.current || !tlRef.current) return;
-
         setIsOpen(!isOpen);
         return isOpen ? tlRef.current.reverse() : tlRef.current.play();
     };
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault();
+
+        const section = document.getElementById(targetId);
+        if (!section) {
+            return;
+        }
+
+        if (lenis) {
+            lenis.scrollTo(section, { offset: -15 });
+            console.log(section);
+        }
+    };
+
 
     return (
         <nav className="fixed top-0 right-0 left-0 z-50 flex justify-center">
@@ -92,13 +108,15 @@ const Navbar = () => {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-text-secondary hover:text-white transition-colors duration-300"
+                                onClick={(e) => handleScroll(e, item.href)}
+                                className="text-text-secondary hover:text-text-primary transition-colors duration-300"
                             >
                                 {item.name}
                             </Link>
                         ))}
                         <Link
                             href={navigation[navigation.length - 1].href}
+                            onClick={(e) => handleScroll(e, navigation[navigation.length - 1].href)}
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon"
                         >
                             {navigation[navigation.length - 1].name}
@@ -116,7 +134,7 @@ const Navbar = () => {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-text-secondary hover:text-white transition-colors duration-300"
+                                className="text-text-secondary hover:text-text-primary transition-colors duration-300"
                                 onClick={toggleMenu}
                             >
                                 {item.name}

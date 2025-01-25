@@ -61,7 +61,7 @@ const Contact = () => {
         )
         .fromTo(
             '#map-container',
-            { opacity: 0, filter: 'blur(10px)' },
+            { opacity: 0, filter: 'blur(20px)' },
             { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
             "-=0.8"
         );
@@ -107,7 +107,7 @@ const Contact = () => {
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.5678!2d19.123456!3d50.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA3JzM0LjQiTiAxOcKwMDcnNDQuNCJF!5e0!3m2!1spl!2spl!4v1234567890"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, filter: 'grayscale(100%) contrast(120%) brightness(90%)' }}
+                  style={{ border: 0, filter: 'grayscale(75%) contrast(90%) brightness(95%)' }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
               />

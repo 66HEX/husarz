@@ -1,7 +1,24 @@
+"use client";
+
 import {navigation} from "@/app/data/navigation";
+import { useLenisContext } from "@/app/components/SmoothScrolling/smoothScrolling";
 
 const Footer = () => {
+    const lenis = useLenisContext();
 
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault();
+
+        const section = document.getElementById(targetId);
+        if (!section) {
+            return;
+        }
+
+        if (lenis) {
+            lenis.scrollTo(section, { offset: -15 });
+            console.log(section);
+        }
+    };
 
   return (
       <footer className="text-white py-8 font-medium">
@@ -27,6 +44,7 @@ const Footer = () => {
                   <a
                       key={name}
                       href={href}
+                      onClick={(e) => handleScroll(e, href)}
                       className="text-text-secondary hover:text-white transition-colors duration-300"
                   >
                     {name}
