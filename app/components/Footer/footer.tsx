@@ -16,7 +16,6 @@ const Footer = () => {
 
         if (lenis) {
             lenis.scrollTo(section, { offset: -15 });
-            console.log(section);
         }
     };
 

@@ -164,6 +164,7 @@ const FAQ = () => {
                                 >
                                     <h3 className="text-base font-bold tracking-tight">{faq.question}</h3>
                                     <ChevronDown
+                                        style={{minWidth: '24px', minHeight: '24px'}}
                                         ref={(el) => {
                                             if (arrowsRef.current) {
                                                 arrowsRef.current[index] = el;

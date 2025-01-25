@@ -103,7 +103,7 @@ const Hero = () => {
                                 Join our community of dedicated athletes and experience training at the highest level.
                             </p>
                         </div>
-                        <div className="flex-wrap gap-2 block md:hidden">
+                        <div className="flex-wrap space-x-2 block md:hidden">
                             {Object.values(sports).map((sport) => (
                                 <span
                                     key={sport.id}

@@ -1,7 +1,7 @@
 "use client";
 
 import {navigation} from "@/app/data/navigation";
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
@@ -74,12 +74,31 @@ const Navbar = () => {
 
         if (lenis) {
             lenis.scrollTo(section, { offset: -15 });
-            console.log(section);
         }
-        if (!menuRef.current || !tlRef.current) return;
-        setIsOpen(!isOpen);
-        return isOpen ? tlRef.current.reverse() : tlRef.current.play();
+
+        if (isOpen && tlRef.current) {
+            setIsOpen(false);
+            tlRef.current.reverse();
+        }
     };
+
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+        if (isOpen && menuRef.current && !(menuRef.current as HTMLElement).contains(event.target as Node) &&
+            toggleButtonRef.current && !(toggleButtonRef.current as HTMLElement).contains(event.target as Node)) {
+            setIsOpen(false);
+            tlRef.current?.reverse();
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
+    }, [isOpen]);
 
 
     return (
