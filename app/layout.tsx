@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/app/components/Footer/footer";
 import localFont from 'next/font/local'
 import Navbar from "@/app/components/Navbar/navbar";
+import SmoothScrolling from "@/app/components/SmoothScrolling/smoothScrolling";
 
 
 export const metadata: Metadata = {
@@ -225,9 +226,11 @@ export default function RootLayout({
   return (
       <html lang='en' className={lausanne.variable} suppressHydrationWarning>
           <body className="dark bg-background text-foreground">
-              <Navbar/>
-              {children}
-              <Footer/>
+              <SmoothScrolling>
+                  <Navbar/>
+                  {children}
+                  <Footer/>
+              </SmoothScrolling>
           </body>
       </html>
   );
