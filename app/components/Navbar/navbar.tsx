@@ -46,8 +46,10 @@ const Navbar = () => {
             .fromTo(menuRef.current,
                 {
                     opacity: 0,
+                    display: "none"
                 },
                 {
+                    display: "block",
                     opacity: 1,
                     duration: 0.3,
                     ease: 'CustomEase'
@@ -74,11 +76,14 @@ const Navbar = () => {
             lenis.scrollTo(section, { offset: -15 });
             console.log(section);
         }
+        if (!menuRef.current || !tlRef.current) return;
+        setIsOpen(!isOpen);
+        return isOpen ? tlRef.current.reverse() : tlRef.current.play();
     };
 
 
     return (
-        <nav className="fixed top-0 right-0 left-0 z-50 flex justify-center">
+        <nav className="fixed top-0 right-0 left-0 flex justify-center z-50 pointer-events-none">
             <div className="w-full flex items-center justify-between mt-4 mx-4 md:mx-8">
                 <div className="flex items-center space-x-2 order-1 md:order-none z-50">
                     <div className="w-8 h-8 bg-white rounded-icon"></div>
@@ -88,7 +93,7 @@ const Navbar = () => {
                 <button
                     ref={toggleButtonRef}
                     onClick={toggleMenu}
-                    className="order-2 h-10 w-10 md:hidden bg-navbar backdrop-blur-md rounded-icon border border-border p-2 text-text-primary"
+                    className="order-2 h-10 w-10 md:hidden bg-navbar backdrop-blur-md rounded-icon border border-border p-2 text-text-primary pointer-events-auto"
                 >
                     <div
                         ref={toggleButtonLine1Ref}
@@ -102,7 +107,7 @@ const Navbar = () => {
                     ></div>
                 </button>
 
-                <div className="hidden md:flex items-center justify-center bg-navbar backdrop-blur-md py-2 px-2 border border-border rounded-card">
+                <div className="hidden md:flex items-center justify-center bg-navbar backdrop-blur-md py-2 px-2 border border-border rounded-card pointer-events-auto">
                     <div className="flex items-center gap-8 ml-2">
                         {navigation.slice(0, -1).map((item) => (
                             <Link
@@ -127,7 +132,7 @@ const Navbar = () => {
                 <div
                     ref={menuRef}
                     style={{opacity:0}}
-                    className="absolute top-0 left-0 right-0 md:hidden bg-navbar backdrop-blur-md border border-border rounded-card p-4"
+                    className="absolute top-0 left-0 right-0 md:hidden bg-navbar backdrop-blur-md border border-border rounded-card p-4 pointer-events-auto"
                 >
                     <div className="flex flex-col space-y-4 pt-24">
                         {navigation.slice(0, -1).map((item) => (
@@ -135,7 +140,8 @@ const Navbar = () => {
                                 key={item.name}
                                 href={item.href}
                                 className="text-text-secondary hover:text-text-primary transition-colors duration-300"
-                                onClick={toggleMenu}
+                                onClick={(e) => handleScroll(e, item.href)}
+
                             >
                                 {item.name}
                             </Link>
@@ -143,7 +149,7 @@ const Navbar = () => {
                         <Link
                             href={navigation[navigation.length - 1].href}
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon text-center"
-                            onClick={toggleMenu}
+                            onClick={(e) => handleScroll(e, navigation[navigation.length - 1].href)}
                         >
                             {navigation[navigation.length - 1].name}
                         </Link>
