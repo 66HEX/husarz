@@ -83,7 +83,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className="fixed top-0 right-0 left-0 flex justify-center z-50 pointer-events-none">
+        <nav className="fixed top-0 right-0 left-0 flex justify-center z-40 pointer-events-none">
             <div className="w-full flex items-center justify-between mt-4 mx-4 md:mx-8">
                 <div className="flex items-center space-x-2 order-1 md:order-none z-50">
                     <div className="w-8 h-8 bg-white rounded-icon"></div>
@@ -93,7 +93,7 @@ const Navbar = () => {
                 <button
                     ref={toggleButtonRef}
                     onClick={toggleMenu}
-                    className="order-2 h-10 w-10 md:hidden bg-navbar backdrop-blur-md rounded-icon border border-border p-2 text-text-primary pointer-events-auto"
+                    className="order-2 h-10 w-10 md:hidden bg-navbar backdrop-blur-md rounded-icon border border-border p-2 text-text-primary relative pointer-events-auto z-50"
                 >
                     <div
                         ref={toggleButtonLine1Ref}
