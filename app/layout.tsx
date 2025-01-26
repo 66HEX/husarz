@@ -5,6 +5,7 @@ import Footer from "@/app/components/Footer/footer";
 import localFont from 'next/font/local'
 import Navbar from "@/app/components/Navbar/navbar";
 import SmoothScrolling from "@/app/components/SmoothScrolling/smoothScrolling";
+import CursorFollower from "@/app/components/CursorFollower/cursorFollower";
 
 
 export const metadata: Metadata = {
@@ -228,6 +229,7 @@ export default function RootLayout({
           <body className="dark bg-background text-foreground">
               <SmoothScrolling>
                   <Navbar/>
+                  <CursorFollower/>
                   {children}
                   <Footer/>
               </SmoothScrolling>

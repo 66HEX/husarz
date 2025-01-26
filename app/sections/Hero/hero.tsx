@@ -69,20 +69,20 @@ const Hero = () => {
 
         tl.fromTo(
             '#hero-image',
-            { opacity: 0, filter: 'blur(20px)' },
+            { opacity: 0, filter: 'blur(10px)' },
             { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
             "-=1.2"
         );
     }, []);
 
     return (
-        <section id="home" className="py-24 h-svh md:h-[50vh] xl:h-svh">
+        <section id="home" className="py-24 h-svh md:h-[66vh] xl:h-svh">
             <div ref={containerRef} className="h-full container mx-auto px-4 md:px-8">
                 <div className="h-full grid grid-rows-[auto_1fr] gap-8">
                     <div className="grid grid-cols-2 gap-4 md:gap-8">
                         <div className="col-span-2 md:col-span-1">
                             <div className="overflow-hidden mb-0 md:mb-4">
-                                <h1 ref={titleRef} className="text-5xl xl:text-7xl font-bold tracking-tight">
+                                <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
                                     Husarz Gym
                                 </h1>
                             </div>

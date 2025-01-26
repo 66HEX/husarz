@@ -61,7 +61,7 @@ const Contact = () => {
         )
         .fromTo(
             '#map-container',
-            { opacity: 0, filter: 'blur(20px)' },
+            { opacity: 0, filter: 'blur(10px)' },
             { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
             "-=0.8"
         );
@@ -108,7 +108,6 @@ const Contact = () => {
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: 'grayscale(75%) contrast(90%) brightness(95%)' }}
-                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
               />
             </div>

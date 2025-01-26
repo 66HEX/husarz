@@ -75,7 +75,7 @@ const Features = () => {
             )
             .fromTo(
                 imageRef.current,
-                { opacity: 0, filter: 'blur(20px)' },
+                { opacity: 0, filter: 'blur(10px)' },
                 { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
                 "-=0.8"
             );
