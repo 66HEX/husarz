@@ -3,15 +3,13 @@ import { notFound } from "next/navigation";
 import SectionContent from "./SectionContent";
 import type { Metadata } from "next";
 
-// Update the Props type to use Promise
-type Props = {
+interface PageProps {
     params: Promise<{ slug: string }>;
-    searchParams?: { [key: string]: string | string[] | undefined };
-};
+}
 
 export default async function SectionPage({
                                               params
-                                          }: Props) {
+                                          }: PageProps) {
     const resolvedParams = await params;
     const section = features.find(feature => feature.slug === resolvedParams.slug);
 
@@ -30,7 +28,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
                                            params
-                                       }: Props): Promise<Metadata> {
+                                       }: PageProps): Promise<Metadata> {
     const resolvedParams = await params;
     const section = features.find(feature => feature.slug === resolvedParams.slug);
 

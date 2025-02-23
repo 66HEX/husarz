@@ -52,7 +52,7 @@ const AboutUs = () => {
             };
         });
 
-        sections.forEach((section, index) => {
+        sections.forEach((section) => {
             if (!section.trigger) return;
 
             const tl = gsap.timeline({
@@ -211,7 +211,7 @@ const AboutUs = () => {
                                     className="text-text-secondary"
                                 >
                                     Over the years, our members have achieved remarkable success in powerlifting competitions
-                                    at both national and international levels. We've proudly produced multiple national
+                                    at both national and international levels. We`&apos;ve proudly produced multiple national
                                     champions and record holders across various weight classes.
                                 </p>
                             </div>
@@ -282,8 +282,8 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Today, Husarz Gym is more than just a training facility – it's a community of dedicated
-                                    athletes supporting each other's journey in strength sports. Our members range from
+                                    Today, Husarz Gym is more than just a training facility – it`&apos;s a community of dedicated
+                                    athletes supporting each other`&apos;s journey in strength sports. Our members range from
                                     beginners to elite competitors, all training together in an atmosphere of mutual respect
                                     and encouragement.
                                 </p>
