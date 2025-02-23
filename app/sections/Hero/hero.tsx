@@ -1,8 +1,9 @@
 "use client";
 
 import {sports} from "@/app/data/sports";
-import  {useRef} from 'react';
+import {useRef} from 'react';
 import Image from "next/image";
+import Link from "next/link";
 import gsap from 'gsap';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
@@ -14,7 +15,6 @@ const Hero = () => {
     const titleRef = useRef(null);
     const descRef = useRef(null);
     const containerRef = useRef(null);
-
 
     useGSAP(() => {
         const titleSplit = new SplitText(titleRef.current, { type: "lines" });
@@ -72,7 +72,13 @@ const Hero = () => {
             { opacity: 0, filter: 'blur(10px)' },
             { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
             "-=1.2"
-        );
+        )
+            .fromTo(
+                '#cta-button',
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6 },
+                "-=0.8"
+            );
     }, []);
 
     return (
@@ -109,8 +115,8 @@ const Hero = () => {
                                     key={sport.id}
                                     className="sport-badge text-xs bg-card backdrop-blur-md border border-border text-secondary px-3 py-1 rounded-full"
                                 >
-                                        {sport.name}
-                                    </span>
+                                    {sport.name}
+                                </span>
                             ))}
                         </div>
                     </div>
@@ -124,6 +130,15 @@ const Hero = () => {
                             className="object-cover"
                             priority
                         />
+                        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                            <Link
+                                href="/about"
+                                id="cta-button"
+                                className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon"
+                            >
+                                About us
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

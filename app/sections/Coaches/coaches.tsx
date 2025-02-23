@@ -104,9 +104,9 @@ const Coaches = () => {
                                     href={`https://instagram.com/${coach.instagram}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="absolute top-4 right-4 bg-social-icon backdrop-blur-md p-2 rounded-icon border border-border"
+                                    className="absolute top-4 right-4 bg-social-icon backdrop-blur-md p-1 rounded-icon border border-border"
                                 >
-                                    <Instagram className="w-6 h-6 text-white" />
+                                    <Instagram className="w-5 h-5 text-white" />
                                 </a>
                             </div>
                             <div className="p-4 md:p-6">

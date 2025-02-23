@@ -85,7 +85,7 @@ const CursorFollower = () => {
             });
         };
 
-        const interactiveElements = document.querySelectorAll('a, button');
+        const interactiveElements = document.querySelectorAll('a, button, Link');
         interactiveElements.forEach(element => {
             element.addEventListener('mouseenter', onHover);
             element.addEventListener('mouseleave', onLeave);

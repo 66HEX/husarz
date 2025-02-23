@@ -5,6 +5,7 @@ import {useRef} from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
+import { Facebook, Instagram } from 'lucide-react';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
 
@@ -85,32 +86,54 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {contact.map((info, index) => (
-                    <div key={index} className="contact-card space-y-4 rounded-card overflow-hidden bg-card backdrop-blur-md border border-border p-4 md:p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-icon backdrop-blur-md border border-border rounded-icon">
-                          <info.icon className="w-6 h-6 text-primary" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {contact.map((info, index) => (
+                        <div key={index}
+                             className="contact-card space-y-4 rounded-card overflow-hidden bg-card backdrop-blur-md border border-border p-4 md:p-6">
+                            <div className="flex items-start gap-4">
+                                <div className="p-1 bg-icon backdrop-blur-md border border-border rounded-icon">
+                                    <info.icon className="w-5 h-5 text-primary"/>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold tracking-tight mb-2">{info.title}</h4>
+                                    <p className="text-text-secondary tracking-tight whitespace-pre-line">{info.description}</p>
+                                    {info.title === "Get in Touch" && (
+                                        <div className="flex gap-3 mt-4">
+                                            <a
+                                                href="https://facebook.com/yourpage"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="p-1 bg-icon backdrop-blur-md border border-border rounded-icon hover:bg-icon/80 transition-colors"
+                                            >
+                                                <Facebook className="w-5 h-5 text-primary"/>
+                                            </a>
+                                            <a
+                                                href="https://instagram.com/yourpage"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="p-1 bg-icon backdrop-blur-md border border-border rounded-icon hover:bg-icon/80 transition-colors"
+                                            >
+                                                <Instagram className="w-5 h-5 text-primary"/>
+                                            </a>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                          <h4 className="text-xl font-bold tracking-tight mb-2">{info.title}</h4>
-                          <p className="text-text-secondary tracking-tight whitespace-pre-line">{info.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                ))}
-              </div>
+                    ))}
+                </div>
             </div>
 
-            <div id="map-container" className="col-span-1 w-full h-full min-h-[400px] rounded-card overflow-hidden relative">
-              <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.5678!2d19.123456!3d50.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA3JzM0LjQiTiAxOcKwMDcnNDQuNCJF!5e0!3m2!1spl!2spl!4v1234567890"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: 'grayscale(75%) contrast(90%) brightness(95%)' }}
-                  referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+              <div id="map-container"
+                   className="col-span-1 w-full h-full min-h-[400px] rounded-card overflow-hidden relative">
+                  <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.5678!2d19.123456!3d50.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA3JzM0LjQiTiAxOcKwMDcnNDQuNCJF!5e0!3m2!1spl!2spl!4v1234567890"
+                      width="100%"
+                      height="100%"
+                      style={{border: 0, filter: 'grayscale(75%) contrast(90%) brightness(95%)'}}
+                      referrerPolicy="no-referrer-when-downgrade"
+                  />
+              </div>
           </div>
         </div>
       </section>

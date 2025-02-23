@@ -151,7 +151,7 @@ const Navbar = () => {
                 <div
                     ref={menuRef}
                     style={{opacity:0}}
-                    className="absolute top-0 left-0 right-0 md:hidden bg-navbar backdrop-blur-md border border-border rounded-card p-4 pointer-events-auto"
+                    className="absolute top-0 left-0 right-0 md:hidden bg-navbar backdrop-blur-md border border-border rounded-b-card p-4 pointer-events-auto"
                 >
                     <div className="flex flex-col space-y-4 pt-24">
                         {navigation.slice(0, -1).map((item) => (

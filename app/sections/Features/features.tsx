@@ -2,11 +2,13 @@
 
 import {features} from "@/app/data/features";
 import Image from "next/image";
+import Link from "next/link";
 import {useRef} from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
+import {ArrowUpRight} from 'lucide-react';
 import '@/app/config/gsap';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
@@ -89,14 +91,14 @@ const Features = () => {
                         <div className="grid grid-cols-2 mb-8 gap-4 md:gap-8">
                             <div className="col-span-2 md:col-span-1">
                                 <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
-                                    Features
+                                    Sections
                                 </h2>
                             </div>
                             <div className="col-span-2 md:col-span-1">
                                 <p ref={descRef} className="text-text-secondary tracking-tight">
-                                    Step into a world where strength meets combat sports excellence. With dedicated sections
-                                    for powerlifting, combat sports, and armwrestling, we've created a unique space where strength
-                                    disciplines converge under one roof.
+                                    Our sports club features professional sections: powerlifting section,
+                                    martial arts section, armwrestling section, and a fully equipped gym.
+                                    Each section is led by experienced trainers.
                                 </p>
                             </div>
                         </div>
@@ -105,7 +107,15 @@ const Features = () => {
                             {features.map((feature, index) => (
                                 <div key={index} className="feature-card space-y-4 rounded-card overflow-hidden bg-card backdrop-blur-md border border-border p-4 md:p-6">
                                     <div>
-                                        <h4 className="text-xl font-bold tracking-tight mb-2">{feature.title}</h4>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h4 className="text-xl font-bold tracking-tight">{feature.title}</h4>
+                                            <Link
+                                                href={`/sections/${feature.slug}`}
+                                                className="section-button inline-flex items-center justify-center bg-white p-1 rounded-icon absolute top-4 right-4"
+                                            >
+                                                <ArrowUpRight className="w-5 h-5 text-black" />
+                                            </Link>
+                                        </div>
                                         <p className="text-text-secondary tracking-tight mb-4">{feature.description}</p>
                                         <div className="flex flex-wrap gap-2">
                                             {feature.equipment.map((item, idx) => (
