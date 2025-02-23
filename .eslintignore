@@ -1,6 +1,0 @@
-# Ignoruj wszystko w app/libs
-app/libs/**/*
-# Ignoruj podfoldery
-app/libs/**/.*
-# Dodatkowe zabezpieczenie dla plików w libs
-**/libs/**
