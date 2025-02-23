@@ -2,15 +2,15 @@ import { features } from "@/app/data/features";
 import { notFound } from "next/navigation";
 import SectionContent from "./SectionContent";
 
-// Define the params type
-type SectionPageParams = {
+// Define the params type using Next.js's built-in types
+type Props = {
     params: {
         slug: string;
     };
+    searchParams: { [key: string]: string | string[] | undefined };
 };
 
-// Add type annotation to the params parameter
-export default function SectionPage({ params }: SectionPageParams) {
+export default function SectionPage({ params, searchParams }: Props) {
     const section = features.find(feature => feature.slug === params.slug);
 
     if (!section) {
