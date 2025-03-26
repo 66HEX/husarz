@@ -35,13 +35,4 @@ export const coaches = [
         specialties: ["Injury Recovery", "Mobility", "Pain Management"],
         experience: "10 years",
     },
-    {
-        name: "David Martinez",
-        title: "CrossFit Coach",
-        description: "CrossFit Level 2 trainer specialized in improving overall athleticism and functional strength.",
-        image: "/grey.png",
-        instagram: "hexthecoder",
-        specialties: ["CrossFit", "Olympic Lifting", "Conditioning"],
-        experience: "7 years",
-    }
 ];

@@ -136,23 +136,19 @@ const FAQ = () => {
     };
 
     return (
-        <section id="faq" className="py-16 md:py-24">
-            <div className="container mx-auto flex flex-col items-center px-4 md:px-8">
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mb-8 gap-4 md:gap-8">
-                    <div className="col-span-1 overflow-hidden">
-                        <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">FAQ</h2>
-                    </div>
-                    <div className="col-span-1">
-                        <p ref={descRef} className="text-text-secondary tracking-tight">
-                            Find answers to commonly asked questions about our facilities,
-                            memberships, and services. If you need more information,
-                            don&apos;t hesitate to contact us.
-                        </p>
-                    </div>
+        <section id="faq" className="py-16 md:py-24 overflow-hidden">
+            <div className="container mx-auto px-4 md:px-8">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">FAQ</h2>
+                    <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                        Find answers to commonly asked questions about our facilities,
+                        memberships, and services. If you need more information,
+                        don&apos;t hesitate to contact us.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-8">
-                    <div className="col-span-3 xl:col-span-1 space-y-4">
+                <div className="flex justify-center">
+                    <div className="space-y-4 max-w-3xl">
                         {faqs.map((faq, index) => (
                             <div
                                 key={index}
@@ -188,15 +184,6 @@ const FAQ = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className="col-span-3 xl:col-span-2 w-full h-[430px] rounded-card overflow-hidden relative">
-                        <Image
-                            id="faq-image"
-                            src="/grey.png"
-                            alt="Gym facilities"
-                            fill
-                            className="object-cover"
-                        />
                     </div>
                 </div>
             </div>

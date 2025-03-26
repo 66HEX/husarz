@@ -1,11 +1,12 @@
 "use client";
 
 import Hero from "@/app/sections/Hero/hero";
-import Features from "@/app/sections/Features/features";
+import Sections from "@/app/sections/Sections/sections";
 import Coaches from "@/app/sections/Coaches/coaches";
 import FAQ from "@/app/sections/FAQ/faq";
-import Contact from "@/app/sections/Contact/contact";
+import Location from "@/app/sections/Location/location";
 import {useEffect} from "react";
+
 
 export default function Home() {
 
@@ -16,10 +17,10 @@ export default function Home() {
   return (
     <div>
       <Hero/>
-      <Features/>
+      <Sections/>
       <Coaches/>
+      <Location/>
       <FAQ/>
-      <Contact/>
     </div>
   );
 }

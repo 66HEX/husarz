@@ -18,7 +18,10 @@ const AboutUs = () => {
     const statsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useGSAP(() => {
-        // Create the main timeline
+        // Create the main timeline for all animations
+        const mainTimeline = gsap.timeline();
+        
+        // Process all sections
         const sections = Array.from({ length: 5 }, (_, i) => {
             const headingIndex = i;
             const startParagraphIndex = i === 0 ? 0 : 1 + (i - 1) * 2;
@@ -46,37 +49,33 @@ const AboutUs = () => {
             });
 
             return {
-                trigger: heading,
+                heading,
                 headingSplit,
                 paragraphSplits
             };
         });
 
-        sections.forEach((section) => {
-            if (!section.trigger) return;
-
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section.trigger,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none none"
-                }
-            });
-
+        // Add all animations to the main timeline in sequence
+        sections.forEach((section, sectionIndex) => {
             // Animate heading
             if (section.headingSplit) {
-                tl.fromTo(
+                mainTimeline.fromTo(
                     section.headingSplit.lines,
                     { y: '100%' },
-                    { y: '0%', duration: 0.8 }
+                    { 
+                        y: '0%', 
+                        duration: 0.8,
+                        // Only add delay for sections after the first one
+                        delay: sectionIndex === 0 ? 0 : 0.2
+                    },
+                    sectionIndex === 0 ? 0 : ">-=0.4" // Position parameter
                 );
             }
 
             // Animate paragraphs
             section.paragraphSplits.forEach((split, i) => {
                 if (!split) return;
-                tl.fromTo(
+                mainTimeline.fromTo(
                     split.lines,
                     { y: '100%' },
                     {
@@ -84,15 +83,15 @@ const AboutUs = () => {
                         duration: 0.8,
                         stagger: 0.05,
                     },
-                    i === 0 ? "-=0.4" : "-=0.6"  // Overlap with previous animation
+                    ">-=0.6"  // Overlap with previous animation
                 );
             });
         });
 
         // Animate stats if they exist
-        statsRef.current.forEach((stat) => {
+        statsRef.current.forEach((stat, index) => {
             if (!stat) return;
-            gsap.fromTo(
+            mainTimeline.fromTo(
                 stat,
                 {
                     y: 50,
@@ -102,13 +101,9 @@ const AboutUs = () => {
                     y: 0,
                     opacity: 1,
                     duration: 0.8,
-                    scrollTrigger: {
-                        trigger: stat,
-                        start: "top 80%",
-                        end: "bottom 20%",
-                        toggleActions: "play none none none"
-                    }
-                }
+                    stagger: 0.1
+                },
+                ">-=0.4"
             );
         });
     }, []);
@@ -117,7 +112,7 @@ const AboutUs = () => {
         <div ref={containerRef} className="min-h-screen bg-background">
             <div className="flex flex-col md:flex-row">
                 {/* Fixed Image Section */}
-                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0">
+                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-r-[3rem] overflow-hidden">
                     <Image
                         src="/grey.png"
                         alt="Husarz Gym interior"

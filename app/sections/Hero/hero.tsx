@@ -31,7 +31,6 @@ const Hero = () => {
         const texts = childSplit.lines;
 
         const tl = gsap.timeline({ defaults: { ease: "CustomEase" } });
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
         tl.fromTo(
             title,
@@ -39,33 +38,18 @@ const Hero = () => {
             { y: '0%', duration: 0.8 }
         )
 
-        if (isMobile) {
-            tl.fromTo(
-                texts,
-                { y: '100%' },
-                { y: '0%', stagger: 0.05, duration: 1.2 },
-                "-=0.4"
-            )
-                .fromTo(
-                    '.sport-badge',
-                    { y: 10, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.05 },
-                    "-=0.4"
-                )
-        } else {
-            tl.fromTo(
+        tl.fromTo(
+            texts,
+            { y: '100%' },
+            { y: '0%', stagger: 0.05, duration: 1.2 },
+            "-=0.4"
+        )
+            .fromTo(
                 '.sport-badge',
                 { y: 10, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, stagger: 0.05 },
                 "-=0.4"
             )
-                .fromTo(
-                    texts,
-                    { y: '100%' },
-                    { y: '0%', stagger: 0.05, duration: 1.2 },
-                    "-=0.4"
-                )
-        }
 
         tl.fromTo(
             '#hero-image',
@@ -82,17 +66,35 @@ const Hero = () => {
     }, []);
 
     return (
-        <section id="home" className="py-24 h-svh md:h-[66vh] xl:h-svh">
-            <div ref={containerRef} className="h-full container mx-auto px-4 md:px-8">
-                <div className="h-full grid grid-rows-[auto_1fr] gap-8">
-                    <div className="grid grid-cols-2 gap-4 md:gap-8">
-                        <div className="col-span-2 md:col-span-1">
-                            <div className="overflow-hidden mb-0 md:mb-4">
+        <section id="home" className="py-24 h-svh md:h-[66vh] xl:h-svh relative">
+            <div className="absolute inset-0 rounded-b-[3rem] overflow-hidden">
+                <Image
+                    id="hero-image"
+                    src="/grey.png"
+                    alt="Hero image"
+                    fill
+                    className="object-cover"
+                    priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            </div>
+            
+            <div ref={containerRef} className="h-full container mx-auto px-4 md:px-8 relative z-10">
+                <div className="h-full flex flex-col justify-center gap-8">
+                    <div className="max-w-2xl">
+                        <div className="bg-card backdrop-blur-md border border-border p-6 md:p-8 rounded-card">
+                            <div className="overflow-hidden mb-4">
                                 <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
                                     Husarz Gym
                                 </h1>
                             </div>
-                            <div className="flex-wrap gap-2 hidden md:flex">
+                            <div className="overflow-hidden mb-6">
+                                <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
+                                    Professional training facility bringing together strength sports and combat arts.
+                                    Join our community of dedicated athletes and experience training at the highest level.
+                                </p>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
                                 {Object.values(sports).map((sport) => (
                                     <span
                                         key={sport.id}
@@ -103,45 +105,20 @@ const Hero = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="col-span-2 md:col-span-1 flex items-end overflow-hidden">
-                            <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
-                                Professional training facility bringing together strength sports and combat arts.
-                                Join our community of dedicated athletes and experience training at the highest level.
-                            </p>
-                        </div>
-                        <div className="flex-wrap space-x-2 block md:hidden">
-                            {Object.values(sports).map((sport) => (
-                                <span
-                                    key={sport.id}
-                                    className="sport-badge text-xs bg-card backdrop-blur-md border border-border text-secondary px-3 py-1 rounded-full"
-                                >
-                                    {sport.name}
-                                </span>
-                            ))}
-                        </div>
                     </div>
-
-                    <div className="w-full h-full rounded-card overflow-hidden relative">
-                        <Image
-                            id="hero-image"
-                            src="/grey.png"
-                            alt="Hero image"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
-                            <Link
-                                href="/about"
-                                id="cta-button"
-                                className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon"
-                            >
-                                About us
-                            </Link>
-                        </div>
+                    
+                    <div className="flex justify-center md:justify-start">
+                        <Link
+                            href="/about"
+                            id="cta-button"
+                            className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-6 py-2 rounded-icon font-medium"
+                        >
+                            About us
+                        </Link>
                     </div>
                 </div>
-            </div>
+            </div>  
+          
         </section>
     );
 };

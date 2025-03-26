@@ -93,7 +93,7 @@ export default function SectionContent({ section }: SectionContentProps) {
     return (
         <div className="min-h-screen bg-background">
             <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0">
+                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-r-[3rem] overflow-hidden">
                     <Image
                         src={section.image}
                         alt={section.title}
