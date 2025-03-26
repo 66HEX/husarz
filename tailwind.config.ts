@@ -21,7 +21,7 @@ export default {
         border: "rgba(255,255,255,0.1)"
       },
       fontFamily: {
-        sans: ['var(--font-lausanne)'],
+        sans: ['var(--font-hoves)'],
       },
       borderRadius: {
         card: "0.75rem",
