@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const hoves = localFont({
     src: [
         {
-            path: './fonts/TT_Hoves_medium.woff2',
+            path: './fonts/TT_Hoves_Medium.woff2',
             weight: '400',
             style: 'normal',
         },
