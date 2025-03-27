@@ -10,12 +10,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#131313",
+        background: "#09090B",
         foreground: "#ffffff",
         "text-primary": "#ffffff",
-        "text-secondary": "rgba(255,255,255,0.8)",
+        "text-secondary": "rgba(255,255,255,0.6)",
         "text-black": "#000000",
-        card: "rgba(255,255,255,0.05)",
+        card: "rgba(255,255,255,0.025)",
         navbar: "rgba(0,0,0,0.6)",
         "social-icon": "rgba(0,0,0,0.5)",
         border: "rgba(255,255,255,0.1)"

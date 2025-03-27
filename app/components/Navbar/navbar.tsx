@@ -136,9 +136,11 @@ const Navbar = () => {
     return (
         <nav className="fixed top-0 right-0 left-0 flex justify-center z-40 pointer-events-none">
             <div className="w-full flex items-center justify-between mt-4 mx-4 md:mx-8">
-                <div className="flex items-center space-x-2 order-1 md:order-none z-50">
+                <div className="flex items-center jus space-x-2 order-1 md:order-none z-50">
                     <div className="w-8 h-8 bg-white rounded-icon"></div>
-                    <div className="w-32 h-8 bg-text-secondary rounded-icon"></div>
+                    <p className="text-lg font-bold tracking-tight text-text-secondary">
+                        Husarz Gym
+                    </p>
                 </div>
 
                 <button

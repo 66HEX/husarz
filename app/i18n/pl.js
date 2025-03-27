@@ -69,7 +69,7 @@ export const pl = {
       description: "Dedykowany obszar do trójboju siłowego z sprzętem klasy zawodniczej. Idealny zarówno dla początkujących, jak i zaawansowanych zawodników przygotowujących się do zawodów.",
       equipment: ["Stojaki Zawodnicze", "Gryfy Eleiko", "Kalibrowane Talerze"],
       slug: "powerlifting",
-      image: "/grey.png",
+      image: "/husarz_106.jpg",
       extendedDescription: [
           "Nasza sekcja trójboju siłowego jest wyposażona w najnowocześniejszy sprzęt klasy zawodniczej, w tym wiele stojaków do przysiadów, kalibrowane talerze i specjalistyczne gryfy. Obszar treningowy jest zaprojektowany tak, aby pomieścić zarówno treningi indywidualne, jak i sesje grupowe, z dedykowanymi platformami do martwego ciągu oraz specjalnymi strefami do przysiadów i wyciskania leżąc.",
           "Oferujemy kompleksowe programy treningowe prowadzone przez doświadczonych trenerów trójboju siłowego, którzy startowali na poziomie krajowym i międzynarodowym. Nasza metodologia treningowa koncentruje się na właściwej technice, progresywnym przeciążeniu i indywidualnym programowaniu, aby pomóc Ci osiągnąć cele siłowe w bezpieczny i efektywny sposób.",
@@ -81,7 +81,7 @@ export const pl = {
       description: "Profesjonalna strefa sportów walki wyposażona w ring bokserski, maty do zapasów i sprzęt do treningu uderzeń. Odpowiednia dla różnych dyscyplin sztuk walki.",
       equipment: ["Ring Bokserski", "Maty do Zapasów", "Worki Treningowe"],
       slug: "martial-arts",
-      image: "/grey.png",
+      image: "/husarz_49.jpg",
       extendedDescription: [
           "Sekcja sztuk walki oferuje profesjonalne środowisko treningowe z pełnowymiarowym ringiem bokserskim, rozległymi matami do zapasów i kompleksowym zestawem sprzętu do treningu uderzeń. Nasz obiekt obsługuje wiele dyscyplin, w tym boks, kickboxing, brazylijskie jiu-jitsu i MMA, zapewniając wszystkie niezbędne narzędzia do pełnego rozwoju zawodnika.",
           "Treningi prowadzone są przez certyfikowanych trenerów z rozległym doświadczeniem zawodniczym w swoich dyscyplinach. Oferujemy zarówno zajęcia przyjazne dla początkujących, jak i zaawansowane sesje treningowe, zapewniając odpowiednią progresję i rozwój umiejętności dla praktykujących na wszystkich poziomach. Szczególny nacisk kładziemy na właściwą technikę, bezpieczeństwo i rozwój strategiczny.",
@@ -105,7 +105,7 @@ export const pl = {
       description: "W pełni wyposażona przestrzeń siłowni z nowoczesnym sprzętem cardio i siłowym. Idealna do ogólnej sprawności, treningu siłowego i pracy uzupełniającej.",
       equipment: ["Wolne Ciężary", "Maszyny Siłowe", "Sprzęt Cardio"],
       slug: "gym",
-      image: "/grey.png",
+      image: "/husarz_100.jpg",
       extendedDescription: [
           "Nasza nowoczesna strefa siłowni jest wyposażona w kompleksowy wybór wysokiej jakości sprzętu wspierającego wszystkie cele fitness. Przestrzeń zawiera najnowsze maszyny cardio, pełen zakres wolnych ciężarów i różnorodne maszyny do treningu oporowego. Układ jest zaprojektowany tak, aby tworzyć odrębne strefy dla różnych rodzajów treningu, zapewniając płynne i efektywne doświadczenie treningowe.",
           "Zapewniamy dostęp do wykwalifikowanych trenerów personalnych, którzy mogą pomóc w opracowaniu spersonalizowanych programów treningowych dostosowanych do indywidualnych celów, czy to utrata wagi, przyrost mięśni, czy ogólna poprawa sprawności. Nasi trenerzy mają doświadczenie w pracy z klientami na wszystkich poziomach sprawności i mogą udzielać wskazówek dotyczących właściwej formy, odżywiania i progresji.",
@@ -126,7 +126,7 @@ export const pl = {
       name: "Grzegorz Bala",
       title: "Trener Personalny | Trener Trójboju Siłowego",
       description: "Specjalizuje się w treningu siłowym, pomagając zrozumieć ruch. Czynny zawodnik trójboju siłowego od 2020 roku.",
-      image: "/grey.png",
+      image: "/husarz2_3.jpg",
       instagram: "grzesiek_bl",
       specialties: ["Trójbój Siłowy", "Trening Siłowy", "Przygotowanie Zawodników"],
     },
@@ -194,7 +194,7 @@ export const pl = {
     armwrestling: { name: 'Armwrestling', id: 4 }
   },
   footer: {
-    quickLinks: "Szybkie Linki",
+    quickLinks: "Nawigacja",
     followUs: "Obserwuj Nas",
     address: "Adres",
     addressText: "Trakt św. Wojciecha 243,\n80-058 Gdańsk",
@@ -204,5 +204,6 @@ export const pl = {
   common: {
     description: "Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki. Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie."
   },
-  homebutton: "O Klubie"
+  homebutton: "O Klubie",
+  seeDetails: "Zobacz Szczegóły"
 };

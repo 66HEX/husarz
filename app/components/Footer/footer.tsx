@@ -21,16 +21,18 @@ const Footer = () => {
     };
 
   return (
-      <footer id="contact" className="text-white py-16 md:py-24 font-medium bg-background">
+      <footer id="contact" className="text-white py-16 md:py-24 font-medium bg-background border-t border-border">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
             {/* Logo and Description */}
             <div className="col-span-2 lg:col-span-3">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 bg-white rounded-icon"></div>
-                <div className="w-32 h-8 bg-text-secondary rounded-icon"></div>
+                <p className="text-lg font-bold tracking-tight text-text-secondary">
+                        Husarz Gym
+                    </p>
               </div>
-              <p className="text-text-secondary text-sm tracking-tight w-full md:w-2/3">
+              <p className="text-text-secondary text-base tracking-tight w-full md:w-3/4">
                 {translations.common.description}
               </p>
             </div>

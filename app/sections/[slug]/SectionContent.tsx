@@ -26,6 +26,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 export default function SectionContent({ section }: SectionContentProps) {
     const { language, translations } = useLanguage();
     const titleRef = useRef<HTMLHeadingElement>(null);
+    const gradientTitleRef = useRef<HTMLHeadingElement>(null); // Dodajemy referencję dla tytułu z gradientem
     const descRef = useRef<HTMLParagraphElement>(null);
     const extendedDescRefs = useRef<HTMLParagraphElement[]>([]);
     
@@ -36,20 +37,55 @@ export default function SectionContent({ section }: SectionContentProps) {
 
     useGSAP(() => {
         // Main title and description animation
-        if (!titleRef.current || !descRef.current) return;
+        if (!descRef.current) return;
 
         const childSplit = new SplitText(descRef.current, { type: "lines" });
-        const titleSplit = new SplitText(titleRef.current, { type: "lines" });
+        
+        // Obsługa zwykłego tytułu (jeśli jest używany)
+        let titleSplit;
+        let title = [];
+        if (titleRef.current) {
+            titleSplit = new SplitText(titleRef.current, { type: "lines" });
+            title = titleSplit.lines;
+            
+            new SplitText(titleRef.current, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+        }
+        
+        // Obsługa gradientowego tytułu
+        let gradientTitleSplit;
+        let gradientTitle = [];
+        if (gradientTitleRef.current) {
+            
+            // Pierwszy podział na linie
+            gradientTitleSplit = new SplitText(gradientTitleRef.current, { type: "lines" });
+            gradientTitle = gradientTitleSplit.lines;
+            
+            // Dodajemy klasę do linii, aby kontrolować overflow
+            new SplitText(gradientTitleRef.current, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+            
+            // TERAZ aplikujemy gradient do każdej linii
+            gradientTitle.forEach(line => {
+                line.style.backgroundImage = 'linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1))';
+                line.style.webkitBackgroundClip = 'text';
+                line.style.webkitTextFillColor = 'transparent';
+                line.style.backgroundClip = 'text';
+                line.style.color = 'transparent';
+                line.style.display = 'block';
+            });
+        }
+        
         new SplitText(descRef.current, {
             type: "lines",
             linesClass: "line-wrapper overflow-hidden",
         });
-        new SplitText(titleRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
+        
         const texts = childSplit.lines;
-        const title = titleSplit.lines;
 
         // Extended description splits
         const extendedSplits = extendedDescRefs.current.map((ref) => {
@@ -78,18 +114,30 @@ export default function SectionContent({ section }: SectionContentProps) {
             0
         );
 
-        // Main sequence
-        tl.fromTo(
-            title,
-            { y: '100%' },
-            { y: '0%', duration: 0.8 }
-        )
-            .fromTo(
-                texts,
+        // Animacja gradientowego tytułu (jeśli istnieje)
+        if (gradientTitle.length > 0) {
+            tl.fromTo(
+                gradientTitle,
                 { y: '100%' },
-                { y: '0%', stagger: 0.05, duration: 0.8 },
-                "-=0.4"
-            )
+                { y: '0%', duration: 0.8 }
+            );
+        }
+        // Animacja zwykłego tytułu (jeśli istnieje i nie ma gradientowego)
+        else if (title.length > 0) {
+            tl.fromTo(
+                title,
+                { y: '100%' },
+                { y: '0%', duration: 0.8 }
+            );
+        }
+        
+        // Animacja tekstu opisu
+        tl.fromTo(
+            texts,
+            { y: '100%' },
+            { y: '0%', stagger: 0.05, duration: 0.8 },
+            "-=0.4"
+        );
 
         // Add extended description animations to the timeline
         extendedSplits.forEach((split) => {
@@ -104,7 +152,7 @@ export default function SectionContent({ section }: SectionContentProps) {
                 "-=0.6"
             );
         });
-    }, []);
+    }, [translations]);
 
     return (
         <div className="min-h-screen bg-background">
@@ -123,10 +171,10 @@ export default function SectionContent({ section }: SectionContentProps) {
                 <div className="w-full md:w-1/2 px-4 md:px-12 py-16 md:py-24">
                     <div id="section-content">
                         <div className="mb-16">
-                            <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+                            <h1 ref={gradientTitleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
                                 {translatedSection.title}
                             </h1>
-                            <p ref={descRef} className="text-lg md:text-xl text-text-secondary">
+                            <p ref={descRef} className="text-lg md:text-xl text-text-primary tracking-tight">
                                 {translatedSection.description}
                             </p>
                         </div>
@@ -140,7 +188,7 @@ export default function SectionContent({ section }: SectionContentProps) {
                                                 extendedDescRefs.current[idx] = el;
                                             }
                                         }}
-                                        className="text-text-secondary text-base"
+                                        className="text-text-secondary text-base tracking-tight"
                                     >
                                         {desc}
                                     </p>
@@ -150,6 +198,23 @@ export default function SectionContent({ section }: SectionContentProps) {
                     </div>
                 </div>
             </div>
+            
+            {/* Dodajemy style dla lepszej obsługi gradientu */}
+            <style jsx global>{`
+                /* Upewnijmy się, że linie mają poprawne style dla gradientu */
+                .line-wrapper {
+                    display: block;
+                    overflow: hidden;
+                }
+                
+                /* Dodatkowe zabezpieczenie dla animacji */
+                .text-transparent {
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    text-fill-color: transparent;
+                }
+            `}</style>
         </div>
     );
 }

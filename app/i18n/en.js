@@ -69,7 +69,7 @@ export const en = {
       description: "Dedicated powerlifting area with competition-grade equipment. Ideal for both beginners and advanced athletes preparing for competitions.",
       equipment: ["Competition Racks", "Eleiko Bars", "Calibrated Plates"],
       slug: "powerlifting",
-      image: "/grey.png",
+      image: "/husarz_106.jpg",
       extendedDescription: [
           "Our powerlifting section is equipped with state-of-the-art competition-grade equipment, including multiple squat racks, calibrated plates, and specialized bars. The training area is designed to accommodate both individual training and group sessions, with dedicated deadlift platforms and specialized zones for squats and bench press.",
           "We offer comprehensive training programs led by experienced powerlifting coaches who have competed at national and international levels. Our training methodology focuses on proper technique, progressive overload, and individualized programming to help you achieve your strength goals in a safe and effective manner.",
@@ -81,7 +81,7 @@ export const en = {
       description: "Professional combat sports zone equipped with a boxing ring, wrestling mats, and striking training equipment. Suitable for various martial arts disciplines.",
       equipment: ["Boxing Ring", "Wrestling Mats", "Training Bags"],
       slug: "martial-arts",
-      image: "/grey.png",
+      image: "/husarz_49.jpg",
       extendedDescription: [
           "The martial arts section offers a professional training environment with a full-size boxing ring, extensive wrestling mats, and a comprehensive set of striking training equipment. Our facility accommodates multiple disciplines including boxing, kickboxing, Brazilian jiu-jitsu, and MMA, providing all the necessary tools for complete fighter development.",
           "Training is conducted by certified coaches with extensive competitive experience in their disciplines. We offer both beginner-friendly classes and advanced training sessions, ensuring appropriate progression and skill development for practitioners at all levels. Special emphasis is placed on proper technique, safety, and strategic development.",
@@ -105,7 +105,7 @@ export const en = {
       description: "Fully equipped gym space with modern cardio and strength equipment. Ideal for general fitness, strength training, and supplementary work.",
       equipment: ["Free Weights", "Strength Machines", "Cardio Equipment"],
       slug: "gym",
-      image: "/grey.png",
+      image: "/husarz_100.jpg",
       extendedDescription: [
           "Our modern gym area is equipped with a comprehensive selection of high-quality equipment supporting all fitness goals. The space includes the latest cardio machines, a full range of free weights, and various resistance training machines. The layout is designed to create distinct zones for different types of training, ensuring a smooth and efficient workout experience.",
           "We provide access to qualified personal trainers who can help develop personalized training programs tailored to individual goals, whether it's weight loss, muscle gain, or general fitness improvement. Our trainers have experience working with clients at all fitness levels and can provide guidance on proper form, nutrition, and progression.",
@@ -126,7 +126,7 @@ export const en = {
       name: "Grzegorz Bala",
       title: "Personal Trainer | Powerlifting Coach",
       description: "Specializes in strength training, helping to understand movement. Active powerlifting competitor since 2020.",
-      image: "/grey.png",
+      image: "/husarz2_3.jpg",
       instagram: "grzesiek_bl",
       specialties: ["Powerlifting", "Strength Training", "Athlete Preparation"],
     },
@@ -204,5 +204,6 @@ export const en = {
   common: {
     description: "Professional training facility combining strength sports and martial arts. Join our community of dedicated athletes and experience training at the highest level."
   },
-  homebutton: "About Us"
+  homebutton: "About Us",
+  seeDetails: "See Details"
 };
