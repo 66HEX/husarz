@@ -8,6 +8,7 @@ import gsap from 'gsap';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(SplitText, useGSAP);
 
@@ -15,6 +16,7 @@ const Hero = () => {
     const titleRef = useRef(null);
     const descRef = useRef(null);
     const containerRef = useRef(null);
+    const { translations } = useLanguage();
 
     useGSAP(() => {
         const titleSplit = new SplitText(titleRef.current, { type: "lines" });
@@ -85,17 +87,16 @@ const Hero = () => {
                         <div className="bg-card backdrop-blur-md border border-border p-6 md:p-8 rounded-card">
                         <div className="overflow-hidden mb-4">
                             <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
-                                Husarz Gym
+                                {translations.sections.hero.title}
                             </h1>
                         </div>
                         <div className="overflow-hidden mb-6">
                             <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
-                                Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki.
-                                Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie.
+                                {translations.sections.hero.description}
                             </p>
                         </div>
                             <div className="flex flex-wrap gap-2">
-                                {Object.values(sports).map((sport) => (
+                                {Object.values(translations.sports).map((sport) => (
                                     <span
                                         key={sport.id}
                                         className="sport-badge text-xs bg-card backdrop-blur-md border border-border text-secondary px-3 py-1 rounded-full"
@@ -113,7 +114,7 @@ const Hero = () => {
                             id="cta-button"
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-6 py-2 rounded-icon font-medium"
                         >
-                            O Klubie
+                            {translations.homebutton}
                         </Link>
                     </div>
                 </div>

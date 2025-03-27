@@ -9,6 +9,7 @@ import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -19,6 +20,7 @@ const FAQ = () => {
     const contentHeights = useRef<number[]>([]);
     const titleRef = useRef(null);
     const descRef = useRef(null);
+    const { translations } = useLanguage();
 
     useEffect(() => {
         const calculateHeights = () => {
@@ -139,17 +141,15 @@ const FAQ = () => {
         <section id="faq" className="py-16 md:py-24 overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">FAQ</h2>
+                <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">{translations.sections.faq.title}</h2>
                 <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                    Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszego obiektu,
-                    członkostwa i usług. Jeśli potrzebujesz więcej informacji,
-                    nie wahaj się z nami skontaktować.
+                    {translations.sections.faq.description}
                 </p>
                 </div>
 
                 <div className="flex justify-center">
                     <div className="space-y-4 max-w-3xl">
-                        {faqs.map((faq, index) => (
+                        {translations.faqs.map((faq, index) => (
                             <div
                                 key={index}
                                 className="faq-item rounded-card overflow-hidden bg-card backdrop-blur-md border border-border"

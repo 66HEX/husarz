@@ -8,12 +8,14 @@ import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 const Coaches = () => {
     const titleRef = useRef(null);
     const descRef = useRef(null);
+    const { translations } = useLanguage();
 
     useGSAP(() => {
         const childSplit = new SplitText(descRef.current, { type: "lines" });
@@ -78,17 +80,15 @@ const Coaches = () => {
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                 <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                    Nasi Trenerzy
+                    {translations.sections.coaches.title}
                 </h2>
                 <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                    Poznaj nasz elitarny zespół certyfikowanych trenerów, którzy łączą wieloletnie doświadczenie 
-                    z nowoczesnymi metodami treningowymi. Każdy trener wnosi unikalne umiejętności i udowodnione 
-                    doświadczenie w transformacji życia klientów poprzez spersonalizowane wskazówki fitness.
+                    {translations.sections.coaches.description}
                 </p>
                     </div>
                     
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {coaches.map((coach, index) => (
+                    {translations.coaches.map((coach, index) => (
                         <div
                             key={index}
                             className="coach-card rounded-card overflow-hidden bg-card backdrop-blur-md border border-border"

@@ -6,12 +6,14 @@ import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 const Location = () => {
   const titleRef = useRef(null);
   const descRef = useRef(null);
+  const { translations } = useLanguage();
 
   useGSAP(() => {
       const childSplit = new SplitText(descRef.current, { type: "lines" });
@@ -59,11 +61,9 @@ const Location = () => {
       <section id="location" className="py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Lokalizacja</h2>
+          <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">{translations.sections.location.title}</h2>
           <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-            Odwiedź nasz nowoczesny obiekt treningowy.
-            Doświadcz premium sprzętu, profesjonalnych trenerów i motywującej
-            atmosfery, która pomoże Ci osiągnąć Twoje cele.
+            {translations.sections.location.description}
           </p>
           </div>
           

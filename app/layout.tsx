@@ -6,6 +6,7 @@ import localFont from 'next/font/local'
 import Navbar from "@/app/components/Navbar/navbar";
 import SmoothScrolling from "@/app/components/SmoothScrolling/smoothScrolling";
 import CursorFollower from "@/app/components/CursorFollower/cursorFollower";
+import { LanguageProvider } from "@/app/i18n/LanguageContext";
 
 
 export const metadata: Metadata = {
@@ -35,14 +36,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang='en' className={hoves.variable} suppressHydrationWarning>
+      <html lang='pl' className={hoves.variable} suppressHydrationWarning>
           <body className="dark bg-background text-foreground">
-              <SmoothScrolling>
-                  <Navbar/>
-                  <CursorFollower/>
-                  {children}
-                  <Footer/>
-              </SmoothScrolling>
+              <LanguageProvider>
+                  <SmoothScrolling>
+                      <Navbar/>
+                      <CursorFollower/>
+                      {children}
+                      <Footer/>
+                  </SmoothScrolling>
+              </LanguageProvider>
           </body>
       </html>
   );

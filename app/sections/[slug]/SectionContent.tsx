@@ -7,12 +7,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from '@/app/libs/gsap/SplitText';
 import { useGSAP } from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 interface Section {
     title: string;
     description: string;
     image: string;
     extendedDescription: string[];
+    slug: string;
 }
 
 interface SectionContentProps {
@@ -22,10 +24,15 @@ interface SectionContentProps {
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 export default function SectionContent({ section }: SectionContentProps) {
+    const { language, translations } = useLanguage();
     const titleRef = useRef<HTMLHeadingElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
     const extendedDescRefs = useRef<HTMLParagraphElement[]>([]);
-    const imageRef = useRef<HTMLImageElement>(null);
+    
+    // Znajdź odpowiednią sekcję w tłumaczeniach na podstawie slug
+    const translatedSection = translations.features.find(
+        (feature) => feature.slug === section.slug
+    ) || section;
 
     useGSAP(() => {
         // Main title and description animation
@@ -105,8 +112,8 @@ export default function SectionContent({ section }: SectionContentProps) {
                 <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-b-[3rem] md:rounded-r-[3rem] overflow-hidden">
                     <Image
                         id="section-image"
-                        src={section.image}
-                        alt={section.title}
+                        src={translatedSection.image}
+                        alt={translatedSection.title}
                         fill
                         className="object-cover"
                         priority
@@ -117,15 +124,15 @@ export default function SectionContent({ section }: SectionContentProps) {
                     <div id="section-content">
                         <div className="mb-16">
                             <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-                                {section.title}
+                                {translatedSection.title}
                             </h1>
                             <p ref={descRef} className="text-lg md:text-xl text-text-secondary">
-                                {section.description}
+                                {translatedSection.description}
                             </p>
                         </div>
 
                         <div className="space-y-8 mb-16">
-                            {section.extendedDescription.map((desc, idx) => (
+                            {translatedSection.extendedDescription.map((desc, idx) => (
                                 <div key={idx} className="overflow-hidden">
                                     <p
                                         ref={(el) => {

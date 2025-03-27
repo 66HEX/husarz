@@ -1,11 +1,11 @@
 "use client";
 
-import {navigation} from "@/app/data/navigation";
-import {social} from "@/app/data/social";
 import { useLenisContext } from "@/app/components/SmoothScrolling/smoothScrolling";
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 const Footer = () => {
     const lenis = useLenisContext();
+    const { translations } = useLanguage();
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
         e.preventDefault();
@@ -31,16 +31,15 @@ const Footer = () => {
                 <div className="w-32 h-8 bg-text-secondary rounded-icon"></div>
               </div>
               <p className="text-text-secondary text-sm tracking-tight w-full md:w-2/3">
-                Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki.
-                Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie.
+                {translations.common.description}
               </p>
             </div>
             
             {/* Quick Links */}
             <div className="col-span-1 w-fit"> 
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Szybkie Linki</h3>
+              <h3 className="text-lg font-bold mb-4 tracking-tight">{translations.footer.quickLinks}</h3>
               <div className="flex flex-col space-y-2">
-                {navigation.map(({name, href}) => (
+                {translations.navigation.map(({name, href}) => (
                   <a
                     key={name}
                     href={href}
@@ -55,9 +54,9 @@ const Footer = () => {
             
             {/* Social Media */}
             <div className="col-span-1 w-fit">
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Obserwuj Nas</h3>
+              <h3 className="text-lg font-bold mb-4 tracking-tight">{translations.footer.followUs}</h3>
               <div className="flex flex-col space-y-2">
-                {social.map((item, index) => (
+                {translations.social.map((item, index) => (
                   <a
                     key={index}
                     href={item.url}
@@ -73,10 +72,9 @@ const Footer = () => {
 
             {/*  Address */}
             <div className="col-span-1 w-48">
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Adres</h3>
+              <h3 className="text-lg font-bold mb-4 tracking-tight">{translations.footer.address}</h3>
               <p className="text-text-secondary text-sm tracking-tight whitespace-pre-line">
-              Trakt Świętego Wojciecha 243,
-              80-058 Gdańsk
+              {translations.footer.addressText}
               </p>
             </div>
           </div>
@@ -84,11 +82,11 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row w-full justify-between items-center pt-6 border-t border-border gap-4 md:gap-0">
             <div className="text-text-secondary text-sm tracking-tight order-2 md:order-1">
-              © {new Date().getFullYear()} Husarz Gym. Wszelkie prawa zastrzeżone.
+              © {new Date().getFullYear()} {translations.footer.copyright}
             </div>
             
             <div className="text-text-secondary text-sm tracking-tight order-1 md:order-2">
-              Zaprojektowane przez
+              {translations.footer.designedBy}
               <a href="https://hexthecoder.pl" target="_blank" rel="noopener noreferrer"
                  className="hover:text-white transition-colors duration-300 ml-1">
                 HEX

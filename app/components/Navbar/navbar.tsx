@@ -1,12 +1,13 @@
 "use client";
 
-import {navigation} from "@/app/data/navigation";
 import {useEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
 import { useLenisContext } from "@/app/components/SmoothScrolling/smoothScrolling";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
+import LanguageSwitcher from "@/app/components/LanguageSwitcher/languageSwitcher";
 
 const Navbar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,7 @@ const Navbar = () => {
     const tlRef = useRef<gsap.core.Timeline | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const lenis = useLenisContext();
+    const { translations } = useLanguage();
 
     useGSAP(() => {
         tlRef.current = gsap.timeline({ paused: true })
@@ -67,6 +69,17 @@ const Navbar = () => {
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
         e.preventDefault();
 
+        // Check if we're on the home page
+        const isHomePage = window.location.pathname === '/' || window.location.pathname === '';
+        
+        if (!isHomePage) {
+            // If not on home page, navigate to home page first
+            window.location.href = '/';
+            // Store the target section in localStorage to scroll after navigation
+            localStorage.setItem('scrollTarget', targetId);
+            return;
+        }
+
         const section = document.getElementById(targetId);
         if (!section) {
             return;
@@ -99,6 +112,25 @@ const Navbar = () => {
             document.removeEventListener('touchstart', handleClickOutside);
         };
     }, [isOpen]);
+    
+    // Effect to handle scrolling to target section after navigation
+    useEffect(() => {
+        const scrollTarget = localStorage.getItem('scrollTarget');
+        if (scrollTarget) {
+            // Clear the stored target immediately to prevent unwanted scrolling on future loads
+            localStorage.removeItem('scrollTarget');
+            
+            // Small delay to ensure the page is fully loaded
+            const timer = setTimeout(() => {
+                const section = document.getElementById(scrollTarget);
+                if (section && lenis) {
+                    lenis.scrollTo(section, { offset: -15 });
+                }
+            }, 500);
+            
+            return () => clearTimeout(timer);
+        }
+    }, [lenis]);
 
 
     return (
@@ -128,7 +160,7 @@ const Navbar = () => {
 
                 <div className="hidden md:flex items-center justify-center bg-navbar backdrop-blur-md py-2 px-2 border border-border rounded-card pointer-events-auto">
                     <div className="flex items-center gap-8 ml-2">
-                        {navigation.slice(0, -1).map((item) => (
+                        {translations.navigation.slice(0, -1).map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.href}
@@ -139,13 +171,14 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <Link
-                            href={navigation[navigation.length - 1].href}
-                            onClick={(e) => handleScroll(e, navigation[navigation.length - 1].href)}
+                            href={translations.navigation[translations.navigation.length - 1].href}
+                            onClick={(e) => handleScroll(e, translations.navigation[translations.navigation.length - 1].href)}
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon"
                         >
-                            {navigation[navigation.length - 1].name}
+                            {translations.navigation[translations.navigation.length - 1].name}
                         </Link>
                     </div>
+                    <LanguageSwitcher />
                 </div>
 
                 <div
@@ -154,7 +187,7 @@ const Navbar = () => {
                     className="absolute top-0 left-0 right-0 md:hidden bg-navbar backdrop-blur-md border border-border rounded-b-card p-4 pointer-events-auto"
                 >
                     <div className="flex flex-col space-y-4 pt-24">
-                        {navigation.slice(0, -1).map((item) => (
+                        {translations.navigation.slice(0, -1).map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.href}
@@ -166,12 +199,13 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <Link
-                            href={navigation[navigation.length - 1].href}
+                            href={translations.navigation[translations.navigation.length - 1].href}
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-3 py-1 rounded-icon text-center"
-                            onClick={(e) => handleScroll(e, navigation[navigation.length - 1].href)}
+                            onClick={(e) => handleScroll(e, translations.navigation[translations.navigation.length - 1].href)}
                         >
-                            {navigation[navigation.length - 1].name}
+                            {translations.navigation[translations.navigation.length - 1].name}
                         </Link>
+                        <LanguageSwitcher />
                     </div>
                 </div>
             </div>

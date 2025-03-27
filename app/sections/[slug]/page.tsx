@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import SectionContent from "./SectionContent";
 import type { Metadata } from "next";
 
+
 interface PageProps {
     params: Promise<{ slug: string }>;
 }

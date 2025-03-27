@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from '@/app/libs/gsap/SplitText';
 import { useGSAP } from "@gsap/react";
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -116,6 +117,8 @@ const AboutUs = () => {
         });
     }, []);
 
+    const { translations } = useLanguage();
+    
     return (
         <div ref={containerRef} className="min-h-screen bg-background">
             <div className="flex flex-col md:flex-row">
@@ -124,7 +127,7 @@ const AboutUs = () => {
                     <Image
                         id="main-image"
                         src="/grey.png"
-                        alt="Wnętrze siłowni Husarz"
+                        alt="Husarz Gym Interior"
                         fill
                         className="object-cover"
                         priority
@@ -142,7 +145,7 @@ const AboutUs = () => {
                                 }}
                                 className="text-4xl md:text-6xl font-bold"
                             >
-                                Nasza Historia
+                                {translations.about.title}
                             </h1>
                         </div>
                         <div className="overflow-hidden">
@@ -152,158 +155,45 @@ const AboutUs = () => {
                                 }}
                                 className="text-text-secondary text-lg md:text-xl"
                             >
-                                Od 2015 roku, Siłownia Husarz jest filarem doskonałości w trójboju siłowym,
-                                tworząc społeczność oddaną sile i osobistemu rozwojowi.
+                                {translations.about.mainDescription}
                             </p>
                         </div>
                     </div>
 
                     {/* Sekcje historyczne */}
                     <div className="space-y-16">
-                        <div>
-                            <div className="overflow-hidden mb-4">
-                                <h2
-                                    ref={(el) => {
-                                        if (el) headingsRef.current[1] = el;
-                                    }}
-                                    className="text-2xl md:text-3xl font-bold"
-                                >
-                                    Nasze Początki
-                                </h2>
+                        {translations.about.sections.map((section, sectionIndex) => (
+                            <div key={sectionIndex}>
+                                <div className="overflow-hidden mb-4">
+                                    <h2
+                                        ref={(el) => {
+                                            if (el) headingsRef.current[sectionIndex + 1] = el;
+                                        }}
+                                        className="text-2xl md:text-3xl font-bold"
+                                    >
+                                        {section.title}
+                                    </h2>
+                                </div>
+                                {section.paragraphs.map((paragraph, paragraphIndex) => {
+                                    const globalParagraphIndex = sectionIndex === 0 
+                                        ? paragraphIndex + 1 
+                                        : 1 + paragraphIndex + (sectionIndex * 2);
+                                    
+                                    return (
+                                        <div key={paragraphIndex} className={`overflow-hidden ${paragraphIndex === 0 ? 'mb-6' : ''}`}>
+                                            <p
+                                                ref={(el) => {
+                                                    if (el) paragraphsRef.current[globalParagraphIndex] = el;
+                                                }}
+                                                className="text-text-secondary"
+                                            >
+                                                {paragraph}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
                             </div>
-                            <div className="overflow-hidden mb-6">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[1] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Założona przez pasjonatów trójboju siłowego, Siłownia Husarz rozpoczęła się jako mały obiekt
-                                    treningowy poświęcony właściwej formie i technice w trójboju. To, co zaczęło się z kilkoma
-                                    stojakami do przysiadów i oddanymi zawodnikami, rozrosło się w kompleksowy ośrodek treningu siłowego.
-                                </p>
-                            </div>
-                            <div className="overflow-hidden">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[2] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Nasza zasada założycielska była prosta: stworzyć przestrzeń, gdzie poważni zawodnicy mogliby trenować
-                                    bez kompromisów, z wysokiej jakości sprzętem i fachowym doradztwem.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="overflow-hidden mb-4">
-                                <h2
-                                    ref={(el) => {
-                                        if (el) headingsRef.current[2] = el;
-                                    }}
-                                    className="text-2xl md:text-3xl font-bold"
-                                >
-                                    Sukcesy Zawodnicze
-                                </h2>
-                            </div>
-                            <div className="overflow-hidden mb-6">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[3] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Przez lata, nasi członkowie osiągnęli niezwykłe sukcesy w zawodach trójboju siłowego
-                                    zarówno na poziomie krajowym jak i międzynarodowym. Z dumą wychowaliśmy wielu mistrzów krajowych
-                                    i rekordzistów w różnych kategoriach wagowych.
-                                </p>
-                            </div>
-                            <div className="overflow-hidden">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[4] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Nasz zespół zawodniczy rozrósł się z garstki oddanych zawodników do ponad 30 aktywnych
-                                    konkurentów, czyniąc nas jednym z najbardziej udanych klubów trójboju siłowego w regionie.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="overflow-hidden mb-4">
-                                <h2
-                                    ref={(el) => {
-                                        if (el) headingsRef.current[3] = el;
-                                    }}
-                                    className="text-2xl md:text-3xl font-bold"
-                                >
-                                    Filozofia Treningowa
-                                </h2>
-                            </div>
-                            <div className="overflow-hidden mb-6">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[5] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    W Siłowni Husarz wierzymy w metodyczne, oparte na nauce podejście do treningu siłowego.
-                                    Nasz zespół trenerski kładzie nacisk na właściwą technikę, ustrukturyzowane programowanie i zrównoważony
-                                    postęp, aby pomóc sportowcom osiągnąć ich cele przy minimalizacji ryzyka kontuzji.
-                                </p>
-                            </div>
-                            <div className="overflow-hidden">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[6] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Priorytetowo traktujemy budowanie silnych podstaw w trzech głównych bojach: przysiad, wyciskanie leżąc
-                                    i martwy ciąg, jednocześnie włączając ćwiczenia pomocnicze dla pełnego rozwoju siły.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="overflow-hidden mb-4">
-                                <h2
-                                    ref={(el) => {
-                                        if (el) headingsRef.current[4] = el;
-                                    }}
-                                    className="text-2xl md:text-3xl font-bold"
-                                >
-                                    Społeczność i Przyszłość
-                                </h2>
-                            </div>
-                            <div className="overflow-hidden mb-6">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[7] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Dzisiaj, Siłownia Husarz to więcej niż tylko obiekt treningowy – to społeczność oddanych
-                                    sportowców wspierających się nawzajem w drodze do sportów siłowych. Nasi członkowie to zarówno
-                                    początkujący, jak i elitarni zawodnicy, wszyscy trenujący razem w atmosferze wzajemnego szacunku
-                                    i zachęty.
-                                </p>
-                            </div>
-                            <div className="overflow-hidden">
-                                <p
-                                    ref={(el) => {
-                                        if (el) paragraphsRef.current[8] = el;
-                                    }}
-                                    className="text-text-secondary"
-                                >
-                                    Patrząc w przyszłość, kontynuujemy rozbudowę naszych obiektów i programów, jednocześnie utrzymując
-                                    nasz główny nacisk na doskonałość w trójboju siłowym i budowaniu społeczności.
-                                </p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

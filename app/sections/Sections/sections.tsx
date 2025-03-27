@@ -10,6 +10,7 @@ import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import {ArrowUpRight} from 'lucide-react';
 import '@/app/config/gsap';
+import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -17,7 +18,7 @@ const Sections = () => {
     const titleRef = useRef(null);
     const descRef = useRef(null);
     const featuresRef = useRef(null);
-    const imageRef = useRef(null);
+    const { translations } = useLanguage();
 
     useGSAP(() => {
         const childSplit = new SplitText(descRef.current, { type: "lines" });
@@ -82,17 +83,15 @@ const Sections = () => {
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                 <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                    Sekcje
+                    {translations.sections.sections.title}
                 </h2>
                 <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                    Nasz klub sportowy oferuje profesjonalne sekcje: sekcję trójboju siłowego,
-                    sekcję sztuk walki, sekcję armwrestlingu oraz w pełni wyposażoną siłownię.
-                    Każda sekcja prowadzona jest przez doświadczonych trenerów.
+                    {translations.sections.sections.description}
                 </p>
                 </div>
 
                 <div ref={featuresRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {features.map((feature, index) => (
+                    {translations.features.map((feature, index) => (
                         <div 
                             key={index} 
                             className="feature-card relative rounded-card overflow-hidden bg-card backdrop-blur-md border border-border"
