@@ -1,122 +1,50 @@
 export const features = [
     {
-        title: "Powerlifting",
-        description: "Dedicated powerlifting area with competition-grade equipment. Perfect for both beginners and advanced lifters preparing for competitions.",
-        equipment: ["Competition Racks", "Eleiko Bars", "Calibrated Plates"],
+        title: "Trójbój Siłowy",
+        description: "Dedykowany obszar do trójboju siłowego z sprzętem klasy zawodniczej. Idealny zarówno dla początkujących, jak i zaawansowanych zawodników przygotowujących się do zawodów.",
+        equipment: ["Stojaki Zawodnicze", "Gryfy Eleiko", "Kalibrowane Talerze"],
         slug: "powerlifting",
         image: "/grey.png",
         extendedDescription: [
-            "Our powerlifting section is equipped with state-of-the-art competition-grade equipment, including multiple power racks, calibrated plates, and specialized bars. The training area is designed to accommodate both individual training and group sessions, with dedicated platforms for deadlifts and specialized areas for squats and bench press.",
-            "We offer comprehensive coaching programs led by experienced powerlifting coaches who have competed at national and international levels. Our training methodology focuses on proper technique, progressive overload, and individualized programming to help you achieve your strength goals safely and effectively.",
-            "The section regularly organizes in-house competitions and preparation camps for athletes looking to compete. We maintain strong connections with the powerlifting community and provide opportunities for both novice and experienced lifters to participate in local and national competitions."
-        ],
-        trainers: [
-            {
-                name: "Mike Anderson",
-                title: "IPF International Coach",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Specializing in competition preparation and advanced programming for elite lifters. 15 years of coaching experience.",
-                image: "/grey.png",
-            },
-            {
-                name: "Sarah Thompson",
-                title: "Certified Strength Coach",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Focus on beginner and intermediate lifters, technique development, and injury prevention.",
-                image: "/grey.png",
-            }
+            "Nasza sekcja trójboju siłowego jest wyposażona w najnowocześniejszy sprzęt klasy zawodniczej, w tym wiele stojaków do przysiadów, kalibrowane talerze i specjalistyczne gryfy. Obszar treningowy jest zaprojektowany tak, aby pomieścić zarówno treningi indywidualne, jak i sesje grupowe, z dedykowanymi platformami do martwego ciągu oraz specjalnymi strefami do przysiadów i wyciskania leżąc.",
+            "Oferujemy kompleksowe programy treningowe prowadzone przez doświadczonych trenerów trójboju siłowego, którzy startowali na poziomie krajowym i międzynarodowym. Nasza metodologia treningowa koncentruje się na właściwej technice, progresywnym przeciążeniu i indywidualnym programowaniu, aby pomóc Ci osiągnąć cele siłowe w bezpieczny i efektywny sposób.",
+            "Sekcja regularnie organizuje wewnętrzne zawody i obozy przygotowawcze dla sportowców planujących starty. Utrzymujemy silne powiązania ze społecznością trójboju siłowego i zapewniamy możliwości uczestnictwa w lokalnych i krajowych zawodach zarówno początkującym, jak i doświadczonym zawodnikom."
         ]
     },
     {
-        title: "Martial Arts",
-        description: "Professional combat sports zone featuring a boxing ring, grappling mats, and striking equipment. Suitable for various martial arts disciplines.",
-        equipment: ["Boxing Ring", "Grappling Mats", "Heavy Bags"],
+        title: "Sztuki Walki",
+        description: "Profesjonalna strefa sportów walki wyposażona w ring bokserski, maty do zapasów i sprzęt do treningu uderzeń. Odpowiednia dla różnych dyscyplin sztuk walki.",
+        equipment: ["Ring Bokserski", "Maty do Zapasów", "Worki Treningowe"],
         slug: "martial-arts",
         image: "/grey.png",
         extendedDescription: [
-            "The martial arts section features a professional-grade training environment with a full-size boxing ring, extensive matted areas for grappling, and a comprehensive range of striking equipment. Our facility caters to multiple disciplines including boxing, kickboxing, Brazilian Jiu-Jitsu, and MMA, providing all the necessary tools for complete fighter development.",
-            "Training is conducted by certified coaches with extensive competitive experience in their respective disciplines. We offer both beginner-friendly classes and advanced training sessions, ensuring proper progression and skill development for practitioners at all levels. Special emphasis is placed on proper technique, safety, and strategic development.",
-            "Our section regularly hosts seminars with guest instructors, organizes sparring sessions, and supports members in their competitive endeavors. We maintain a strong focus on building a respectful and supportive community where practitioners can develop their skills and achieve their martial arts goals."
-        ],
-        trainers: [
-            {
-                name: "John Martinez",
-                title: "BJJ Black Belt",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Head MMA coach with expertise in grappling and striking integration. Professional fighting experience with major organizations.",
-                image: "/grey.png",
-            },
-            {
-                name: "Lisa Chen",
-                title: "Boxing Coach",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Specializes in boxing technique and footwork. Experience in preparing both amateur and professional fighters.",
-                image: "/grey.png",
-            },
-            {
-                name: "Alex Kumar",
-                title: "Kickboxing Expert",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Focus on striking techniques and competition preparation. Known for developing well-rounded fighters.",
-                image: "/grey.png",
-            }
+            "Sekcja sztuk walki oferuje profesjonalne środowisko treningowe z pełnowymiarowym ringiem bokserskim, rozległymi matami do zapasów i kompleksowym zestawem sprzętu do treningu uderzeń. Nasz obiekt obsługuje wiele dyscyplin, w tym boks, kickboxing, brazylijskie jiu-jitsu i MMA, zapewniając wszystkie niezbędne narzędzia do pełnego rozwoju zawodnika.",
+            "Treningi prowadzone są przez certyfikowanych trenerów z rozległym doświadczeniem zawodniczym w swoich dyscyplinach. Oferujemy zarówno zajęcia przyjazne dla początkujących, jak i zaawansowane sesje treningowe, zapewniając odpowiednią progresję i rozwój umiejętności dla praktykujących na wszystkich poziomach. Szczególny nacisk kładziemy na właściwą technikę, bezpieczeństwo i rozwój strategiczny.",
+            "Nasza sekcja regularnie organizuje seminaria z gościnnymi instruktorami, sesje sparingowe i wspiera członków w ich zawodniczych dążeniach. Utrzymujemy silny nacisk na budowanie pełnej szacunku i wspierającej społeczności, w której praktykujący mogą rozwijać swoje umiejętności i osiągać cele w sztukach walki."
         ]
     },
     {
         title: "Armwrestling",
-        description: "Specialized armwrestling training area with professional tables and specific equipment for developing arm wrestling techniques and strength.",
-        equipment: ["Professional Tables", "Grip Training Tools", "Specialized Handles"],
+        description: "Specjalistyczny obszar treningowy do armwrestlingu z profesjonalnymi stołami i specyficznym sprzętem do rozwijania technik i siły w siłowaniu na rękę.",
+        equipment: ["Profesjonalne Stoły", "Narzędzia do Treningu Chwytu", "Specjalistyczne Uchwyty"],
         slug: "armwrestling",
         image: "/grey.png",
         extendedDescription: [
-            "Our armwrestling section is equipped with professional competition-standard tables and specialized training equipment designed specifically for the sport. The training area includes a comprehensive range of grip strength development tools, custom handles, and resistance training equipment that targets the specific demands of armwrestling.",
-            "Training is led by experienced armwrestling coaches who understand both the technical and physical aspects of the sport. Our program covers all aspects of armwrestling preparation, including technique refinement, strategic development, and specific strength training. We cater to both newcomers and experienced competitors.",
-            "The section actively participates in the armwrestling community, organizing regular training camps and hosting competitions. We provide opportunities for members to compete at various levels and offer specialized preparation programs for those interested in competitive armwrestling."
-        ],
-        trainers: [
-            {
-                name: "David Wilson",
-                title: "Professional Armwrestler",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Expert in both right and left-handed techniques. Specializes in competition preparation and advanced training methods.",
-                image: "/grey.png",
-            }
+            "Nasza sekcja armwrestlingu jest wyposażona w stoły o standardzie zawodniczym i specjalistyczny sprzęt treningowy zaprojektowany specjalnie dla tego sportu. Strefa treningowa zawiera kompleksowy zestaw narzędzi do rozwoju siły chwytu, niestandardowe uchwyty i sprzęt do treningu oporowego, który odpowiada specyficznym wymaganiom armwrestlingu.",
+            "Treningi prowadzone są przez doświadczonych trenerów armwrestlingu, którzy rozumieją zarówno techniczne, jak i fizyczne aspekty tego sportu. Nasz program obejmuje wszystkie aspekty przygotowania do armwrestlingu, w tym doskonalenie techniki, rozwój strategiczny i specjalistyczny trening siłowy. Obsługujemy zarówno nowicjuszy, jak i doświadczonych zawodników.",
+            "Sekcja aktywnie uczestniczy w społeczności armwrestlingu, organizując regularne obozy treningowe i zawody. Zapewniamy członkom możliwość rywalizacji na różnych poziomach i oferujemy specjalistyczne programy przygotowawcze dla osób zainteresowanych zawodniczym armwrestlingiem."
         ]
     },
     {
-        title: "Gym Area",
-        description: "Fully equipped gym space with modern cardio and strength equipment. Perfect for general fitness, strength training, and supplementary work.",
-        equipment: ["Free Weights", "Weight Machines", "Cardio Equipment"],
+        title: "Strefa Siłowni",
+        description: "W pełni wyposażona przestrzeń siłowni z nowoczesnym sprzętem cardio i siłowym. Idealna do ogólnej sprawności, treningu siłowego i pracy uzupełniającej.",
+        equipment: ["Wolne Ciężary", "Maszyny Siłowe", "Sprzęt Cardio"],
         slug: "gym",
         image: "/grey.png",
         extendedDescription: [
-            "Our modern gym area is outfitted with a comprehensive selection of high-quality equipment to support all fitness goals. The space features the latest cardio machines, a full range of free weights, and various resistance training machines. The layout is designed to create distinct zones for different types of training, ensuring a smooth and efficient workout experience.",
-            "We provide access to qualified personal trainers who can help develop personalized training programs tailored to individual goals, whether it's weight loss, muscle gain, or general fitness improvement. Our trainers are experienced in working with clients of all fitness levels and can provide guidance on proper form, nutrition, and progression.",
-            "The gym area is maintained to the highest standards with regular equipment maintenance and updates. We offer various membership options to suit different needs and schedules, including options for open gym access and personal training packages. The space is designed to complement our specialized sections while serving as a comprehensive fitness facility for general training needs."
-        ],
-        trainers: [
-            {
-                name: "Emma Roberts",
-                title: "NASM Certified Personal Trainer",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Specializes in weight loss and body transformation programs. Expert in creating personalized workout and nutrition plans.",
-                image: "/grey.png",
-            },
-            {
-                name: "Tom Clark",
-                title: "Certified Strength and Conditioning Specialist",
-                experience: "12 years",
-                instagram: "hexthecoder",
-                description: "Focus on athletic performance and functional training. Experience with both beginners and advanced athletes.",
-                image: "/grey.png",
-            }
+            "Nasza nowoczesna strefa siłowni jest wyposażona w kompleksowy wybór wysokiej jakości sprzętu wspierającego wszystkie cele fitness. Przestrzeń zawiera najnowsze maszyny cardio, pełen zakres wolnych ciężarów i różnorodne maszyny do treningu oporowego. Układ jest zaprojektowany tak, aby tworzyć odrębne strefy dla różnych rodzajów treningu, zapewniając płynne i efektywne doświadczenie treningowe.",
+            "Zapewniamy dostęp do wykwalifikowanych trenerów personalnych, którzy mogą pomóc w opracowaniu spersonalizowanych programów treningowych dostosowanych do indywidualnych celów, czy to utrata wagi, przyrost mięśni, czy ogólna poprawa sprawności. Nasi trenerzy mają doświadczenie w pracy z klientami na wszystkich poziomach sprawności i mogą udzielać wskazówek dotyczących właściwej formy, odżywiania i progresji.",
+            "Strefa siłowni jest utrzymywana zgodnie z najwyższymi standardami, z regularną konserwacją i aktualizacjami sprzętu. Oferujemy różne opcje członkostwa dostosowane do różnych potrzeb i harmonogramów, w tym opcje otwartego dostępu do siłowni i pakiety treningów personalnych. Przestrzeń jest zaprojektowana tak, aby uzupełniać nasze specjalistyczne sekcje, będąc jednocześnie kompleksowym obiektem fitness dla ogólnych potrzeb treningowych."
         ]
     }
 ];

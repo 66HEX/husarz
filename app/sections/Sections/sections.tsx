@@ -78,17 +78,17 @@ const Sections = () => {
     }, []);
 
     return (
-        <section id="sections" className="py-16 md:py-24 overflow-hidden">
+        <section id="sections" className="py-16 md:py-24 mt-16 md:mt-24 overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                        Sections
-                    </h2>
-                    <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                        Our sports club features professional sections: powerlifting section,
-                        martial arts section, armwrestling section, and a fully equipped gym.
-                        Each section is led by experienced trainers.
-                    </p>
+                <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                    Sekcje
+                </h2>
+                <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                    Nasz klub sportowy oferuje profesjonalne sekcje: sekcję trójboju siłowego,
+                    sekcję sztuk walki, sekcję armwrestlingu oraz w pełni wyposażoną siłownię.
+                    Każda sekcja prowadzona jest przez doświadczonych trenerów.
+                </p>
                 </div>
 
                 <div ref={featuresRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -116,7 +116,7 @@ const Sections = () => {
                                 <div className="flex justify-between items-start mb-4">
                                     <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{feature.title}</h3>
                                 </div>
-                                <p className="text-text-secondary tracking-tight mb-6 text-lg">{feature.description}</p>
+                                <p className="text-text-secondary tracking-tight mb-6 text-base xl:text-lg">{feature.description}</p>
                                 <div className="flex flex-wrap gap-2">
                                     {feature.equipment.map((item, idx) => (
                                         <span

@@ -18,10 +18,18 @@ const AboutUs = () => {
     const statsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useGSAP(() => {
-        // Create the main timeline for all animations
+        // Utworzenie głównej osi czasu dla wszystkich animacji
         const mainTimeline = gsap.timeline();
         
-        // Process all sections
+        // Dodanie animacji obrazu głównego
+        mainTimeline.fromTo(
+            '#main-image',
+            { opacity: 0, filter: 'blur(10px)' },
+            { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
+            0 // Start na początku osi czasu
+        );
+        
+        // Przetwarzanie wszystkich sekcji
         const sections = Array.from({ length: 5 }, (_, i) => {
             const headingIndex = i;
             const startParagraphIndex = i === 0 ? 0 : 1 + (i - 1) * 2;
@@ -55,9 +63,9 @@ const AboutUs = () => {
             };
         });
 
-        // Add all animations to the main timeline in sequence
+        // Dodanie wszystkich animacji do osi czasu w sekwencji
         sections.forEach((section, sectionIndex) => {
-            // Animate heading
+            // Animacja nagłówka
             if (section.headingSplit) {
                 mainTimeline.fromTo(
                     section.headingSplit.lines,
@@ -65,14 +73,14 @@ const AboutUs = () => {
                     { 
                         y: '0%', 
                         duration: 0.8,
-                        // Only add delay for sections after the first one
+                        // Dodanie opóźnienia tylko dla sekcji po pierwszej
                         delay: sectionIndex === 0 ? 0 : 0.2
                     },
-                    sectionIndex === 0 ? 0 : ">-=0.4" // Position parameter
+                    sectionIndex === 0 ? 0 : ">-=0.4" // Parametr pozycji
                 );
             }
 
-            // Animate paragraphs
+            // Animacja paragrafów
             section.paragraphSplits.forEach((split, i) => {
                 if (!split) return;
                 mainTimeline.fromTo(
@@ -83,12 +91,12 @@ const AboutUs = () => {
                         duration: 0.8,
                         stagger: 0.05,
                     },
-                    ">-=0.6"  // Overlap with previous animation
+                    ">-=0.6"  // Nakładanie się z poprzednią animacją
                 );
             });
         });
 
-        // Animate stats if they exist
+        // Animacja statystyk jeśli istnieją
         statsRef.current.forEach((stat, index) => {
             if (!stat) return;
             mainTimeline.fromTo(
@@ -111,20 +119,21 @@ const AboutUs = () => {
     return (
         <div ref={containerRef} className="min-h-screen bg-background">
             <div className="flex flex-col md:flex-row">
-                {/* Fixed Image Section */}
-                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-r-[3rem] overflow-hidden">
+                {/* Sekcja ze stałym obrazem */}
+                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-b-[3rem] md:rounded-r-[3rem] overflow-hidden">
                     <Image
+                        id="main-image"
                         src="/grey.png"
-                        alt="Husarz Gym interior"
+                        alt="Wnętrze siłowni Husarz"
                         fill
                         className="object-cover"
                         priority
                     />
                 </div>
 
-                {/* Content Section */}
+                {/* Sekcja z treścią */}
                 <div className="w-full md:w-1/2 px-4 md:px-12 py-16 md:py-24" ref={contentRef}>
-                    {/* Hero Section */}
+                    {/* Sekcja główna */}
                     <div className="mb-16">
                         <div className="overflow-hidden mb-4">
                             <h1
@@ -133,7 +142,7 @@ const AboutUs = () => {
                                 }}
                                 className="text-4xl md:text-6xl font-bold"
                             >
-                                Our Story
+                                Nasza Historia
                             </h1>
                         </div>
                         <div className="overflow-hidden">
@@ -143,13 +152,13 @@ const AboutUs = () => {
                                 }}
                                 className="text-text-secondary text-lg md:text-xl"
                             >
-                                Since 2015, Husarz Gym has been a cornerstone of powerlifting excellence,
-                                fostering a community dedicated to strength and personal growth.
+                                Od 2015 roku, Siłownia Husarz jest filarem doskonałości w trójboju siłowym,
+                                tworząc społeczność oddaną sile i osobistemu rozwojowi.
                             </p>
                         </div>
                     </div>
 
-                    {/* History Sections */}
+                    {/* Sekcje historyczne */}
                     <div className="space-y-16">
                         <div>
                             <div className="overflow-hidden mb-4">
@@ -159,7 +168,7 @@ const AboutUs = () => {
                                     }}
                                     className="text-2xl md:text-3xl font-bold"
                                 >
-                                    Our Beginnings
+                                    Nasze Początki
                                 </h2>
                             </div>
                             <div className="overflow-hidden mb-6">
@@ -169,9 +178,9 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Founded by passionate powerlifters, Husarz Gym started as a small training facility
-                                    dedicated to proper form and technique in powerlifting. What began with just a few
-                                    power racks and dedicated lifters has grown into a comprehensive strength training facility.
+                                    Założona przez pasjonatów trójboju siłowego, Siłownia Husarz rozpoczęła się jako mały obiekt
+                                    treningowy poświęcony właściwej formie i technice w trójboju. To, co zaczęło się z kilkoma
+                                    stojakami do przysiadów i oddanymi zawodnikami, rozrosło się w kompleksowy ośrodek treningu siłowego.
                                 </p>
                             </div>
                             <div className="overflow-hidden">
@@ -181,8 +190,8 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Our founding principle was simple: create a space where serious lifters could train
-                                    without compromise, with quality equipment and knowledgeable guidance.
+                                    Nasza zasada założycielska była prosta: stworzyć przestrzeń, gdzie poważni zawodnicy mogliby trenować
+                                    bez kompromisów, z wysokiej jakości sprzętem i fachowym doradztwem.
                                 </p>
                             </div>
                         </div>
@@ -195,7 +204,7 @@ const AboutUs = () => {
                                     }}
                                     className="text-2xl md:text-3xl font-bold"
                                 >
-                                    Competition Success
+                                    Sukcesy Zawodnicze
                                 </h2>
                             </div>
                             <div className="overflow-hidden mb-6">
@@ -205,9 +214,9 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Over the years, our members have achieved remarkable success in powerlifting competitions
-                                    at both national and international levels. We`&apos;ve proudly produced multiple national
-                                    champions and record holders across various weight classes.
+                                    Przez lata, nasi członkowie osiągnęli niezwykłe sukcesy w zawodach trójboju siłowego
+                                    zarówno na poziomie krajowym jak i międzynarodowym. Z dumą wychowaliśmy wielu mistrzów krajowych
+                                    i rekordzistów w różnych kategoriach wagowych.
                                 </p>
                             </div>
                             <div className="overflow-hidden">
@@ -217,8 +226,8 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Our competition team has grown from a handful of dedicated lifters to over 30 active
-                                    competitors, making us one of the most successful powerlifting clubs in the region.
+                                    Nasz zespół zawodniczy rozrósł się z garstki oddanych zawodników do ponad 30 aktywnych
+                                    konkurentów, czyniąc nas jednym z najbardziej udanych klubów trójboju siłowego w regionie.
                                 </p>
                             </div>
                         </div>
@@ -231,7 +240,7 @@ const AboutUs = () => {
                                     }}
                                     className="text-2xl md:text-3xl font-bold"
                                 >
-                                    Training Philosophy
+                                    Filozofia Treningowa
                                 </h2>
                             </div>
                             <div className="overflow-hidden mb-6">
@@ -241,9 +250,9 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    At Husarz Gym, we believe in a methodical, science-based approach to strength training.
-                                    Our coaching staff emphasizes proper technique, structured programming, and sustainable
-                                    progression to help athletes achieve their goals while minimizing injury risk.
+                                    W Siłowni Husarz wierzymy w metodyczne, oparte na nauce podejście do treningu siłowego.
+                                    Nasz zespół trenerski kładzie nacisk na właściwą technikę, ustrukturyzowane programowanie i zrównoważony
+                                    postęp, aby pomóc sportowcom osiągnąć ich cele przy minimalizacji ryzyka kontuzji.
                                 </p>
                             </div>
                             <div className="overflow-hidden">
@@ -253,8 +262,8 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    We prioritize building a strong foundation in the three main lifts: squat, bench press,
-                                    and deadlift, while incorporating auxiliary exercises for complete strength development.
+                                    Priorytetowo traktujemy budowanie silnych podstaw w trzech głównych bojach: przysiad, wyciskanie leżąc
+                                    i martwy ciąg, jednocześnie włączając ćwiczenia pomocnicze dla pełnego rozwoju siły.
                                 </p>
                             </div>
                         </div>
@@ -267,7 +276,7 @@ const AboutUs = () => {
                                     }}
                                     className="text-2xl md:text-3xl font-bold"
                                 >
-                                    Community & Future
+                                    Społeczność i Przyszłość
                                 </h2>
                             </div>
                             <div className="overflow-hidden mb-6">
@@ -277,10 +286,10 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Today, Husarz Gym is more than just a training facility – it`&apos;s a community of dedicated
-                                    athletes supporting each other`&apos;s journey in strength sports. Our members range from
-                                    beginners to elite competitors, all training together in an atmosphere of mutual respect
-                                    and encouragement.
+                                    Dzisiaj, Siłownia Husarz to więcej niż tylko obiekt treningowy – to społeczność oddanych
+                                    sportowców wspierających się nawzajem w drodze do sportów siłowych. Nasi członkowie to zarówno
+                                    początkujący, jak i elitarni zawodnicy, wszyscy trenujący razem w atmosferze wzajemnego szacunku
+                                    i zachęty.
                                 </p>
                             </div>
                             <div className="overflow-hidden">
@@ -290,8 +299,8 @@ const AboutUs = () => {
                                     }}
                                     className="text-text-secondary"
                                 >
-                                    Looking ahead, we continue to expand our facilities and programs while maintaining our
-                                    core focus on powerlifting excellence and community building.
+                                    Patrząc w przyszłość, kontynuujemy rozbudowę naszych obiektów i programów, jednocześnie utrzymując
+                                    nasz główny nacisk na doskonałość w trójboju siłowym i budowaniu społeczności.
                                 </p>
                             </div>
                         </div>

@@ -83,17 +83,17 @@ const Hero = () => {
                 <div className="h-full flex flex-col justify-center gap-8">
                     <div className="max-w-2xl">
                         <div className="bg-card backdrop-blur-md border border-border p-6 md:p-8 rounded-card">
-                            <div className="overflow-hidden mb-4">
-                                <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
-                                    Husarz Gym
-                                </h1>
-                            </div>
-                            <div className="overflow-hidden mb-6">
-                                <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
-                                    Professional training facility bringing together strength sports and combat arts.
-                                    Join our community of dedicated athletes and experience training at the highest level.
-                                </p>
-                            </div>
+                        <div className="overflow-hidden mb-4">
+                            <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
+                                Husarz Gym
+                            </h1>
+                        </div>
+                        <div className="overflow-hidden mb-6">
+                            <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
+                                Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki.
+                                Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie.
+                            </p>
+                        </div>
                             <div className="flex flex-wrap gap-2">
                                 {Object.values(sports).map((sport) => (
                                     <span
@@ -113,7 +113,7 @@ const Hero = () => {
                             id="cta-button"
                             className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-6 py-2 rounded-icon font-medium"
                         >
-                            About us
+                            O Klubie
                         </Link>
                     </div>
                 </div>

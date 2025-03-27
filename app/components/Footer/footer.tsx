@@ -31,14 +31,14 @@ const Footer = () => {
                 <div className="w-32 h-8 bg-text-secondary rounded-icon"></div>
               </div>
               <p className="text-text-secondary text-sm tracking-tight w-full md:w-2/3">
-                Professional training facility bringing together strength sports and combat arts.
-                Join our community of dedicated athletes and experience training at the highest level.
+                Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki.
+                Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie.
               </p>
             </div>
             
             {/* Quick Links */}
             <div className="col-span-1 w-fit"> 
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Quick Links</h3>
+              <h3 className="text-lg font-bold mb-4 tracking-tight">Szybkie Linki</h3>
               <div className="flex flex-col space-y-2">
                 {navigation.map(({name, href}) => (
                   <a
@@ -55,7 +55,7 @@ const Footer = () => {
             
             {/* Social Media */}
             <div className="col-span-1 w-fit">
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Follow Us</h3>
+              <h3 className="text-lg font-bold mb-4 tracking-tight">Obserwuj Nas</h3>
               <div className="flex flex-col space-y-2">
                 {social.map((item, index) => (
                   <a
@@ -72,12 +72,11 @@ const Footer = () => {
             </div>
 
             {/*  Address */}
-            <div className="col-span-1 w-32">
-              <h3 className="text-lg font-bold mb-4 tracking-tight">Address</h3>
+            <div className="col-span-1 w-48">
+              <h3 className="text-lg font-bold mb-4 tracking-tight">Adres</h3>
               <p className="text-text-secondary text-sm tracking-tight whitespace-pre-line">
-                123 Fitness Street,
-                Downtown District
-                City Center, 00-123
+              Trakt Świętego Wojciecha 243,
+              80-058 Gdańsk
               </p>
             </div>
           </div>
@@ -85,11 +84,11 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row w-full justify-between items-center pt-6 border-t border-border gap-4 md:gap-0">
             <div className="text-text-secondary text-sm tracking-tight order-2 md:order-1">
-              © {new Date().getFullYear()} Husarz Gym. All rights reserved.
+              © {new Date().getFullYear()} Husarz Gym. Wszelkie prawa zastrzeżone.
             </div>
             
             <div className="text-text-secondary text-sm tracking-tight order-1 md:order-2">
-              Designed by
+              Zaprojektowane przez
               <a href="https://hexthecoder.pl" target="_blank" rel="noopener noreferrer"
                  className="hover:text-white transition-colors duration-300 ml-1">
                 HEX
@@ -102,4 +101,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

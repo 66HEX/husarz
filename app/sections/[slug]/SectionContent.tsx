@@ -25,6 +25,7 @@ export default function SectionContent({ section }: SectionContentProps) {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
     const extendedDescRefs = useRef<HTMLParagraphElement[]>([]);
+    const imageRef = useRef<HTMLImageElement>(null);
 
     useGSAP(() => {
         // Main title and description animation
@@ -61,6 +62,14 @@ export default function SectionContent({ section }: SectionContentProps) {
             },
             defaults: { ease: "CustomEase" }
         });
+        
+        // Add image animation at the beginning
+        tl.fromTo(
+            '#section-image',
+            { opacity: 0, filter: 'blur(10px)' },
+            { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
+            0
+        );
 
         // Main sequence
         tl.fromTo(
@@ -93,8 +102,9 @@ export default function SectionContent({ section }: SectionContentProps) {
     return (
         <div className="min-h-screen bg-background">
             <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-r-[3rem] overflow-hidden">
+                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-b-[3rem] md:rounded-r-[3rem] overflow-hidden">
                     <Image
+                        id="section-image"
                         src={section.image}
                         alt={section.title}
                         fill

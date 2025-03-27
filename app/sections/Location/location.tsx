@@ -59,22 +59,22 @@ const Location = () => {
       <section id="location" className="py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Location</h2>
-            <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-              Visit our state-of-the-art facility in the heart of the city.
-              Experience premium equipment, expert trainers, and a motivating
-              atmosphere that will help you achieve your fitness goals.
-            </p>
+          <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Lokalizacja</h2>
+          <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+            Odwiedź nasz nowoczesny obiekt treningowy.
+            Doświadcz premium sprzętu, profesjonalnych trenerów i motywującej
+            atmosfery, która pomoże Ci osiągnąć Twoje cele.
+          </p>
           </div>
           
           <div className=" mx-auto">
               <div id="map-container"
                    className="rounded-card overflow-hidden bg-card backdrop-blur-md border border-border relative h-[600px]">
                   <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.5678!2d19.123456!3d50.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA3JzM0LjQiTiAxOcKwMDcnNDQuNCJF!5e0!3m2!1spl!2spl!4v1234567890"
+                      src="https://www.google.com/maps/embed/v1/place?q=Husarz+GYM,+Trakt+Świętego+Wojciecha,+Gdańsk,+Poland&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
                       width="100%"
                       height="100%"
-                      style={{border: 0, filter: 'grayscale(75%) contrast(90%) brightness(95%)'}}  
+                      style={{border: 0, filter: 'grayscale(85%) invert(92%) hue-rotate(180deg) brightness(100%) contrast(100%)'}}  
                       referrerPolicy="no-referrer-when-downgrade"
                       className="w-full h-full absolute inset-0"
                   />

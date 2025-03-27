@@ -139,12 +139,12 @@ const FAQ = () => {
         <section id="faq" className="py-16 md:py-24 overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">FAQ</h2>
-                    <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                        Find answers to commonly asked questions about our facilities,
-                        memberships, and services. If you need more information,
-                        don&apos;t hesitate to contact us.
-                    </p>
+                <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">FAQ</h2>
+                <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                    Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszego obiektu,
+                    członkostwa i usług. Jeśli potrzebujesz więcej informacji,
+                    nie wahaj się z nami skontaktować.
+                </p>
                 </div>
 
                 <div className="flex justify-center">

@@ -1,22 +1,22 @@
 export const faqs = [
     {
-        question: "What are your membership options?",
-        answer: "We offer flexible membership plans including monthly, quarterly, and annual options. Premium members get 24/7 access, free parking, and exclusive access to our recovery facilities."
+        question: "Jakie opcje członkostwa oferujecie?",
+        answer: "Oferujemy elastyczne plany członkostwa, w tym opcje miesięczne, kwartalne i roczne. Członkowie premium otrzymują dostęp 24/7, darmowy parking i wyłączny dostęp do naszych stref regeneracyjnych."
     },
     {
-        question: "Do you offer personal training?",
-        answer: "Yes, we have certified trainers specializing in powerlifting, combat sports, and general fitness. All training sessions are customized to your goals and experience level."
+        question: "Czy oferujecie treningi personalne?",
+        answer: "Tak, mamy certyfikowanych trenerów specjalizujących się w trójboju siłowym, sportach walki i ogólnym fitnessie. Wszystkie sesje treningowe są dostosowane do Twoich celów i poziomu doświadczenia."
     },
     {
-        question: "What equipment do you have for powerlifting?",
-        answer: "Our powerlifting area features Eleiko competition plates, Hammer Strength HD Elite racks, specialized bars including Texas power bars, and competition-grade benches."
+        question: "Jaki sprzęt macie do trójboju siłowego?",
+        answer: "Nasza strefa trójboju siłowego zawiera talerze zawodnicze Eleiko, stojaki Hammer Strength HD Elite, specjalistyczne gryfy, w tym gryfy Texas power bar, oraz ławki klasy zawodniczej."
     },
     {
-        question: "Can beginners join your gym?",
-        answer: "Absolutely! We welcome members of all experience levels. Our certified trainers provide thorough orientation sessions and can create beginner-friendly training programs."
+        question: "Czy początkujący mogą dołączyć do waszej siłowni?",
+        answer: "Absolutnie! Witamy członków o każdym poziomie doświadczenia. Nasi certyfikowani trenerzy zapewniają dokładne sesje wprowadzające i mogą stworzyć programy treningowe przyjazne dla początkujących."
     },
     {
-        question: "What combat sports facilities do you offer?",
-        answer: "We have a professional boxing ring, heavy bags, speed bags, and dedicated mat space for MMA training. All combat sports areas are supervised by experienced coaches."
+        question: "Jakie udogodnienia do sportów walki oferujecie?",
+        answer: "Posiadamy profesjonalny ring bokserski, worki treningowe, gruszki speedbag oraz dedykowaną przestrzeń matową do treningu MMA. Wszystkie strefy sportów walki są nadzorowane przez doświadczonych trenerów."
     }
 ];

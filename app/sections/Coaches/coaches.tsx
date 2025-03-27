@@ -77,12 +77,14 @@ const Coaches = () => {
         <section id="coaches" className="py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Our Coaches</h2>
-                        <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-                            Meet our elite team of certified trainers who combine years of experience with cutting-edge
-                            training methods. Each coach brings unique expertise and a proven track record of transforming
-                            clients lives through personalized fitness guidance.
-                        </p>
+                <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                    Nasi Trenerzy
+                </h2>
+                <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                    Poznaj nasz elitarny zespół certyfikowanych trenerów, którzy łączą wieloletnie doświadczenie 
+                    z nowoczesnymi metodami treningowymi. Każdy trener wnosi unikalne umiejętności i udowodnione 
+                    doświadczenie w transformacji życia klientów poprzez spersonalizowane wskazówki fitness.
+                </p>
                     </div>
                     
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -113,11 +115,11 @@ const Coaches = () => {
                                         <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-1">{coach.name}</h3>
                                         <h4 className="text-xl text-text-primary tracking-tight hidden">{coach.title}</h4>
                                     </div>
-                                    <span className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">
+                                    <span className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-full hidden">
                                         {coach.title}
                                     </span>
                                 </div>
-                                <p className="text-text-secondary tracking-tight mb-6 text-lg">{coach.description}</p>
+                                <p className="text-text-secondary tracking-tight mb-6 text-base xl:text-lg ">{coach.description}</p>
                                 <div className="space-y-3">
                                     <div>
                                         <div className="flex flex-wrap gap-2">
