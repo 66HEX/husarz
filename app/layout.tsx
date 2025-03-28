@@ -41,7 +41,6 @@ export default function RootLayout({
               <LanguageProvider>
                   <SmoothScrolling>
                       <Navbar/>
-                      <CursorFollower/>
                       {children}
                       <Footer/>
                   </SmoothScrolling>

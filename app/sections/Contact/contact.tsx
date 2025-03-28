@@ -11,7 +11,7 @@ import { useLanguage } from "@/app/i18n/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
-const Location = () => {
+const Contact = () => {
   const titleRef = useRef(null);
   const descRef = useRef(null);
   const gradientTitleRef = useRef(null);
@@ -124,14 +124,14 @@ const Location = () => {
   }, [translations]);
 
   return (
-      <section id="location" className="py-16 md:py-24 overflow-hidden">
+      <section id="contact" className="py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 ref={gradientTitleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-              {translations.sections.location.title}
+              {translations.sections.contact.title}
             </h2>
             <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
-              {translations.sections.location.description}
+              {translations.sections.contact.description}
             </p>
           </div>
           
@@ -139,7 +139,7 @@ const Location = () => {
             {/* Lewa kolumna z informacjami kontaktowymi */}
             <div className="lg:col-span-1" ref={contactRef}>
               <div className="rounded-card overflow-hidden bg-card backdrop-blur-md border border-border p-6 h-full">
-                <h3 className="text-2xl font-bold mb-6 tracking-tight">Husarz GYM</h3>
+                <h3 className="text-2xl font-bold mb-6 tracking-tight">{translations.sections.contact.gymName}</h3>
                 
                 <div className="space-y-6">
                   <div className="contact-info flex items-start">
@@ -147,7 +147,7 @@ const Location = () => {
                       <MapPin size={20} className="text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium mb-1">Adres</h4>
+                      <h4 className="font-medium mb-1">{translations.sections.contact.address}</h4>
                       <p className="text-text-secondary text-sm mb-2">Trakt Świętego Wojciecha 235A</p>
                       <p className="text-text-secondary text-sm">80-017 Gdańsk</p>
                     </div>
@@ -158,7 +158,7 @@ const Location = () => {
                       <Phone size={20} className="text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium mb-1">Telefon</h4>
+                      <h4 className="font-medium mb-1">{translations.sections.contact.phone}</h4>
                       <a href="tel:+48500123456" className="text-text-secondary text-sm hover:text-primary transition-colors">
                         +48 500 123 456
                       </a>
@@ -170,31 +170,31 @@ const Location = () => {
                       <Clock size={20} className="text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium mb-1">Godziny otwarcia</h4>
-                      <p className="text-text-secondary text-sm mb-1">Poniedziałek - Piątek: 6:00 - 22:00</p>
-                      <p className="text-text-secondary text-sm mb-1">Sobota: 8:00 - 20:00</p>
-                      <p className="text-text-secondary text-sm">Niedziela: 9:00 - 18:00</p>
+                      <h4 className="font-medium mb-1">{translations.sections.contact.openingHours}</h4>
+                      <p className="text-text-secondary text-sm mb-1">{translations.sections.contact.weekdays}</p>
+                      <p className="text-text-secondary text-sm mb-1">{translations.sections.contact.saturday}</p>
+                      <p className="text-text-secondary text-sm">{translations.sections.contact.sunday}</p>
                     </div>
                   </div>
                 </div>
                 
                 <div className="mt-8">
-                  <h4 className="font-medium mb-3">Udogodnienia</h4>
+                  <h4 className="font-medium mb-3">{translations.sections.contact.amenities}</h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
-                      Darmowy parking
+                      {translations.sections.contact.freeParking}
                     </span>
                     <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
-                      Szatnie z prysznicami
+                      {translations.sections.contact.changingRooms}
                     </span>
                     <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
-                      Strefa kardio
+                      {translations.sections.contact.cardioZone}
                     </span>
                     <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
-                      Sauny
+                      {translations.sections.contact.saunas}
                     </span>
                     <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
-                      Sklep z suplementami
+                      {translations.sections.contact.supplementStore}
                     </span>
                   </div>
                 </div>
@@ -205,7 +205,7 @@ const Location = () => {
                   rel="noopener noreferrer"
                   className="mt-8 inline-flex items-center space-x-2 text-sm hover:text-primary transition-colors"
                 >
-                  <span>Wyznacz trasę w Google Maps</span>
+                  <span>{translations.sections.contact.directions}</span>
                   <ExternalLink size={14} />
                 </a>
               </div>
@@ -245,4 +245,4 @@ const Location = () => {
   );
 };
 
-export default Location;
+export default Contact;

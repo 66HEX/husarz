@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [activeCategory, setActiveCategory] = useState('general');
     const answersRef = useRef<Array<HTMLDivElement | null>>([]);
     const arrowsRef = useRef<Array<SVGSVGElement | null>>([]);
     const contentHeights = useRef<number[]>([]);
@@ -20,13 +21,13 @@ const FAQ = () => {
     const descRef = useRef(null);
     const gradientTitleRef = useRef(null);
     const faqItemsRef = useRef(null);
-    const { translations } = useLanguage();
+    const { translations, language } = useLanguage();
     
     // Kategorie FAQ dla grupowania
     const categories = [
-        { id: 'general', name: 'Ogólne', icon: <Info size={18} /> },
-        { id: 'membership', name: 'Członkostwo', icon: <Info size={18} /> },
-        { id: 'training', name: 'Treningi', icon: <Info size={18} /> }
+        { id: 'general', name: language === 'pl' ? 'Ogólne' : 'General', icon: <Info size={18} /> },
+        { id: 'membership', name: language === 'pl' ? 'Członkostwo' : 'Membership', icon: <Info size={18} /> },
+        { id: 'training', name: language === 'pl' ? 'Treningi' : 'Training', icon: <Info size={18} /> }
     ];
 
     useEffect(() => {
@@ -42,7 +43,7 @@ const FAQ = () => {
         return () => {
             window.removeEventListener('resize', calculateHeights);
         };
-    }, []);
+    }, [activeCategory]); // Recalculate when category changes
 
     useGSAP(() => {
         const childSplit = new SplitText(descRef.current, { type: "lines" });
@@ -186,6 +187,12 @@ const FAQ = () => {
         const currentArrow = arrowsRef.current[index];
 
         if (currentContent) {
+            // Ensure we have the correct height before animating
+            if (!isCurrentlyOpen && contentHeights.current[index] === 0) {
+                // Force recalculation of height if it's zero
+                contentHeights.current[index] = currentContent.scrollHeight;
+            }
+            
             tl.to(currentContent, {
                 height: isCurrentlyOpen ? 0 : contentHeights.current[index],
                 force3D: true
@@ -219,8 +226,12 @@ const FAQ = () => {
                         {categories.map((category, idx) => (
                             <button 
                                 key={idx}
+                                onClick={() => {
+                                    setActiveCategory(category.id);
+                                    setOpenIndex(null); // Reset open accordion when changing category
+                                }}
                                 className={`faq-category-tab flex items-center px-5 py-2 rounded-full border transition-all duration-300 
-                                           ${idx === 0 ? 'bg-primary text-white border-primary' : 'bg-card border-border hover:bg-card/80'}`}
+                                           ${activeCategory === category.id ? 'bg-primary text-white border-primary' : 'bg-card border-border hover:bg-card/80'}`}
                             >
                                 <span className="mr-2">{category.icon}</span>
                                 <span>{category.name}</span>
@@ -230,106 +241,132 @@ const FAQ = () => {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto" ref={faqItemsRef}>
-                    {/* Lewa kolumna FAQ */}
-                    <div className="md:w-1/2 space-y-4">
-                        {translations.faqs.slice(0, Math.ceil(translations.faqs.length / 2)).map((faq, index) => (
-                            <div
-                                key={index}
-                                className="faq-item rounded-card overflow-hidden bg-card backdrop-blur-md border border-border transition-all duration-300 hover:shadow-md"
-                            >
-                                <button
-                                    className="w-full p-4 md:p-5 flex justify-between items-center text-left"
-                                    onClick={() => toggleAccordion(index)}
-                                >
-                                    <h3 className="text-base font-bold tracking-tight pr-4">{faq.question}</h3>
-                                    <div 
-                                        className={`min-w-8 h-8 flex items-center justify-center rounded-full border border-border transition-colors duration-300 ${
-                                            openIndex === index ? 'bg-primary border-primary' : 'bg-card'
-                                        }`}
-                                    >
-                                        <ChevronDown
-                                            ref={(el) => {
-                                                if (arrowsRef.current) {
-                                                    arrowsRef.current[index] = el;
-                                                }
-                                            }}
-                                            className={`w-5 h-5 transition-colors duration-300 ${
-                                                openIndex === index ? 'text-white' : 'text-primary'
-                                            }`}
-                                        />
-                                    </div>
-                                </button>
-                                <div
-                                    ref={(el) => {
-                                        if (answersRef.current) {
-                                            answersRef.current[index] = el;
-                                        }
-                                    }}
-                                    className="overflow-hidden"
-                                    style={{ height: 0 }}
-                                >
-                                    <div className="px-4 md:px-5 pb-4 md:pb-5">
-                                        <div className="pt-1 border-t border-border mb-3"></div>
-                                        <p className="text-text-secondary tracking-tight text-sm">
-                                            {faq.answer}
-                                        </p>
-                                    </div>
+                    {/* Filtrowanie pytań według aktywnej kategorii */}
+                    {(() => {
+                        // Filtrujemy pytania według aktywnej kategorii
+                        const filteredFaqs = translations.faqs.filter(faq => faq.category === activeCategory);
+                        const halfLength = Math.ceil(filteredFaqs.length / 2);
+                        
+                        return (
+                            <>
+                                {/* Lewa kolumna FAQ */}
+                                <div className="md:w-1/2 space-y-4">
+                                    {filteredFaqs.slice(0, halfLength).map((faq, index) => {
+                                        // Znajdź oryginalny indeks w pełnej tablicy pytań
+                                        const originalIndex = translations.faqs.findIndex(f => f.question === faq.question);
+                                        return (
+                                            <div
+                                                key={originalIndex}
+                                                className="faq-item rounded-card overflow-hidden bg-card backdrop-blur-md border border-border transition-all duration-300 hover:shadow-md"
+                                            >
+                                                <button
+                                                    className="w-full p-4 md:p-5 flex justify-between items-center text-left"
+                                                    onClick={() => toggleAccordion(originalIndex)}
+                                                >
+                                                    <h3 className="text-base font-bold tracking-tight pr-4">{faq.question}</h3>
+                                                    <div 
+                                                        className={`min-w-8 h-8 flex items-center justify-center rounded-full border border-border transition-colors duration-300 ${
+                                                            openIndex === originalIndex ? 'bg-primary border-primary' : 'bg-card'
+                                                        }`}
+                                                    >
+                                                        <ChevronDown
+                                                            ref={(el) => {
+                                                                if (arrowsRef.current) {
+                                                                    arrowsRef.current[originalIndex] = el;
+                                                                }
+                                                            }}
+                                                            className={`w-5 h-5 transition-colors duration-300 ${
+                                                                openIndex === originalIndex ? 'text-white' : 'text-primary'
+                                                            }`}
+                                                        />
+                                                    </div>
+                                                </button>
+                                                <div
+                                                    ref={(el) => {
+                                                        if (answersRef.current) {
+                                                            // Ensure the ref is set at the correct index
+                                                            answersRef.current[originalIndex] = el;
+                                                            // Recalculate height after ref is set
+                                                            if (el) {
+                                                                contentHeights.current[originalIndex] = el.scrollHeight;
+                                                            }
+                                                        }
+                                                    }}
+                                                    className="overflow-hidden"
+                                                    style={{ height: 0 }}
+                                                >
+                                                    <div className="px-4 md:px-5 pb-4 md:pb-5">
+                                                        <div className="pt-1 border-t border-border mb-3"></div>
+                                                        <p className="text-text-secondary tracking-tight text-sm">
+                                                            {faq.answer}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                    
-                    {/* Prawa kolumna FAQ */}
-                    <div className="md:w-1/2 space-y-4">
-                        {translations.faqs.slice(Math.ceil(translations.faqs.length / 2)).map((faq, index) => {
-                            const actualIndex = index + Math.ceil(translations.faqs.length / 2);
-                            return (
-                                <div
-                                    key={actualIndex}
-                                    className="faq-item rounded-card overflow-hidden bg-card backdrop-blur-md border border-border transition-all duration-300 hover:shadow-md"
-                                >
-                                    <button
-                                        className="w-full p-4 md:p-5 flex justify-between items-center text-left"
-                                        onClick={() => toggleAccordion(actualIndex)}
-                                    >
-                                        <h3 className="text-base font-bold tracking-tight pr-4">{faq.question}</h3>
-                                        <div 
-                                            className={`min-w-8 h-8 flex items-center justify-center rounded-full border border-border transition-colors duration-300 ${
-                                                openIndex === actualIndex ? 'bg-primary border-primary' : 'bg-card'
-                                            }`}
-                                        >
-                                            <ChevronDown
-                                                ref={(el) => {
-                                                    if (arrowsRef.current) {
-                                                        arrowsRef.current[actualIndex] = el;
-                                                    }
-                                                }}
-                                                className={`w-5 h-5 transition-colors duration-300 ${
-                                                    openIndex === actualIndex ? 'text-white' : 'text-primary'
-                                                }`}
-                                            />
-                                        </div>
-                                    </button>
-                                    <div
-                                        ref={(el) => {
-                                            if (answersRef.current) {
-                                                answersRef.current[actualIndex] = el;
-                                            }
-                                        }}
-                                        className="overflow-hidden"
-                                        style={{ height: 0 }}
-                                    >
-                                        <div className="px-4 md:px-5 pb-4 md:pb-5">
-                                            <div className="pt-1 border-t border-border mb-3"></div>
-                                            <p className="text-text-secondary tracking-tight text-sm">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    </div>
+                                
+                                {/* Prawa kolumna FAQ */}
+                                <div className="md:w-1/2 space-y-4">
+                                    {filteredFaqs.slice(halfLength).map((faq, index) => {
+                                        // Znajdź oryginalny indeks w pełnej tablicy pytań
+                                        const originalIndex = translations.faqs.findIndex(f => f.question === faq.question);
+                                        return (
+                                            <div
+                                                key={originalIndex}
+                                                className="faq-item rounded-card overflow-hidden bg-card backdrop-blur-md border border-border transition-all duration-300 hover:shadow-md"
+                                            >
+                                                <button
+                                                    className="w-full p-4 md:p-5 flex justify-between items-center text-left"
+                                                    onClick={() => toggleAccordion(originalIndex)}
+                                                >
+                                                    <h3 className="text-base font-bold tracking-tight pr-4">{faq.question}</h3>
+                                                    <div 
+                                                        className={`min-w-8 h-8 flex items-center justify-center rounded-full border border-border transition-colors duration-300 ${
+                                                            openIndex === originalIndex ? 'bg-primary border-primary' : 'bg-card'
+                                                        }`}
+                                                    >
+                                                        <ChevronDown
+                                                            ref={(el) => {
+                                                                if (arrowsRef.current) {
+                                                                    arrowsRef.current[originalIndex] = el;
+                                                                }
+                                                            }}
+                                                            className={`w-5 h-5 transition-colors duration-300 ${
+                                                                openIndex === originalIndex ? 'text-white' : 'text-primary'
+                                                            }`}
+                                                        />
+                                                    </div>
+                                                </button>
+                                                <div
+                                                    ref={(el) => {
+                                                        if (answersRef.current) {
+                                                            // Ensure the ref is set at the correct index
+                                                            answersRef.current[originalIndex] = el;
+                                                            // Recalculate height after ref is set
+                                                            if (el) {
+                                                                contentHeights.current[originalIndex] = el.scrollHeight;
+                                                            }
+                                                        }
+                                                    }}
+                                                    className="overflow-hidden"
+                                                    style={{ height: 0 }}
+                                                >
+                                                    <div className="px-4 md:px-5 pb-4 md:pb-5">
+                                                        <div className="pt-1 border-t border-border mb-3"></div>
+                                                        <p className="text-text-secondary tracking-tight text-sm">
+                                                            {faq.answer}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </>
+                        );
+                    })()} 
                 </div>
                 
                 {/* Call-to-Action na dole */}
