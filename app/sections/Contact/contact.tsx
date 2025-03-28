@@ -148,7 +148,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-medium mb-1">{translations.sections.contact.address}</h4>
-                      <p className="text-text-secondary text-sm mb-2">Trakt Świętego Wojciecha 235A</p>
+                      <p className="text-text-secondary text-sm mb-2">Trakt św. Wojciecha 235A</p>
                       <p className="text-text-secondary text-sm">80-017 Gdańsk</p>
                     </div>
                   </div>
