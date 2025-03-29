@@ -55,7 +55,12 @@ export const en = {
     },
     faq: {
       title: "Frequently Asked Questions",
-      description: "Find answers to the most common questions about our gym, membership options, and training programs. If you can't find what you're looking for, feel free to contact us directly."
+      description: "Find answers to the most common questions about our gym, membership options, and training programs. If you can't find what you're looking for, feel free to contact us directly.",
+      categories: {
+        general: "General",
+        membership: "Membership",
+        training: "Training"
+      }
     },
     contact: {
       title: "Contact",
@@ -111,18 +116,6 @@ export const en = {
           "Our armwrestling section is equipped with competition-standard tables and specialized training equipment designed specifically for the sport. The training zone includes a comprehensive set of grip strength development tools, custom handles, and resistance training equipment that addresses the specific demands of armwrestling.",
           "Training is led by experienced armwrestling coaches who understand both the technical and physical aspects of the sport. Our program covers all aspects of armwrestling preparation, including technique refinement, strategic development, and specialized strength training. We cater to both novices and experienced competitors.",
           "The section actively participates in the armwrestling community, organizing regular training camps and competitions. We provide members with opportunities to compete at various levels and offer specialized preparation programs for those interested in competitive armwrestling."
-      ]
-  },
-  {
-      title: "Gym Area",
-      description: "Fully equipped gym space with modern cardio and strength equipment. Ideal for general fitness, strength training, and supplementary work.",
-      equipment: ["Free Weights", "Strength Machines", "Cardio Equipment"],
-      slug: "gym",
-      image: "/husarz_100.jpg",
-      extendedDescription: [
-          "Our modern gym area is equipped with a comprehensive selection of high-quality equipment supporting all fitness goals. The space includes the latest cardio machines, a full range of free weights, and various resistance training machines. The layout is designed to create distinct zones for different types of training, ensuring a smooth and efficient workout experience.",
-          "We provide access to qualified personal trainers who can help develop personalized training programs tailored to individual goals, whether it's weight loss, muscle gain, or general fitness improvement. Our trainers have experience working with clients at all fitness levels and can provide guidance on proper form, nutrition, and progression.",
-          "The gym area is maintained to the highest standards, with regular maintenance and equipment updates. We offer various membership options tailored to different needs and schedules, including open gym access options and personal training packages. The space is designed to complement our specialized sections while being a comprehensive fitness facility for general training needs."
       ]
   }
   ],

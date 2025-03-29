@@ -2,6 +2,8 @@
 
 import { useLenisContext } from "@/app/components/SmoothScrolling/smoothScrolling";
 import { useLanguage } from "@/app/i18n/LanguageContext";
+import Image from "next/image";
+
 
 const Footer = () => {
     const lenis = useLenisContext();
@@ -21,18 +23,25 @@ const Footer = () => {
     };
 
   return (
-      <footer id="contact" className="text-white py-16 md:py-24 font-medium bg-background border-t border-border">
+      <footer id="contact" className="text-white py-16 md:py-24 font-medium border-t border-border">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
             {/* Logo and Description */}
             <div className="col-span-2 lg:col-span-3">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-white rounded-icon"></div>
-                <p className="text-lg font-bold tracking-tight text-text-secondary">
+              <div className="w-10 h-10 bg-card relative rounded-icon border border-border overflow-hidden">
+                        <Image
+                            src={"/logo.png"}
+                            alt={"Husarz Logo"}
+                            fill
+                            className="section-image object-cover"
+                        />
+                    </div>
+                    <p className="text-base font-bold tracking-tight text-text-primary">
                         Husarz Gym
                     </p>
               </div>
-              <p className="text-text-secondary text-base tracking-tight w-full md:w-3/4">
+              <p className="text-text-secondary text-sm tracking-tight w-full md:w-2/3">
                 {translations.common.description}
               </p>
             </div>

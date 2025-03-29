@@ -15,7 +15,6 @@ const AboutUs = () => {
     const containerRef = useRef(null);
     const contentRef = useRef(null);
     const headingsRef = useRef<(HTMLHeadingElement | null)[]>([]);
-    const gradientHeadingsRef = useRef<(HTMLHeadingElement | null)[]>([]); // Nowa referencja dla gradientowych nagłówków
     const paragraphsRef = useRef<(HTMLParagraphElement | null)[]>([]);
     const statsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -41,44 +40,11 @@ const AboutUs = () => {
 
             // Obsługa zwykłych nagłówków (jeśli są używane)
             const heading = headingsRef.current[headingIndex];
-            let headingSplit = null;
-            
-            if (heading) {
-                headingSplit = new SplitText(heading, { type: "lines" });
-                new SplitText(heading, {
-                    type: "lines",
-                    linesClass: "line-wrapper overflow-hidden",
-                });
-            }
-            
-            // Obsługa gradientowych nagłówków
-            const gradientHeading = gradientHeadingsRef.current[headingIndex];
-            let gradientHeadingSplit = null;
-            let gradientLines = [];
-            
-            if (gradientHeading) {
-                
-                // Pierwszy podział na linie
-                gradientHeadingSplit = new SplitText(gradientHeading, { type: "lines" });
-                gradientLines = gradientHeadingSplit.lines;
-                
-                
-                // Dodajemy klasę do linii, aby kontrolować overflow
-                new SplitText(gradientHeading, {
-                    type: "lines",
-                    linesClass: "line-wrapper overflow-hidden",
-                });
-                
-                // TERAZ aplikujemy gradient do każdej linii
-                gradientLines.forEach(line => {
-                    line.style.backgroundImage = 'linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1))';
-                    line.style.webkitBackgroundClip = 'text';
-                    line.style.webkitTextFillColor = 'transparent';
-                    line.style.backgroundClip = 'text';
-                    line.style.color = 'transparent';
-                    line.style.display = 'block';
-                });
-            }
+            let headingSplit = new SplitText(heading, { type: "lines" });
+            new SplitText(heading, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
 
             const paragraphs = paragraphsRef.current.slice(startParagraphIndex, startParagraphIndex + paragraphCount);
 
@@ -95,41 +61,22 @@ const AboutUs = () => {
             return {
                 heading,
                 headingSplit,
-                gradientHeading,
-                gradientHeadingSplit,
-                gradientLines,
                 paragraphSplits
             };
         });
 
         // Dodanie wszystkich animacji do osi czasu w sekwencji
         sections.forEach((section, sectionIndex) => {
-            // Animacja gradientowego nagłówka (jeśli istnieje)
-            if (section.gradientLines && section.gradientLines.length > 0) {
-                mainTimeline.fromTo(
-                    section.gradientLines,
-                    { y: '100%' },
-                    { 
-                        y: '0%', 
-                        duration: 0.8,
-                        delay: sectionIndex === 0 ? 0 : 0.2
-                    },
-                    sectionIndex === 0 ? 0 : ">-=0.4"
-                );
-            }
-            // Animacja zwykłego nagłówka (jeśli istnieje i nie ma gradientowego)
-            else if (section.headingSplit) {
-                mainTimeline.fromTo(
-                    section.headingSplit.lines,
-                    { y: '100%' },
-                    { 
-                        y: '0%', 
-                        duration: 0.8,
-                        delay: sectionIndex === 0 ? 0 : 0.2
-                    },
-                    sectionIndex === 0 ? 0 : ">-=0.4"
-                );
-            }
+            mainTimeline.fromTo(
+                section.headingSplit.lines,
+                { y: '100%' },
+                { 
+                    y: '0%', 
+                    duration: 0.8,
+                    delay: sectionIndex === 0 ? 0 : 0.2
+                },
+                sectionIndex === 0 ? 0 : ">-=0.4"
+            );
 
             // Animacja paragrafów
             section.paragraphSplits.forEach((split, i) => {
@@ -168,7 +115,7 @@ const AboutUs = () => {
     }, [translations]);
     
     return (
-        <div ref={containerRef} className="min-h-screen bg-background">
+        <div ref={containerRef} className="min-h-screen">
             <div className="flex flex-col md:flex-row">
                 {/* Sekcja ze stałym obrazem */}
                 <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-b-[3rem] md:rounded-r-[3rem] overflow-hidden">
@@ -189,7 +136,7 @@ const AboutUs = () => {
                         <div className="overflow-hidden mb-4">
                             <h1
                                 ref={(el) => {
-                                    if (el) gradientHeadingsRef.current[0] = el; // Używamy gradientHeadingsRef zamiast headingsRef
+                                    if (el) headingsRef.current[0] = el; // Używamy gradientHeadingsRef zamiast headingsRef
                                 }}
                                 className="text-4xl md:text-6xl font-bold tracking-tight"
                             >
@@ -245,23 +192,6 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
-            
-            {/* Dodajemy style dla lepszej obsługi gradientu */}
-            <style jsx global>{`
-                /* Upewnijmy się, że linie mają poprawne style dla gradientu */
-                .line-wrapper {
-                    display: block;
-                    overflow: hidden;
-                }
-                
-                /* Dodatkowe zabezpieczenie dla animacji */
-                .text-transparent {
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    text-fill-color: transparent;
-                }
-            `}</style>
         </div>
     );
 };

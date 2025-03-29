@@ -14,7 +14,6 @@ gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 const Contact = () => {
   const titleRef = useRef(null);
   const descRef = useRef(null);
-  const gradientTitleRef = useRef(null);
   const contactRef = useRef(null);
   const { translations } = useLanguage();
 
@@ -34,33 +33,6 @@ const Contact = () => {
         });
       }
       
-      // Osobna obsługa dla gradientowego tytułu
-      let gradientTitleSplit;
-      let gradientTitle = [];
-      if (gradientTitleRef.current) {
-        
-        // Pierwszy podział na linie
-        gradientTitleSplit = new SplitText(gradientTitleRef.current, { type: "lines" });
-        gradientTitle = gradientTitleSplit.lines;
-        
-        
-        // Dodajemy klasę do linii, aby kontrolować overflow
-        new SplitText(gradientTitleRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-        
-        // TERAZ aplikujemy gradient do każdej linii
-        gradientTitle.forEach(line => {
-            line.style.backgroundImage = 'linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1))';
-            line.style.webkitBackgroundClip = 'text';
-            line.style.webkitTextFillColor = 'transparent';
-            line.style.backgroundClip = 'text';
-            line.style.color = 'transparent';
-            line.style.display = 'block';
-        });
-      }
-      
       new SplitText(descRef.current, {
           type: "lines",
           linesClass: "line-wrapper overflow-hidden",
@@ -70,31 +42,18 @@ const Contact = () => {
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: "#location",
+        trigger: "#contact",
         start: "top 80%",
         end: "bottom bottom",
       },
       defaults: { ease: "CustomEase" }
     });
 
-    // Jeśli mamy gradient title, animujemy to
-    if (gradientTitle.length > 0) {
-      tl.fromTo(
-          gradientTitle,
-          { y: '100%' },
-          { y: '0%', duration: 0.8 }
-      );
-    }
-    
-    // Jeśli mamy zwykły title, animujemy to (warunkowe - w zależności czy używasz titleRef czy gradientTitleRef)
-    if (title.length > 0) {
-      tl.fromTo(
-          title,
-          { y: '100%' },
-          { y: '0%', duration: 0.8 },
-          gradientTitle.length > 0 ? "-=0.4" : ""
-      );
-    }
+    tl.fromTo(
+      title,
+      { y: '100%' },
+      { y: '0%', duration: 0.8 },
+  );
     
     // Reszta animacji
     tl.fromTo(
@@ -127,7 +86,7 @@ const Contact = () => {
       <section id="contact" className="py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 ref={gradientTitleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
               {translations.sections.contact.title}
             </h2>
             <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
@@ -143,8 +102,8 @@ const Contact = () => {
                 
                 <div className="space-y-6">
                   <div className="contact-info flex items-start">
-                    <div className="p-2 mr-4 rounded-full bg-card/50 border border-border">
-                      <MapPin size={20} className="text-primary" />
+                    <div className="p-2 mr-4 rounded-icon bg-card border border-border">
+                      <MapPin size={20} className="text-white" />
                     </div>
                     <div>
                       <h4 className="font-medium mb-1">{translations.sections.contact.address}</h4>
@@ -154,8 +113,8 @@ const Contact = () => {
                   </div>
                   
                   <div className="contact-info flex items-start">
-                    <div className="p-2 mr-4 rounded-full bg-card/50 border border-border">
-                      <Phone size={20} className="text-primary" />
+                    <div className="p-2 mr-4 rounded-icon bg-card border border-border">
+                      <Phone size={20} className="text-white" />
                     </div>
                     <div>
                       <h4 className="font-medium mb-1">{translations.sections.contact.phone}</h4>
@@ -166,8 +125,8 @@ const Contact = () => {
                   </div>
                   
                   <div className="contact-info flex items-start">
-                    <div className="p-2 mr-4 rounded-full bg-card/50 border border-border">
-                      <Clock size={20} className="text-primary" />
+                    <div className="p-2 mr-4 rounded-icon bg-card border border-border">
+                      <Clock size={20} className="text-white" />
                     </div>
                     <div>
                       <h4 className="font-medium mb-1">{translations.sections.contact.openingHours}</h4>
@@ -181,19 +140,19 @@ const Contact = () => {
                 <div className="mt-8">
                   <h4 className="font-medium mb-3">{translations.sections.contact.amenities}</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
+                    <span className="info-badge tracking-tight text-xs bg-card backdrop-blur-sm border border-border text-text-primary px-2 py-0.5 rounded-full">
                       {translations.sections.contact.freeParking}
                     </span>
-                    <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
+                    <span className="info-badge tracking-tight text-xs bg-card backdrop-blur-sm border border-border text-text-primary px-2 py-0.5 rounded-full">
                       {translations.sections.contact.changingRooms}
                     </span>
-                    <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
+                    <span className="info-badge tracking-tight text-xs bg-card backdrop-blur-sm border border-border text-text-primary px-2 py-0.5 rounded-full">
                       {translations.sections.contact.cardioZone}
                     </span>
-                    <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
+                    <span className="info-badge tracking-tight text-xs bg-card backdrop-blur-sm border border-border text-text-primary px-2 py-0.5 rounded-full">
                       {translations.sections.contact.saunas}
                     </span>
-                    <span className="info-badge tracking-tight text-xs bg-card/50 border border-border text-secondary px-2 py-0.5 rounded-full">
+                    <span className="info-badge tracking-tight text-xs bg-card backdrop-blur-sm border border-border text-text-primary px-2 py-0.5 rounded-full">
                       {translations.sections.contact.supplementStore}
                     </span>
                   </div>
@@ -203,7 +162,7 @@ const Contact = () => {
                   href="https://maps.google.com/maps?ll=54.3211,18.6259&z=16&t=m&hl=pl&gl=PL&q=Husarz+GYM"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-8 inline-flex items-center space-x-2 text-sm hover:text-primary transition-colors"
+                  className="mt-8 inline-flex w-full items-center justify-center space-x-2 bg-card text-text-primary text-sm border border-border rounded-full px-4 py-2 hover:bg-white/10 transition-colors"
                 >
                   <span>{translations.sections.contact.directions}</span>
                   <ExternalLink size={14} />
@@ -227,20 +186,6 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        
-        <style jsx global>{`
-            .line-wrapper {
-                display: block;
-                overflow: hidden;
-            }
-            
-            #location .text-transparent {
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                text-fill-color: transparent;
-            }
-        `}</style>
       </section>
   );
 };

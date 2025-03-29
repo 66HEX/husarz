@@ -13,7 +13,6 @@ gsap.registerPlugin(SplitText, useGSAP);
 
 const Hero = () => {
     const titleRef = useRef(null);
-    const gradientTitleRef = useRef(null); // Nowa referencja dla tytułu z gradientem
     const descRef = useRef(null);
     const containerRef = useRef(null);
     const { translations } = useLanguage();
@@ -31,33 +30,6 @@ const Hero = () => {
                 linesClass: "line-wrapper overflow-hidden",
             });
         }
-
-        // Obsługa gradientowego tytułu
-        let gradientTitleSplit;
-        let gradientTitle = [];
-        if (gradientTitleRef.current) {
-            
-            // Pierwszy podział na linie
-            gradientTitleSplit = new SplitText(gradientTitleRef.current, { type: "lines" });
-            gradientTitle = gradientTitleSplit.lines;
-            
-            
-            // Dodajemy klasę do linii, aby kontrolować overflow
-            new SplitText(gradientTitleRef.current, {
-                type: "lines",
-                linesClass: "line-wrapper overflow-hidden",
-            });
-            
-            // TERAZ aplikujemy gradient do każdej linii
-            gradientTitle.forEach(line => {
-                line.style.backgroundImage = 'linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1))';
-                line.style.webkitBackgroundClip = 'text';
-                line.style.webkitTextFillColor = 'transparent';
-                line.style.backgroundClip = 'text';
-                line.style.color = 'transparent';
-                line.style.display = 'block';
-            });
-        }
         
         const childSplit = new SplitText(descRef.current, { type: "lines" });
         new SplitText(descRef.current, {
@@ -69,22 +41,11 @@ const Hero = () => {
 
         const tl = gsap.timeline({ defaults: { ease: "CustomEase" } });
 
-        // Animacja gradientowego tytułu (jeśli istnieje)
-        if (gradientTitle.length > 0) {
-            tl.fromTo(
-                gradientTitle,
-                { y: '100%' },
-                { y: '0%', duration: 0.8 }
-            );
-        }
-        // Animacja zwykłego tytułu (jeśli istnieje i nie ma gradientowego)
-        else if (title.length > 0) {
-            tl.fromTo(
-                title,
-                { y: '100%' },
-                { y: '0%', duration: 0.8 }
-            );
-        }
+        tl.fromTo(
+            title,
+            { y: '100%' },
+            { y: '0%', duration: 0.8 }
+        );
 
         tl.fromTo(
             texts,
@@ -122,7 +83,6 @@ const Hero = () => {
                     alt="Hero image"
                     fill
                     className="object-cover"
-                    style={{ filter: 'grayscale(100%)' }}
                     priority
                 />
                 <div id="hero-background-overlay" className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80"></div>
@@ -133,7 +93,7 @@ const Hero = () => {
                     <div className="max-w-2xl">
                         <div className="bg-card backdrop-blur-md border border-border p-6 md:p-8 rounded-card">
                         <div className="overflow-hidden mb-4">
-                            <h1 ref={gradientTitleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
+                            <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
                                 {translations.sections.hero.title}
                             </h1>
                         </div>

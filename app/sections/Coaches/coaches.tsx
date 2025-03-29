@@ -1,7 +1,7 @@
 "use client";
 
 import {Instagram} from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, RefObject } from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
@@ -12,34 +12,21 @@ import { useLanguage } from "@/app/i18n/LanguageContext";
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 const Coaches = () => {
-    const titleRef = useRef(null);
-    const descRef = useRef(null);
-    const gradientTitleRef = useRef(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const descRef = useRef<HTMLParagraphElement>(null);
+    const coachCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const coachImagesRef = useRef<(HTMLImageElement | null)[]>([]);
+    const overlaysRef = useRef<(HTMLDivElement | null)[]>([]);
+    const overlayTitlesRef = useRef<(HTMLHeadingElement | null)[]>([]);
+    const overlayDescsRef = useRef<(HTMLParagraphElement | null)[]>([]);
+    const overlaySpecialtiesRef = useRef<(HTMLDivElement | null)[]>([]);
+    const overlayInstasRef = useRef<(HTMLAnchorElement | null)[]>([]);
     const { translations } = useLanguage();
 
     useGSAP(() => {
         // Podstawowe animacje tekstu
         const childSplit = new SplitText(descRef.current, { type: "lines" });
         const titleSplit = new SplitText(titleRef.current, { type: "lines"});
-        
-        let gradientTitleSplit;
-        if (gradientTitleRef.current) {
-            gradientTitleSplit = new SplitText(gradientTitleRef.current, { type: "lines" });
-            
-            gradientTitleSplit.lines.forEach(line => {
-                line.style.backgroundImage = 'linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1))';
-                line.style.webkitBackgroundClip = 'text';
-                line.style.webkitTextFillColor = 'transparent';
-                line.style.backgroundClip = 'text';
-                line.style.color = 'transparent';
-                line.style.display = 'block';
-            });
-            
-            new SplitText(gradientTitleRef.current, {
-                type: "lines",
-                linesClass: "line-wrapper overflow-hidden",
-            });
-        }
         
         new SplitText(descRef.current, {
             type: "lines",
@@ -52,8 +39,6 @@ const Coaches = () => {
         
         const texts = childSplit.lines;
         const title = titleSplit.lines;
-        const gradientTitle = gradientTitleSplit ? gradientTitleSplit.lines : [];
-
         // Główna animacja przy scrollowaniu
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -69,15 +54,6 @@ const Coaches = () => {
             { y: '100%' },
             { y: '0%', duration: 0.8 }
         )
-        
-        if (gradientTitle.length > 0) {
-            tl.fromTo(
-                gradientTitle,
-                { y: '100%' },
-                { y: '0%', duration: 0.8 },
-                "-=0.6"
-            );
-        }
         
         tl.fromTo(
             texts,
@@ -109,19 +85,23 @@ const Coaches = () => {
         );
         
         // Animacje hoveru dla kart trenerów z GSAP - identycznie jak w komponencie Sections
-        const coachCards = document.querySelectorAll('.coach-container');
-        
-        coachCards.forEach((card) => {
-            const coachImage = card.querySelector('img');
-            const overlay = card.querySelector('.coach-overlay');
-            const overlayTitle = card.querySelector('.overlay-title');
-            const overlayDesc = card.querySelector('.overlay-description');
-            const overlaySpecialties = card.querySelector('.overlay-specialties');
-            const overlayInsta = card.querySelector('.overlay-insta');
+        coachCardsRef.current.forEach((card, index) => {
+            if (!card) return;
+            
+            const coachImage = coachImagesRef.current[index];
+            const overlay = overlaysRef.current[index];
+            const overlayTitle = overlayTitlesRef.current[index];
+            const overlayDesc = overlayDescsRef.current[index];
+            const overlaySpecialties = overlaySpecialtiesRef.current[index];
+            const overlayInsta = overlayInstasRef.current[index];
             
             // Ustawiamy początkowe style dla elementów nakładki
-            gsap.set(overlay, { opacity: 0 });
-            gsap.set([overlayTitle, overlayDesc, overlaySpecialties, overlayInsta], { 
+            if (overlay) {
+                gsap.set(overlay, { opacity: 0 });
+            }
+            
+            const elementsToAnimate = [overlayTitle, overlayDesc, overlaySpecialties, overlayInsta].filter(Boolean);
+            gsap.set(elementsToAnimate, { 
                 y: 15, 
                 opacity: 0 
             });
@@ -130,17 +110,19 @@ const Coaches = () => {
             const hoverTl = gsap.timeline({ paused: true });
             
             // Animacja obrazu i nakładki
-            hoverTl
-                .to(coachImage, { 
-                    scale: 1.05, 
-                    duration: 0.7, 
-                    ease: "power2.out" 
-                }, 0)
-                .to(overlay, {
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: "power1.out"
-                }, 0);
+            if (coachImage && overlay) {
+                hoverTl
+                    .to(coachImage, { 
+                        scale: 1.05, 
+                        duration: 0.7, 
+                        ease: "power2.out" 
+                    }, 0)
+                    .to(overlay, {
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "power1.out"
+                    }, 0);
+            }
             
             // Animacja tytułu
             if (overlayTitle) {
@@ -183,21 +165,25 @@ const Coaches = () => {
             }
             
             // Dodaj event listenery do karty
-            card.addEventListener('mouseenter', () => {
-                hoverTl.play();
-                // Włącz pointer-events aby linki były klikalne
-                gsap.set(overlay, { pointerEvents: 'auto' });
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                hoverTl.reverse();
-                // Po zakończeniu animacji wyłącz pointer-events
-                setTimeout(() => {
-                    if (!card.matches(':hover')) {
-                        gsap.set(overlay, { pointerEvents: 'none' });
+            if (card) {
+                card.addEventListener('mouseenter', () => {
+                    hoverTl.play();
+                    // Włącz pointer-events aby linki były klikalne
+                    if (overlay) {
+                        gsap.set(overlay, { pointerEvents: 'auto' });
                     }
-                }, 200);
-            });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    hoverTl.reverse();
+                    // Po zakończeniu animacji wyłącz pointer-events
+                    setTimeout(() => {
+                        if (overlay && !card.matches(':hover')) {
+                            gsap.set(overlay, { pointerEvents: 'none' });
+                        }
+                    }, 200);
+                });
+            }
         });
     }, [translations]);
 
@@ -206,7 +192,7 @@ const Coaches = () => {
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 
-                        ref={gradientTitleRef} 
+                        ref={titleRef} 
                         className="text-4xl md:text-6xl font-bold tracking-tight mb-6"
                     >
                         {translations.sections.coaches.title}
@@ -221,14 +207,20 @@ const Coaches = () => {
                     {translations.coaches.map((coach, index) => (
                         <div
                             key={index}
+                            ref={(el: HTMLDivElement | null) => {
+                                coachCardsRef.current[index] = el;
+                            }}
                             className="coach-card relative rounded-card overflow-hidden bg-card backdrop-blur-md border border-border flex flex-col h-full coach-container"
                             data-coach-id={index}
                         >
                             <div className="relative aspect-[3/4] overflow-hidden">
                                 <img
+                                    ref={(el: HTMLImageElement | null) => {
+                                        coachImagesRef.current[index] = el;
+                                    }}
                                     src={coach.image}
                                     alt={coach.name}
-                                    className="w-full h-full object-cover transition-transform duration-700"
+                                    className="w-full h-full object-cover transition-transform"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                                 
@@ -236,9 +228,9 @@ const Coaches = () => {
                                     href={`https://instagram.com/${coach.instagram}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="absolute top-4 right-4 flex items-center justify-center bg-white p-2 rounded-icon z-10 hover:shadow-lg transition-all duration-300"
+                                    className="absolute top-4 right-4 flex items-center justify-center bg-black p-2 rounded-icon z-10 hover:shadow-lg transition-all duration-300 hidden"
                                 >
-                                    <Instagram className="w-5 h-5 text-black" />
+                                    <Instagram className="w-5 h-5 text-white" />
                                 </a>
                                 
                                 {/* Informacje o trenerze umieszczone na zdjęciu - zawsze widoczne */}
@@ -263,20 +255,39 @@ const Coaches = () => {
                             </div>
                             
                             {/* Panel z pełnymi informacjami - pokazywany na hover z animacjami jak w Sections */}
-                            <div className="coach-overlay absolute inset-0 bg-black/80 backdrop-blur-sm p-6 flex flex-col justify-center overflow-y-auto pointer-events-none">
-                                <h3 className="overlay-title text-xl md:text-2xl font-bold tracking-tight mb-2 text-white">{coach.name}</h3>
-                                <p className="overlay-description text-white/80 tracking-tight mb-4 text-sm">{coach.description}</p>
-                                <div className="overlay-specialties flex flex-wrap gap-2 mt-auto">
+                            <div 
+                                ref={(el: HTMLDivElement | null) => {
+                                    overlaysRef.current[index] = el;
+                                }}
+                                className="coach-overlay absolute inset-0 bg-black/80 backdrop-blur-sm p-6 flex flex-col justify-end overflow-y-auto pointer-events-none">
+                                <h3 
+                                    ref={(el: HTMLHeadingElement | null) => {
+                                        overlayTitlesRef.current[index] = el;
+                                    }}
+                                    className="overlay-title text-xl md:text-2xl font-bold tracking-tight mb-2 text-white">{coach.name}</h3>
+                                <p 
+                                    ref={(el: HTMLParagraphElement | null) => {
+                                        overlayDescsRef.current[index] = el;
+                                    }}
+                                    className="overlay-description text-white/80 tracking-tight mb-4 text-sm">{coach.description}</p>
+                                <div 
+                                    ref={(el: HTMLDivElement | null) => {
+                                        overlaySpecialtiesRef.current[index] = el;
+                                    }}
+                                    className="overlay-specialties flex flex-wrap gap-2">
                                     {coach.specialties.map((specialty, idx) => (
                                         <span
                                             key={idx}
-                                            className="specialty-badge tracking-tight text-xs bg-white/10 border border-white/20 text-white px-2 py-0.5 rounded-full"
+                                            className="specialty-badge tracking-tight text-xs bg-black/40 backdrop-blur-sm border border-white/20 text-white px-2 py-0.5 rounded-full"
                                         >
                                             {specialty}
                                         </span>
                                     ))}
                                 </div>
                                 <a
+                                    ref={(el: HTMLAnchorElement | null) => {
+                                        overlayInstasRef.current[index] = el;
+                                    }}
                                     href={`https://instagram.com/${coach.instagram}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -290,41 +301,6 @@ const Coaches = () => {
                     ))}
                 </div>
             </div>
-            
-            <style jsx global>{`
-                .gradient-text {
-                    background-image: linear-gradient(to bottom, #FFFFFF, rgba(15, 23, 42, 0.1));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    color: transparent;
-                }
-                
-                .line-wrapper {
-                    display: block;
-                }
-                
-                /* Dla płynniejszych animacji */
-                .coach-card {
-                    will-change: transform, opacity;
-                    transform: translateZ(0);
-                }
-                
-                /* Zapobieganie blikom podczas animacji */
-                .overlay-title,
-                .overlay-description,
-                .specialty-badge,
-                .overlay-insta {
-                    backface-visibility: hidden;
-                    transform: translateZ(0);
-                    will-change: transform, opacity;
-                }
-                
-                /* Efekt hover dla obrazu */
-                .coach-container:hover img {
-                    transform: scale(1.05);
-                }
-            `}</style>
         </section>
     );
 };

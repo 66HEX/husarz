@@ -55,7 +55,12 @@ export const pl = {
     },
     faq: {
       title: "Często Zadawane Pytania",
-      description: "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszej siłowni, opcji członkostwa i programów treningowych. Jeśli nie znajdziesz tego, czego szukasz, skontaktuj się z nami bezpośrednio."
+      description: "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszej siłowni, opcji członkostwa i programów treningowych. Jeśli nie znajdziesz tego, czego szukasz, skontaktuj się z nami bezpośrednio.",
+      categories: {
+        general: "Ogólne",
+        membership: "Członkostwo",
+        training: "Treningi"
+      }
     },
     contact: {
       title: "Kontakt",
@@ -111,18 +116,6 @@ export const pl = {
           "Nasza sekcja armwrestlingu jest wyposażona w stoły o standardzie zawodniczym i specjalistyczny sprzęt treningowy zaprojektowany specjalnie dla tego sportu. Strefa treningowa zawiera kompleksowy zestaw narzędzi do rozwoju siły chwytu, niestandardowe uchwyty i sprzęt do treningu oporowego, który odpowiada specyficznym wymaganiom armwrestlingu.",
           "Treningi prowadzone są przez doświadczonych trenerów armwrestlingu, którzy rozumieją zarówno techniczne, jak i fizyczne aspekty tego sportu. Nasz program obejmuje wszystkie aspekty przygotowania do armwrestlingu, w tym doskonalenie techniki, rozwój strategiczny i specjalistyczny trening siłowy. Obsługujemy zarówno nowicjuszy, jak i doświadczonych zawodników.",
           "Sekcja aktywnie uczestniczy w społeczności armwrestlingu, organizując regularne obozy treningowe i zawody. Zapewniamy członkom możliwość rywalizacji na różnych poziomach i oferujemy specjalistyczne programy przygotowawcze dla osób zainteresowanych zawodniczym armwrestlingiem."
-      ]
-  },
-  {
-      title: "Strefa Siłowni",
-      description: "W pełni wyposażona przestrzeń siłowni z nowoczesnym sprzętem cardio i siłowym. Idealna do ogólnej sprawności, treningu siłowego i pracy uzupełniającej.",
-      equipment: ["Wolne Ciężary", "Maszyny Siłowe", "Sprzęt Cardio"],
-      slug: "gym",
-      image: "/husarz_100.jpg",
-      extendedDescription: [
-          "Nasza nowoczesna strefa siłowni jest wyposażona w kompleksowy wybór wysokiej jakości sprzętu wspierającego wszystkie cele fitness. Przestrzeń zawiera najnowsze maszyny cardio, pełen zakres wolnych ciężarów i różnorodne maszyny do treningu oporowego. Układ jest zaprojektowany tak, aby tworzyć odrębne strefy dla różnych rodzajów treningu, zapewniając płynne i efektywne doświadczenie treningowe.",
-          "Zapewniamy dostęp do wykwalifikowanych trenerów personalnych, którzy mogą pomóc w opracowaniu spersonalizowanych programów treningowych dostosowanych do indywidualnych celów, czy to utrata wagi, przyrost mięśni, czy ogólna poprawa sprawności. Nasi trenerzy mają doświadczenie w pracy z klientami na wszystkich poziomach sprawności i mogą udzielać wskazówek dotyczących właściwej formy, odżywiania i progresji.",
-          "Strefa siłowni jest utrzymywana zgodnie z najwyższymi standardami, z regularną konserwacją i aktualizacjami sprzętu. Oferujemy różne opcje członkostwa dostosowane do różnych potrzeb i harmonogramów, w tym opcje otwartego dostępu do siłowni i pakiety treningów personalnych. Przestrzeń jest zaprojektowana tak, aby uzupełniać nasze specjalistyczne sekcje, będąc jednocześnie kompleksowym obiektem fitness dla ogólnych potrzeb treningowych."
       ]
   }
   ],
