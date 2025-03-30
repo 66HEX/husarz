@@ -48,7 +48,7 @@ const InfiniteMarqueeExample = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative bg-card py-4 md:py-8 mx-4 md:mx-8 rounded-3xl border border-border overflow-hidden"
+      className="relative bg-card py-4 md:py-8 mx-2 md:mx-8 rounded-3xl border border-border overflow-hidden"
     >
       {/* Left vignette */}
       <div className="absolute left-0 top-0 bottom-0 w-1/3 z-10 pointer-events-none bg-gradient-to-r from-background to-transparent" />

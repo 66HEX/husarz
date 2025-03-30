@@ -1,7 +1,7 @@
 "use client";
 
 import {Instagram, ChevronLeft, ChevronRight} from 'lucide-react';
-import { useRef, useEffect, useLayoutEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {SplitText} from '@/app/libs/gsap/SplitText';
@@ -9,7 +9,6 @@ import {useGSAP} from "@gsap/react";
 import { Observer } from 'gsap/Observer';
 import '@/app/config/gsap';
 import { useLanguage } from "@/app/i18n/LanguageContext";
-import { horizontalLoop } from '@/app/libs/loopHelper.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP, Observer);
 
@@ -23,7 +22,7 @@ const Coaches = () => {
     const overlaySpecialtiesRef = useRef<(HTMLDivElement | null)[]>([]);
     const overlayInstasRef = useRef<(HTMLAnchorElement | null)[]>([]);
     const carouselRef = useRef<HTMLDivElement>(null);
-    const loopRef = useRef<gsap.core.Timeline | null>(null);
+    const carouselInnerRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [maxCardHeight, setMaxCardHeight] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -83,39 +82,63 @@ const Coaches = () => {
         };
     }, []);
 
-    // Efekt do aktualizacji liczby widocznych kart przy zmianie rozmiaru okna
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
+    // Funkcja do pobierania szerokości karty
+    const getCardWidth = () => {
+        if (!carouselRef.current) return 0;
         
-        // Funkcja do aktualizacji karuzeli przy zmianie rozmiaru ekranu
-        const handleResize = () => {
-            // Odśwież karty jeśli zmieni się liczba widocznych elementów
-            if (loopRef.current) {
-                // Zatrzymaj karuzele
-                loopRef.current.kill();
-                loopRef.current = null;
-                
-                // Inicjalizuj na nowo po krótkim opóźnieniu (aby pozwolić na przeliczenie DOM)
-                setTimeout(() => {
-                    if (carouselRef.current) {
-                        const cards = gsap.utils.toArray('.coach-card');
-                        if (cards.length > 0) {
-                            loopRef.current = horizontalLoop(cards, {
-                                paused: true,
-                                paddingRight: getSpacing(),
-                                repeat: -1,
-                            });
-                        }
-                    }
-                }, 300);
+        const containerWidth = carouselRef.current.clientWidth;
+        const currentSpacing = getSpacing();
+        const visibleCardsCount = getVisibleCards();
+        const totalSpacing = currentSpacing * (visibleCardsCount - 1);
+        
+        return (containerWidth - totalSpacing) / visibleCardsCount;
+    };
+
+    // Funkcja do przesuwania do wybranego indeksu
+    const scrollToIndex = (index: number) => {
+        if (!carouselInnerRef.current || isAnimating) return;
+        
+        setIsAnimating(true);
+        
+        // Oblicz szerokość karty i odstęp
+        const cardWidth = getCardWidth();
+        const cardSpacing = getSpacing();
+        
+        // Oblicz pozycję docelową
+        const position = index * (cardWidth + cardSpacing);
+        
+        // Animuj przesunięcie
+        gsap.to(carouselInnerRef.current, {
+            duration: 0.6,
+            ease: "CustomEase",
+            x: -position,
+            onComplete: () => {
+                setIsAnimating(false);
             }
+        });
+    };
+
+    // Efekt do aktualizacji widoku przy zmianie rozmiaru okna
+    useEffect(() => {
+        if (typeof window === 'undefined' || !carouselInnerRef.current) return;
+        
+        let resizeTimeout: NodeJS.Timeout;
+        
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Aktualizuj pozycję karuzeli po zmianie rozmiaru
+                scrollToIndex(currentIndex);
+            }, 300);
         };
 
         window.addEventListener('resize', handleResize);
+        
         return () => {
+            clearTimeout(resizeTimeout);
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [currentIndex, visibleCards, spacing]);
 
     // Efekt do aktualizacji wysokości kart
     useEffect(() => {
@@ -299,106 +322,67 @@ const Coaches = () => {
             "-=0.3"
         );
 
-        // Inicjalizacja horizontalLoop dla karuzeli
-        if (carouselRef.current) {
-            // Poczekaj, aż wysokości zostaną zaktualizowane
-            setTimeout(() => {
-                const cards = gsap.utils.toArray('.coach-card');
-                if (cards.length > 0) {
-                    loopRef.current = horizontalLoop(cards, {
-                        paused: true, // Zaczynamy wstrzymani, by uniknąć konfliktu z auto-play
-                        paddingRight: getSpacing(),
-                        repeat: -1,
-                    });
-                }
-            }, 200); // Dodaj opóźnienie, aby dać czas na przeliczenie wysokości
+        // Upewnij się, że karuzela jest na początku
+        if (carouselInnerRef.current) {
+            gsap.set(carouselInnerRef.current, { x: 0 });
         }
     }, [translations]);
 
-    const handlePrev = () => {
-        if (loopRef.current && !isAnimating) {
-            setIsAnimating(true);
+    const handleNext = () => {
+        if (isAnimating) return;
+        
+        // Oblicz maksymalny indeks ze względu na liczbę widocznych kart
+        const maxIndex = Math.max(0, translations.coaches.length - getVisibleCards());
+        
+        // Sprawdź, czy można przejść dalej
+        if (currentIndex < maxIndex) {
+            // Aktualizuj indeks przed animacją
+            setCurrentIndex(prev => prev + 1);
             setIsAutoPlaying(false);
             
-            loopRef.current.previous({
-                duration: 0.6,
-                ease: "CustomEase",
-                onComplete: () => {
-                    setIsAnimating(false);
-                    setCurrentIndex(prev => {
-                        const newIndex = prev - 1;
-                        return newIndex < 0 ? translations.coaches.length - 1 : newIndex;
-                    });
-                }
-            });
+            // Przewiń do nowego indeksu
+            scrollToIndex(currentIndex + 1);
         }
     };
 
-    const handleNext = () => {
-        if (loopRef.current && !isAnimating) {
-            setIsAnimating(true);
+    const handlePrev = () => {
+        if (isAnimating) return;
+        
+        // Sprawdź, czy można przejść wstecz
+        if (currentIndex > 0) {
+            // Aktualizuj indeks przed animacją
+            setCurrentIndex(prev => prev - 1);
+            setIsAutoPlaying(false);
             
-            loopRef.current.next({
-                duration: 0.6,
-                ease: "CustomEase",
-                onComplete: () => {
-                    setIsAnimating(false);
-                    setCurrentIndex(prev => (prev + 1) % translations.coaches.length);
-                }
-            });
+            // Przewiń do nowego indeksu
+            scrollToIndex(currentIndex - 1);
         }
     };
-    
+
     const handleDotClick = (index: number) => {
         if (isAnimating || index === currentIndex) return;
         
-        setIsAutoPlaying(false);
-        setIsAnimating(true);
+        // Oblicz maksymalny indeks
+        const maxIndex = Math.max(0, translations.coaches.length - getVisibleCards());
         
-        if (loopRef.current) {
-            // Calculate how many positions to move
-            const currentPos = currentIndex;
-            const targetPos = index;
-            let diff = targetPos - currentPos;
-            
-            // Adjust for wrapping around the ends
-            if (diff < 0 && Math.abs(diff) > translations.coaches.length / 2) {
-                diff = translations.coaches.length + diff;
-            } else if (diff > 0 && diff > translations.coaches.length / 2) {
-                diff = diff - translations.coaches.length;
-            }
-            
-            if (diff > 0) {
-                loopRef.current.toIndex(currentIndex + diff, {
-                    duration: 0.6,
-                    ease: "CustomEase",
-                    onComplete: () => {
-                        setIsAnimating(false);
-                        setCurrentIndex(index);
-                    }
-                });
-            } else if (diff < 0) {
-                loopRef.current.toIndex(currentIndex + diff, {
-                    duration: 0.6,
-                    ease: "CustomEase",
-                    onComplete: () => {
-                        setIsAnimating(false);
-                        setCurrentIndex(index);
-                    }
-                });
-            }
-        }
+        // Upewnij się, że indeks nie przekracza maksymalnego
+        const safeIndex = Math.min(index, maxIndex);
+        
+        // Aktualizuj stan
+        setIsAutoPlaying(false);
+        setCurrentIndex(safeIndex);
+        
+        // Przewiń do wybranego indeksu
+        scrollToIndex(safeIndex);
     };
 
-    // Tworzymy dwie kopie tablicy coaches żeby zapewnić płynne przewijanie w pętli
-    const loopedCoaches = [
-        ...translations.coaches,
-        ...translations.coaches,
-    ];
+    // Funkcja pomocnicza do sprawdzenia czy przycisk powinien być aktywny
+    const isPrevDisabled = currentIndex <= 0;
+    const isNextDisabled = currentIndex >= translations.coaches.length - getVisibleCards();
 
     return (
         <section id="coaches" className="overflow-hidden">
-            <div className="px-4 md:px-8">
+            <div className="px-2 md:px-8">
                 <div className='py-4 md:py-8 border bg-card border-border rounded-3xl p-4 md:p-8'>
                     {/* Grid identyczny jak w komponencie Sections */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-4 md:mb-8">
@@ -428,11 +412,11 @@ const Coaches = () => {
                     {/* Kontener karuzeli */}
                     <div className="relative">
                         {/* Karuzela z trenerami */}
-                        <div ref={carouselRef} className="overflow-hidden">
-                            <div className="flex space-x-4 md:space-x-6">
-                                {loopedCoaches.map((coach, index) => (
+                        <div ref={carouselRef} className="overflow-hidden px-1">
+                            <div ref={carouselInnerRef} className="flex space-x-4 md:space-x-6">
+                                {translations.coaches.map((coach, index) => (
                                     <div
-                                        key={index}
+                                        key={`coach-${index}`}
                                         ref={(el: HTMLDivElement | null) => {
                                             coachCardsRef.current[index] = el;
                                         }}
@@ -440,9 +424,8 @@ const Coaches = () => {
                                         style={{
                                             width: `calc((100% - ${(getVisibleCards() - 1) * getSpacing()}px) / ${getVisibleCards()})`,
                                             height: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto',
-                                            minWidth: isMobile ? '85%' : '350px' // Używamy stanu zamiast window.innerWidth
+                                            minWidth: isMobile ? '85%' : '350px'
                                         }}
-                                        data-coach-id={index % translations.coaches.length}
                                     >
                                         {/* Kontener obrazu z paddingiem */}
                                         <div className="p-4">
@@ -519,15 +502,15 @@ const Coaches = () => {
                         <div className="flex justify-between items-center mt-6">
                             {/* Kropki sygnalizujące pozycję */}
                             <div className="flex gap-2">
-                                {translations.coaches.map((_, index) => (
+                                {translations.coaches.slice(0, translations.coaches.length - getVisibleCards() + 1).map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => handleDotClick(index)}
                                         disabled={isAnimating}
                                         className={`h-2 rounded-full transition-all duration-300 
                                             ${index === currentIndex
-                                            ? 'w-8 bg-active border border-borderactive'
-                                            : 'w-2 bg-innercard border border-border hover:bg-border'}`}
+                                            ? 'w-8 bg-active2 border border-borderactive'
+                                            : 'w-2 bg-active border border-border hover:bg-border'}`}
                                         aria-label={`Przejdź do trenera ${index + 1}`}
                                     />
                                 ))}
@@ -537,17 +520,25 @@ const Coaches = () => {
                             <div className="flex gap-4">
                                 <button 
                                     onClick={handlePrev}
-                                    className="flex items-center justify-center w-10 h-10 rounded-full bg-active text-white hover:bg-active2 transition-colors border border-borderactive"
+                                    className={`flex items-center justify-center w-10 h-10 rounded-full text-white border border-borderactive transition-colors ${
+                                        isPrevDisabled 
+                                            ? 'bg-active opacity-50 cursor-not-allowed' 
+                                            : 'bg-active hover:bg-active2 cursor-pointer'
+                                    }`}
                                     aria-label="Poprzedni trener"
-                                    disabled={isAnimating}
+                                    disabled={isAnimating || isPrevDisabled}
                                 >
                                     <ChevronLeft className="w-5 h-5" />
                                 </button>
                                 <button 
                                     onClick={handleNext}
-                                    className="flex items-center justify-center w-10 h-10 rounded-full bg-active text-white hover:bg-active2 transition-colors border border-borderactive"
+                                    className={`flex items-center justify-center w-10 h-10 rounded-full text-white border border-borderactive transition-colors ${
+                                        isNextDisabled 
+                                            ? 'bg-active opacity-50 cursor-not-allowed' 
+                                            : 'bg-active hover:bg-active2 cursor-pointer'
+                                    }`}
                                     aria-label="Następny trener"
-                                    disabled={isAnimating}
+                                    disabled={isAnimating || isNextDisabled}
                                 >
                                     <ChevronRight className="w-5 h-5" />
                                 </button>

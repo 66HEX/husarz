@@ -133,7 +133,7 @@ const Contact = () => {
 
   return (
       <section id="contact" className="overflow-hidden">
-        <div className="px-4 md:px-8">
+        <div className="px-2 md:px-8">
           <div className='py-4 md:py-8 border bg-card border-border rounded-3xl p-4 md:p-8'>
             {/* Grid identyczny jak w komponentach Sections, Coaches i FAQ */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-4 md:mb-8">

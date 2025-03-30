@@ -137,7 +137,7 @@ export default function SectionContent({ section }: SectionContentProps) {
 
     return (
         <div id="section-content" className="bg-background pt-16 md:pt-24 pb-4 md:pb-8">
-            <div className="px-4 md:px-8">
+            <div className="px-2 md:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                     {/* Image container - left column */}
                     <div 
