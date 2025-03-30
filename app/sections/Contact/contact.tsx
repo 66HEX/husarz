@@ -151,7 +151,7 @@ const Contact = () => {
               
               {/* Opis w drugim gridzie od lewej */}
               <div className="flex items-center col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-2">
-                <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                <p ref={descRef} className="text-text-secondary tracking-tight text-base md:text-lg">
                   {translations.sections.contact.description}
                 </p>
               </div>
@@ -168,7 +168,7 @@ const Contact = () => {
                   
                   <div className="space-y-6">
                     <div className="contact-info flex items-start">
-                      <div className="contact-icon-container p-2 mr-4 rounded-full bg-active border border-border">
+                      <div className="contact-icon-container p-2 mr-4 rounded-icon bg-active border border-border">
                         <MapPin size={20} className="text-white" />
                       </div>
                       <div>
@@ -179,7 +179,7 @@ const Contact = () => {
                     </div>
                     
                     <div className="contact-info flex items-start">
-                      <div className="contact-icon-container p-2 mr-4 rounded-full bg-active border border-border">
+                      <div className="contact-icon-container p-2 mr-4 rounded-icon bg-active border border-border">
                         <Phone size={20} className="text-white" />
                       </div>
                       <div>
@@ -191,7 +191,7 @@ const Contact = () => {
                     </div>
                     
                     <div className="contact-info flex items-start">
-                      <div className="contact-icon-container p-2 mr-4 rounded-full bg-active border border-border">
+                      <div className="contact-icon-container p-2 mr-4 rounded-icon bg-active border border-border">
                         <Clock size={20} className="text-white" />
                       </div>
                       <div>

@@ -199,7 +199,7 @@ const FAQ = () => {
                         
                         {/* Opis w drugim gridzie od lewej */}
                         <div className="flex items-center col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-2">
-                            <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                            <p ref={descRef} className="text-text-secondary tracking-tight text-base md:text-lg">
                                 {translations.sections.faq.description}
                             </p>
                         </div>
@@ -224,7 +224,7 @@ const FAQ = () => {
                                         setActiveCategory(category.id);
                                         setOpenIndex(null); // Reset open accordion when changing category
                                     }}
-                                    className={`faq-category-tab flex items-center px-5 py-2 rounded-full border transition-all duration-300 
+                                    className={`faq-category-tab flex items-center px-5 py-2 rounded-full border transition-all duration-300 text-sm md:text-base
                                             ${activeCategory === category.id ? 'bg-active text-white border-borderactive' : 'bg-innercard border-border hover:bg-active'}`}
                                 >
                                     <span className="mr-2">{category.icon}</span>

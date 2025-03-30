@@ -191,7 +191,7 @@ const Sections = () => {
                         
                         {/* Opis w drugim gridzie od lewej */}
                         <div className="flex items-center col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-2">
-                            <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                            <p ref={descRef} className="text-text-secondary tracking-tight text-base md:text-lg">
                                 {translations.sections.sections.description}
                             </p>
                         </div>

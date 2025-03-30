@@ -30,6 +30,7 @@ const Coaches = () => {
     const [visibleCards, setVisibleCards] = useState(3);
     const [spacing, setSpacing] = useState(24);
     const [isMobile, setIsMobile] = useState(false);
+    const [isResponsiveReady, setIsResponsiveReady] = useState(false);
     const { translations } = useLanguage();
 
     // Funkcja do pobierania liczby widocznych kart
@@ -37,17 +38,6 @@ const Coaches = () => {
     
     // Funkcja do pobierania odstępu między kartami
     const getSpacing = () => spacing;
-
-    // Auto-scrolling effect
-    useEffect(() => {
-        if (!isAutoPlaying) return;
-        
-        const interval = setInterval(() => {
-            handleNext();
-        }, 5000);
-        
-        return () => clearInterval(interval);
-    }, [isAutoPlaying, currentIndex]);
 
     // Efekt do ustawienia responsywności po stronie klienta
     useEffect(() => {
@@ -69,6 +59,11 @@ const Coaches = () => {
             
             // Ustaw flagę urządzeń mobilnych
             setIsMobile(window.innerWidth < 768);
+            
+            // Mark responsive settings as ready
+            setTimeout(() => {
+                setIsResponsiveReady(true);
+            }, 50);
         };
         
         // Wywołaj inicjalizację
@@ -100,13 +95,21 @@ const Coaches = () => {
         
         setIsAnimating(true);
         
-        // Oblicz szerokość karty i odstęp
-        const cardWidth = getCardWidth();
+        // Pobierz rzeczywistą szerokość kart bezpośrednio z DOM
+        const cards = document.querySelectorAll('.coach-card');
+        if (cards.length === 0) {
+            setIsAnimating(false);
+            return;
+        }
+        
+        // Oblicz rzeczywistą szerokość i odstęp pierwszej karty
+        const firstCard = cards[0];
+        const cardWidth = firstCard.getBoundingClientRect().width;
         const cardSpacing = getSpacing();
         
-        // Oblicz pozycję docelową
+        // Oblicz dokładną pozycję docelową
         const position = index * (cardWidth + cardSpacing);
-        
+            
         // Animuj przesunięcie
         gsap.to(carouselInnerRef.current, {
             duration: 0.6,
@@ -178,7 +181,11 @@ const Coaches = () => {
         };
     }, [translations.coaches]);
 
+    // Modify useGSAP to wait for responsive settings to be ready
     useGSAP(() => {
+        // Skip GSAP animations if responsive settings aren't ready yet
+        if (!isResponsiveReady) return;
+        
         // Podstawowe animacje tekstu dla opisu
         const childSplit = new SplitText(descRef.current, { type: "lines" });
         
@@ -326,7 +333,7 @@ const Coaches = () => {
         if (carouselInnerRef.current) {
             gsap.set(carouselInnerRef.current, { x: 0 });
         }
-    }, [translations]);
+    }, [isResponsiveReady, translations]); // Add isResponsiveReady as dependency
 
     const handleNext = () => {
         if (isAnimating) return;
@@ -400,7 +407,7 @@ const Coaches = () => {
                         
                         {/* Opis w drugim gridzie od lewej */}
                         <div className="flex items-center col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-2">
-                            <p ref={descRef} className="text-text-secondary tracking-tight text-lg">
+                            <p ref={descRef} className="text-text-secondary tracking-tight text-base md:text-lg">
                                 {translations.sections.coaches.description}
                             </p>
                         </div>
@@ -412,7 +419,7 @@ const Coaches = () => {
                     {/* Kontener karuzeli */}
                     <div className="relative">
                         {/* Karuzela z trenerami */}
-                        <div ref={carouselRef} className="overflow-hidden px-1">
+                        <div ref={carouselRef} className="overflow-hidden">
                             <div ref={carouselInnerRef} className="flex space-x-4 md:space-x-6">
                                 {translations.coaches.map((coach, index) => (
                                     <div
@@ -424,7 +431,7 @@ const Coaches = () => {
                                         style={{
                                             width: `calc((100% - ${(getVisibleCards() - 1) * getSpacing()}px) / ${getVisibleCards()})`,
                                             height: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto',
-                                            minWidth: isMobile ? '85%' : '350px'
+                                            boxSizing: 'border-box',
                                         }}
                                     >
                                         {/* Kontener obrazu z paddingiem */}
