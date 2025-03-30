@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from 'react';
+import Image from "next/image";
 import Link from 'next/link';
 import gsap from 'gsap';
 import {useGSAP} from "@gsap/react";
@@ -136,9 +137,18 @@ const Navbar = () => {
     return (
         <nav className="fixed top-0 right-0 left-0 flex justify-center z-40 pointer-events-none">
             <div className="w-full flex items-center justify-between mt-4 mx-4 md:mx-8">
-                <div className="flex items-center space-x-2 order-1 md:order-none z-50">
-                    <div className="w-8 h-8 bg-white rounded-icon"></div>
-                    <div className="w-32 h-8 bg-text-secondary rounded-icon"></div>
+                <div className="flex items-center justify-center space-x-2 order-1 md:order-none z-50">
+                    <div className="w-10 h-10 bg-navbar relative rounded-icon border border-border overflow-hidden">
+                        <Image
+                            src={"/logo.png"}
+                            alt={"Husarz Logo"}
+                            fill
+                            className="section-image object-cover"
+                        />
+                    </div>
+                    <p className="text-lg font-bold tracking-tight text-text-primary">
+                        Husarz Gym
+                    </p>
                 </div>
 
                 <button

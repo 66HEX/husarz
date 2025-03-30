@@ -32,7 +32,9 @@ const SmoothScrolling = ({ children }: SmoothScrollingProps) => {
 
     return (
         <LenisContext.Provider value={lenis}>
-            {children}
+            <div className={"relative"}>
+                {children}
+            </div>
         </LenisContext.Provider>
     );
 };

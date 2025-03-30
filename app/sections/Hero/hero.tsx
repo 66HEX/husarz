@@ -1,7 +1,6 @@
 "use client";
 
-import {sports} from "@/app/data/sports";
-import {useRef} from 'react';
+import {useRef } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import gsap from 'gsap';
@@ -9,117 +8,235 @@ import {SplitText} from '@/app/libs/gsap/SplitText';
 import {useGSAP} from "@gsap/react";
 import '@/app/config/gsap';
 import { useLanguage } from "@/app/i18n/LanguageContext";
+import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(SplitText, useGSAP);
 
 const Hero = () => {
-    const titleRef = useRef(null);
-    const descRef = useRef(null);
-    const containerRef = useRef(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const subtitleRef = useRef<HTMLHeadingElement>(null);
+    const descRef = useRef<HTMLParagraphElement>(null);
+    const containerRef = useRef<HTMLElement>(null);
+    const imageContainerRef = useRef<HTMLDivElement>(null);
+    const heroImageRef = useRef<HTMLImageElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const badgesContainerRef = useRef<HTMLDivElement>(null);
+    const sportBadgesRefs = useRef<HTMLSpanElement[]>([]);
+    const ctaButtonRef = useRef<HTMLAnchorElement>(null);
     const { translations } = useLanguage();
 
+    // Function to add refs to sport badges with proper TypeScript typing
+    const addToBadgesRefs = (el: HTMLSpanElement | null) => {
+        if (el && !sportBadgesRefs.current.includes(el)) {
+            sportBadgesRefs.current.push(el);
+        }
+    };
+
     useGSAP(() => {
-        const titleSplit = new SplitText(titleRef.current, { type: "lines" });
-        const childSplit = new SplitText(descRef.current, { type: "lines" });
-        new SplitText(descRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-        new SplitText(titleRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-        const title = titleSplit.lines;
-        const texts = childSplit.lines;
+        // Title animation setup with SplitText
+        let titleSplit;
+        let title = [];
+        if (titleRef.current) {
+            titleSplit = new SplitText(titleRef.current, { type: "lines" });
+            title = titleSplit.lines;
+            
+            new SplitText(titleRef.current, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+        }
+        
+        // Subtitle animation setup
+        let subtitleSplit;
+        let subtitle = [];
+        if (subtitleRef.current) {
+            subtitleSplit = new SplitText(subtitleRef.current, { type: "lines" });
+            subtitle = subtitleSplit.lines;
+            
+            new SplitText(subtitleRef.current, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+        }
+        
+        // Description animation setup
+        if (descRef.current) {
+            const childSplit = new SplitText(descRef.current, { type: "lines" });
+            new SplitText(descRef.current, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+            
+            let texts = childSplit.lines;
 
-        const tl = gsap.timeline({ defaults: { ease: "CustomEase" } });
+            // Create main timeline with enhanced animations
+            const tl = gsap.timeline({ defaults: { ease: "CustomEase" } });
 
-        tl.fromTo(
-            title,
-            { y: '100%' },
-            { y: '0%', duration: 0.8 }
-        )
+            // Initial overlay animation
+            if (overlayRef.current) {
+                tl.fromTo(
+                    overlayRef.current,
+                    { opacity: 0 },
+                    { opacity: 1, duration: 1.2 },
+                    0
+                );
+            }
 
-        tl.fromTo(
-            texts,
-            { y: '100%' },
-            { y: '0%', stagger: 0.05, duration: 1.2 },
-            "-=0.4"
-        )
-            .fromTo(
-                '.sport-badge',
-                { y: 10, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.05 },
-                "-=0.4"
-            )
+            // Image scale animation - using ref instead of selector
+            if (heroImageRef.current) {
+                tl.fromTo(
+                    heroImageRef.current,
+                    { scale: 1.1, opacity: 0, filter: 'blur(10px)' },
+                    { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 2.5 },
+                    0
+                );
+            }
 
-        tl.fromTo(
-            '#hero-image',
-            { opacity: 0, filter: 'blur(10px)' },
-            { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
-            "-=1.2"
-        )
-            .fromTo(
-                '#cta-button',
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6 },
-                "-=0.8"
+            // Title animation with staggered effect
+            tl.fromTo(
+                title,
+                { y: '100%' },
+                { y: '0%', duration: 1, stagger: 0.1 },
+                0.5
             );
-    }, []);
+
+            // Subtitle animation
+            tl.fromTo(
+                subtitle,
+                { y: '100%' },
+                { y: '0%', duration: 0.8, stagger: 0.05 },
+                0.8
+            );
+
+            // Description text animation
+            tl.fromTo(
+                texts,
+                { y: '100%' },
+                { y: '0%', stagger: 0.05, duration: 0.8 },
+                1.0
+            );
+
+            // Sport badges animation with improved stagger - using refs array
+            tl.fromTo(
+                sportBadgesRefs.current,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.08 },
+                1.2
+            );
+
+            // CTA button animation with bounce effect
+            if (ctaButtonRef.current) {
+                tl.fromTo(
+                    ctaButtonRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 },
+                    1.4
+                );
+            }
+
+            // Add scroll-triggered animations for parallax effect
+            if (imageContainerRef.current && containerRef.current) {
+                gsap.to(imageContainerRef.current, {
+                    y: '10%',
+                    scrollTrigger: {
+                        trigger: containerRef.current,
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            }
+        }
+    }, [translations]);
 
     return (
-        <section id="home" className="py-24 h-svh md:h-[66vh] xl:h-svh relative">
-            <div className="absolute inset-0 rounded-b-[3rem] overflow-hidden">
-                <Image
-                    id="hero-image"
-                    src="/grey.png"
-                    alt="Hero image"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            </div>
-            
-            <div ref={containerRef} className="h-full container mx-auto px-4 md:px-8 relative z-10">
-                <div className="h-full flex flex-col justify-center gap-8">
-                    <div className="max-w-2xl">
-                        <div className="bg-card backdrop-blur-md border border-border p-6 md:p-8 rounded-card">
-                        <div className="overflow-hidden mb-4">
-                            <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight">
-                                {translations.sections.hero.title}
-                            </h1>
-                        </div>
-                        <div className="overflow-hidden mb-6">
-                            <p ref={descRef} className="text-text-secondary text-base xl:text-xl tracking-tight">
-                                {translations.sections.hero.description}
-                            </p>
-                        </div>
-                            <div className="flex flex-wrap gap-2">
-                                {Object.values(translations.sports).map((sport) => (
+        <section ref={containerRef} className=" w-full flex items-center justify-center pt-16 md:pt-24 overflow-hidden">
+            <div className="px-4 md:px-8 h-full w-full">
+                <div className="h-full border border-border rounded-3xl p-8 bg-card relative overflow-hidden">
+                    {/* Full-width image container with parallax effect */}
+                    <div 
+                        ref={imageContainerRef}
+                        className="absolute inset-0 overflow-hidden z-0"
+                    >
+                        <Image
+                            ref={heroImageRef}
+                            src="/husarz_26.jpg"
+                            alt="Hero image"
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                        
+                        {/* Enhanced gradient overlay with more dramatic effect */}
+                        <div 
+                            ref={overlayRef}
+                            className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/90"
+                        ></div>
+                    </div>
+                    
+                    <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                        <div className="max-w-4xl mx-auto">
+                            {/* Main title with larger size and dramatic styling */}
+                            <div className="overflow-hidden mb-2">
+                                <h1 
+                                    ref={titleRef} 
+                                    className="text-5xl md:text-7xl xl:text-8xl font-bold tracking-tight text-white"
+                                >
+                                    {translations.sections.hero.title}
+                                </h1>
+                            </div>
+                            
+                            {/* Added subtitle for more visual hierarchy */}
+                            <div className="overflow-hidden mb-4">
+                                <h2 
+                                    ref={subtitleRef} 
+                                    className="text-2xl md:text-3xl font-bold tracking-tight text-white/90"
+                                >
+                                    Strength & Combat
+                                </h2>
+                            </div>
+                            
+                            {/* Description with improved styling */}
+                            <div className="overflow-hidden mb-8 max-w-2xl mx-auto">
+                                <p 
+                                    ref={descRef} 
+                                    className="text-text-secondary text-base md:text-xl tracking-tight"
+                                >
+                                    {translations.sections.hero.description}
+                                </p>
+                            </div>
+                            
+                            {/* Sport badges with improved styling */}
+                            <div 
+                                ref={badgesContainerRef}
+                                className="flex flex-wrap justify-center gap-3 mb-8"
+                            >
+                                {Object.values(translations.sports).map((sport, index) => (
                                     <span
                                         key={sport.id}
-                                        className="sport-badge text-xs bg-card backdrop-blur-md border border-border text-secondary px-3 py-1 rounded-full"
+                                        ref={addToBadgesRefs}
+                                        className="sport-badge tracking-tight text-sm bg-active border border-border text-text-primary px-4 py-1.5 rounded-full"
                                     >
                                         {sport.name}
                                     </span>
                                 ))}
                             </div>
+                            
+                            {/* CTA button with enhanced styling and animation */}
+                            <div className="mt-6">
+                                <Link
+                                    href="/about"
+                                    ref={ctaButtonRef}
+                                    className="inline-flex items-center justify-center bg-text-primary tracking-tight text-text-black border border-border px-8 py-3 rounded-icon font-medium hover:bg-white/90 transition-all duration-300 group"
+                                >
+                                    <span className="mr-2">{translations.homebutton}</span>
+                                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div className="flex justify-center md:justify-start">
-                        <Link
-                            href="/about"
-                            id="cta-button"
-                            className="bg-text-primary text-text-black backdrop-blur-sm border border-border px-6 py-2 rounded-icon font-medium"
-                        >
-                            {translations.homebutton}
-                        </Link>
-                    </div>
                 </div>
-            </div>  
-          
+            </div>
         </section>
     );
 };

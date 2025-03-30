@@ -10,15 +10,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#131313",
+        background: "#0E0E0E",
         foreground: "#ffffff",
         "text-primary": "#ffffff",
-        "text-secondary": "rgba(255,255,255,0.8)",
+        "text-secondary": "rgba(255,255,255,0.75)",
         "text-black": "#000000",
-        card: "rgba(255,255,255,0.05)",
-        navbar: "rgba(0,0,0,0.6)",
+        card: "#141414",
+        innercard: "#1A1A1A",
+        active: "#202020",
+        active2: "#252525",
+        navbar: "#141414",
         "social-icon": "rgba(0,0,0,0.5)",
-        border: "rgba(255,255,255,0.1)"
+        border: "rgba(255,255,255,0.075)",
+        borderactive: "rgba(255,255,255,0.075)"
+
       },
       fontFamily: {
         sans: ['var(--font-hoves)'],

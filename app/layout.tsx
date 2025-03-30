@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 const hoves = localFont({
     src: [
         {
-            path: './fonts/TT_Hoves_Medium.woff2',
+            path: './fonts/TT_Hoves_Regular.woff2',
             weight: '400',
             style: 'normal',
         },
         {
-            path: './fonts/TT_Hoves_DemiBold.woff2',
+            path: './fonts/TT_Hoves_Bold.woff2',
             weight: '700',
             style: 'normal',
         },
@@ -41,7 +41,6 @@ export default function RootLayout({
               <LanguageProvider>
                   <SmoothScrolling>
                       <Navbar/>
-                      <CursorFollower/>
                       {children}
                       <Footer/>
                   </SmoothScrolling>

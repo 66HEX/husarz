@@ -24,10 +24,12 @@ interface SectionContentProps {
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 export default function SectionContent({ section }: SectionContentProps) {
-    const { language, translations } = useLanguage();
+    const { translations } = useLanguage();
     const titleRef = useRef<HTMLHeadingElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
-    const extendedDescRefs = useRef<HTMLParagraphElement[]>([]);
+    const extendedDescRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+    const imageRef = useRef<HTMLDivElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
     
     // Znajdź odpowiednią sekcję w tłumaczeniach na podstawie slug
     const translatedSection = translations.features.find(
@@ -35,117 +37,163 @@ export default function SectionContent({ section }: SectionContentProps) {
     ) || section;
 
     useGSAP(() => {
-        // Main title and description animation
-        if (!titleRef.current || !descRef.current) return;
-
-        const childSplit = new SplitText(descRef.current, { type: "lines" });
+        // Title and description text splits
         const titleSplit = new SplitText(titleRef.current, { type: "lines" });
-        new SplitText(descRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
+        const descSplit = new SplitText(descRef.current, { type: "lines" });
+        
         new SplitText(titleRef.current, {
             type: "lines",
             linesClass: "line-wrapper overflow-hidden",
         });
-        const texts = childSplit.lines;
-        const title = titleSplit.lines;
-
-        // Extended description splits
-        const extendedSplits = extendedDescRefs.current.map((ref) => {
-            const split = new SplitText(ref, { type: "lines" });
-            new SplitText(ref, {
-                type: "lines",
-                linesClass: "line-wrapper overflow-hidden",
-            });
-            return split.lines;
+        
+        new SplitText(descRef.current, {
+            type: "lines",
+            linesClass: "line-wrapper overflow-hidden",
         });
-
+        
+        const titleLines = titleSplit.lines;
+        const descLines = descSplit.lines;
+        
+        // Define types for paragraph animations
+        interface ParagraphAnimation {
+            el: HTMLParagraphElement;
+            lines: HTMLElement[];
+        }
+        
+        // Process extended description paragraphs
+        const paragraphAnimations: ParagraphAnimation[] = [];
+        
+        extendedDescRefs.current.forEach((paragraphEl) => {
+            if (paragraphEl) {
+                const paragraphSplit = new SplitText(paragraphEl, { type: "lines" });
+                
+                new SplitText(paragraphEl, {
+                    type: "lines",
+                    linesClass: "line-wrapper overflow-hidden",
+                });
+                
+                paragraphAnimations.push({
+                    el: paragraphEl,
+                    lines: paragraphSplit.lines
+                });
+            }
+        });
+        
+        // Create the main timeline
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#section-content",
                 start: "top 80%",
-                end: "bottom 20%",
+                end: "bottom bottom",
             },
             defaults: { ease: "CustomEase" }
         });
         
-        // Add image animation at the beginning
+        // Image animation
         tl.fromTo(
-            '#section-image',
-            { opacity: 0, filter: 'blur(10px)' },
-            { opacity: 1, filter: 'blur(0px)', duration: 1.2 },
-            0
+            imageRef.current,
+            { scale: 1.1, opacity: 0, filter: 'blur(10px)' },
+                    { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.8 },
         );
-
-        // Main sequence
+        
+        // Card animation
         tl.fromTo(
-            title,
+            cardRef.current,
+            { opacity: 0, x: 20 },
+            { opacity: 1, x: 0, duration: 0.8 },
+            "-=0.6"
+        );
+        
+        // Title animation
+        tl.fromTo(
+            titleLines,
             { y: '100%' },
-            { y: '0%', duration: 0.8 }
-        )
-            .fromTo(
-                texts,
-                { y: '100%' },
-                { y: '0%', stagger: 0.05, duration: 0.8 },
-                "-=0.4"
-            )
-
-        // Add extended description animations to the timeline
-        extendedSplits.forEach((split) => {
+            { y: '0%', stagger: 0.05, duration: 0.8 },
+            "-=0.4"
+        );
+        
+        // Description animation
+        tl.fromTo(
+            descLines,
+            { y: '100%' },
+            { y: '0%', stagger: 0.05, duration: 0.8 },
+            "-=0.6"
+        );
+        
+        // Animate each paragraph in sequence
+        paragraphAnimations.forEach((paragraph, index) => {
             tl.fromTo(
-                split,
+                paragraph.lines,
                 { y: '100%' },
-                {
-                    y: '0%',
-                    duration: 0.8,
-                    stagger: 0.05,
+                { 
+                    y: '0%', 
+                    stagger: 0.02, 
+                    duration: 0.7,
                 },
-                "-=0.6"
+                index === 0 ? "-=0.5" : "-=0.6"
             );
         });
-    }, []);
+    }, [translations]);
 
     return (
-        <div className="min-h-screen bg-background">
-            <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative md:sticky md:top-0 rounded-b-[3rem] md:rounded-r-[3rem] overflow-hidden">
-                    <Image
-                        id="section-image"
-                        src={translatedSection.image}
-                        alt={translatedSection.title}
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                </div>
-
-                <div className="w-full md:w-1/2 px-4 md:px-12 py-16 md:py-24">
-                    <div id="section-content">
-                        <div className="mb-16">
-                            <h1 ref={titleRef} className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-                                {translatedSection.title}
-                            </h1>
-                            <p ref={descRef} className="text-lg md:text-xl text-text-secondary">
-                                {translatedSection.description}
-                            </p>
+        <div id="section-content" className="bg-background pt-16 md:pt-24 pb-4 md:pb-8">
+            <div className="px-4 md:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                    {/* Image container - left column */}
+                    <div 
+                        className="h-full rounded-3xl border border-border overflow-hidden md:top-24"
+                    >
+                        <div
+                        ref={imageRef}
+                        className="relative w-full h-full">
+                            <Image
+                                src={translatedSection.image}
+                                alt={translatedSection.title}
+                                fill
+                                className="object-cover rounded-3xl"
+                                priority
+                            />
                         </div>
-
-                        <div className="space-y-8 mb-16">
-                            {translatedSection.extendedDescription.map((desc, idx) => (
-                                <div key={idx} className="overflow-hidden">
-                                    <p
-                                        ref={(el) => {
-                                            if (el) {
+                    </div>
+                    
+                    {/* Content container - right column */}
+                    <div>
+                        <div 
+                            ref={cardRef} 
+                            className="bg-card border border-border rounded-3xl p-6 md:p-8"
+                        >
+                            {/* Header */}
+                            <div className="mb-10">
+                                <h1 
+                                    ref={titleRef}
+                                    className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4"
+                                >
+                                    {translatedSection.title}
+                                </h1>
+                                
+                                <p 
+                                    ref={descRef} 
+                                    className="text-text-secondary tracking-tight text-lg"
+                                >
+                                    {translatedSection.description}
+                                </p>
+                            </div>
+                            
+                            {/* Extended descriptions */}
+                            <div className="space-y-6">
+                                {translatedSection.extendedDescription.map((desc, idx) => (
+                                    <div key={idx} className="overflow-hidden">
+                                        <p
+                                            ref={(el) => {
                                                 extendedDescRefs.current[idx] = el;
-                                            }
-                                        }}
-                                        className="text-text-secondary text-base"
-                                    >
-                                        {desc}
-                                    </p>
-                                </div>
-                            ))}
+                                            }}
+                                            className="text-text-secondary tracking-tight"
+                                        >
+                                            {desc}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -37,7 +37,6 @@ export const pl = {
     { name: 'Strona Główna', href: 'home' },
     { name: 'Sekcje', href: 'sections' },
     { name: 'Trenerzy', href: 'coaches' },
-    { name: 'Lokalizacja', href: 'location' },
     { name: 'FAQ', href: 'faq' },
     { name: 'Kontakt', href: 'contact' }
   ],
@@ -54,13 +53,32 @@ export const pl = {
       title: "Nasi Trenerzy",
       description: "Poznaj nasz elitarny zespół certyfikowanych trenerów, którzy łączą wieloletnie doświadczenie z nowoczesnymi metodami treningowymi. Każdy trener wnosi unikalne umiejętności i udowodnione doświadczenie w transformacji życia klientów poprzez spersonalizowane wskazówki fitness."
     },
-    location: {
-      title: "Lokalizacja",
-      description: "Odwiedź nasz nowoczesny obiekt treningowy. Doświadcz premium sprzętu, profesjonalnych trenerów i motywującej atmosfery, która pomoże Ci osiągnąć Twoje cele."
-    },
     faq: {
       title: "Często Zadawane Pytania",
-      description: "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszej siłowni, opcji członkostwa i programów treningowych. Jeśli nie znajdziesz tego, czego szukasz, skontaktuj się z nami bezpośrednio."
+      description: "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszej siłowni, opcji członkostwa i programów treningowych. Jeśli nie znajdziesz tego, czego szukasz, skontaktuj się z nami bezpośrednio.",
+      categories: {
+        general: "Ogólne",
+        membership: "Członkostwo",
+        training: "Treningi"
+      }
+    },
+    contact: {
+      title: "Kontakt",
+      description: "Skontaktuj się z nami, aby uzyskać więcej informacji o naszej siłowni, opcjach członkostwa i programach treningowych. Jesteśmy gotowi odpowiedzieć na wszystkie Twoje pytania.",
+      gymName: "Husarz GYM",
+      address: "Adres",
+      phone: "Telefon",
+      openingHours: "Godziny otwarcia",
+      weekdays: "Poniedziałek - Piątek: 6:00 - 22:00",
+      saturday: "Sobota: 8:00 - 20:00",
+      sunday: "Niedziela: 9:00 - 18:00",
+      amenities: "Udogodnienia",
+      freeParking: "Darmowy parking",
+      changingRooms: "Szatnie z prysznicami",
+      cardioZone: "Strefa kardio",
+      saunas: "Sauny",
+      supplementStore: "Sklep z suplementami",
+      directions: "Wyznacz trasę w Google Maps"    
     }
   },
   features: [
@@ -99,18 +117,6 @@ export const pl = {
           "Treningi prowadzone są przez doświadczonych trenerów armwrestlingu, którzy rozumieją zarówno techniczne, jak i fizyczne aspekty tego sportu. Nasz program obejmuje wszystkie aspekty przygotowania do armwrestlingu, w tym doskonalenie techniki, rozwój strategiczny i specjalistyczny trening siłowy. Obsługujemy zarówno nowicjuszy, jak i doświadczonych zawodników.",
           "Sekcja aktywnie uczestniczy w społeczności armwrestlingu, organizując regularne obozy treningowe i zawody. Zapewniamy członkom możliwość rywalizacji na różnych poziomach i oferujemy specjalistyczne programy przygotowawcze dla osób zainteresowanych zawodniczym armwrestlingiem."
       ]
-  },
-  {
-      title: "Strefa Siłowni",
-      description: "W pełni wyposażona przestrzeń siłowni z nowoczesnym sprzętem cardio i siłowym. Idealna do ogólnej sprawności, treningu siłowego i pracy uzupełniającej.",
-      equipment: ["Wolne Ciężary", "Maszyny Siłowe", "Sprzęt Cardio"],
-      slug: "gym",
-      image: "/grey.png",
-      extendedDescription: [
-          "Nasza nowoczesna strefa siłowni jest wyposażona w kompleksowy wybór wysokiej jakości sprzętu wspierającego wszystkie cele fitness. Przestrzeń zawiera najnowsze maszyny cardio, pełen zakres wolnych ciężarów i różnorodne maszyny do treningu oporowego. Układ jest zaprojektowany tak, aby tworzyć odrębne strefy dla różnych rodzajów treningu, zapewniając płynne i efektywne doświadczenie treningowe.",
-          "Zapewniamy dostęp do wykwalifikowanych trenerów personalnych, którzy mogą pomóc w opracowaniu spersonalizowanych programów treningowych dostosowanych do indywidualnych celów, czy to utrata wagi, przyrost mięśni, czy ogólna poprawa sprawności. Nasi trenerzy mają doświadczenie w pracy z klientami na wszystkich poziomach sprawności i mogą udzielać wskazówek dotyczących właściwej formy, odżywiania i progresji.",
-          "Strefa siłowni jest utrzymywana zgodnie z najwyższymi standardami, z regularną konserwacją i aktualizacjami sprzętu. Oferujemy różne opcje członkostwa dostosowane do różnych potrzeb i harmonogramów, w tym opcje otwartego dostępu do siłowni i pakiety treningów personalnych. Przestrzeń jest zaprojektowana tak, aby uzupełniać nasze specjalistyczne sekcje, będąc jednocześnie kompleksowym obiektem fitness dla ogólnych potrzeb treningowych."
-      ]
   }
   ],
   coaches: [
@@ -148,25 +154,100 @@ export const pl = {
   },
   ],
   faqs: [
+    // Pytania o członkostwo (6)
     {
       question: "Jakie opcje członkostwa oferujecie?",
-      answer: "Oferujemy elastyczne plany członkostwa, w tym opcje miesięczne, kwartalne i roczne. Członkowie premium otrzymują dostęp 24/7, darmowy parking i wyłączny dostęp do naszych stref regeneracyjnych."
+      answer: "Oferujemy elastyczne plany członkostwa, w tym opcje miesięczne, kwartalne i roczne. Członkowie premium otrzymują dostęp 24/7, darmowy parking i wyłączny dostęp do naszych stref regeneracyjnych.",
+      category: "membership"
     },
     {
+      question: "Ile kosztuje członkostwo?",
+      answer: "Ceny naszego członkostwa zaczynają się od 39,99 zł za podstawowy plan miesięczny. Plany premium kosztują od 59,99 zł do 89,99 zł miesięcznie, z dostępnymi zniżkami przy zobowiązaniach kwartalnych i rocznych.",
+      category: "membership"
+    },
+    {
+      question: "Czy mogę tymczasowo zawiesić moje członkostwo?",
+      answer: "Tak, oferujemy zawieszenie członkostwa na okres do 3 miesięcy w roku za niewielką opłatą administracyjną. Członkowie premium mogą zawiesić swoje członkostwo na okres do 6 miesięcy rocznie bez dodatkowych kosztów.",
+      category: "membership"
+    },
+    {
+      question: "Czy jest opłata wpisowa?",
+      answer: "Pobieramy jednorazową opłatę wpisową w wysokości 49,99 zł, która obejmuje kompleksową ocenę sprawności fizycznej i spersonalizowaną sesję orientacyjną na siłowni. Często prowadzimy promocje znoszące tę opłatę.",
+      category: "membership"
+    },
+    {
+      question: "Czy oferujecie rodzinne plany członkostwa?",
+      answer: "Tak, oferujemy plany rodzinne, które zapewniają zniżki dla członków gospodarstwa domowego. Każdy dodatkowy członek rodziny otrzymuje 15% zniżki na swoją cenę członkostwa przy wspólnym dołączeniu.",
+      category: "membership"
+    },
+    {
+      question: "Co zawiera członkostwo premium?",
+      answer: "Nasze członkostwo premium obejmuje dostęp 24/7, bezpłatną usługę ręcznikową, darmowy parking, dostęp do ekskluzywnych stref regeneracyjnych z saunami i łaźniami lodowymi oraz jedną darmową sesję treningu personalnego każdego miesiąca.",
+      category: "membership"
+    },
+    
+    // Pytania o treningi (6)
+    {
       question: "Czy oferujecie treningi personalne?",
-      answer: "Tak, mamy certyfikowanych trenerów specjalizujących się w trójboju siłowym, sportach walki i ogólnym fitnessie. Wszystkie sesje treningowe są dostosowane do Twoich celów i poziomu doświadczenia."
+      answer: "Tak, mamy certyfikowanych trenerów specjalizujących się w trójboju siłowym, sportach walki i ogólnym fitnessie. Wszystkie sesje treningowe są dostosowane do Twoich celów i poziomu doświadczenia.",
+      category: "training"
     },
     {
       question: "Jaki sprzęt macie do trójboju siłowego?",
-      answer: "Nasza strefa trójboju siłowego zawiera talerze zawodnicze Eleiko, stojaki Hammer Strength HD Elite, specjalistyczne gryfy, w tym gryfy Texas power bar, oraz ławki klasy zawodniczej."
-    },
-    {
-      question: "Czy początkujący mogą dołączyć do waszej siłowni?",
-      answer: "Absolutnie! Witamy członków o każdym poziomie doświadczenia. Nasi certyfikowani trenerzy zapewniają dokładne sesje wprowadzające i mogą stworzyć programy treningowe przyjazne dla początkujących."
+      answer: "Nasza strefa trójboju siłowego zawiera talerze zawodnicze Eleiko, stojaki Hammer Strength HD Elite, specjalistyczne gryfy, w tym gryfy Texas power bar, oraz ławki klasy zawodniczej.",
+      category: "training"
     },
     {
       question: "Jakie udogodnienia do sportów walki oferujecie?",
-      answer: "Posiadamy profesjonalny ring bokserski, worki treningowe, gruszki speedbag oraz dedykowaną przestrzeń matową do treningu MMA. Wszystkie strefy sportów walki są nadzorowane przez doświadczonych trenerów."
+      answer: "Posiadamy profesjonalny ring bokserski, worki treningowe, gruszki speedbag oraz dedykowaną przestrzeń matową do treningu MMA. Wszystkie strefy sportów walki są nadzorowane przez doświadczonych trenerów.",
+      category: "training"
+    },
+    {
+      question: "Czy oferujecie zajęcia grupowe?",
+      answer: "Tak, prowadzimy ponad 50 zajęć grupowych tygodniowo, w tym HIIT, trening siłowy, boks, jogę i specjalistyczne sesje mobilności. Wszystkie zajęcia są wliczone w cenę członkostwa.",
+      category: "training"
+    },
+    {
+      question: "Jak często powinienem spotykać się z trenerem personalnym?",
+      answer: "To zależy od Twoich celów, ale większość członków osiąga optymalne rezultaty przy 1-2 sesjach tygodniowo. Oferujemy pakiety ze zniżkami na wiele sesji i możemy stworzyć harmonogram, który odpowiada Twoim potrzebom.",
+      category: "training"
+    },
+    {
+      question: "Czy oferujecie doradztwo żywieniowe?",
+      answer: "Tak, nasi certyfikowani doradcy żywieniowi mogą pomóc stworzyć spersonalizowane plany posiłków i zapewnić bieżące wsparcie, które uzupełni Twój plan treningowy. Pakiety żywieniowe można dodać do każdego członkostwa.",
+      category: "training"
+    },
+    
+    // Pytania ogólne (6)
+    {
+      question: "Czy początkujący mogą dołączyć do waszej siłowni?",
+      answer: "Absolutnie! Witamy członków o każdym poziomie doświadczenia. Nasi certyfikowani trenerzy zapewniają dokładne sesje wprowadzające i mogą stworzyć programy treningowe przyjazne dla początkujących.",
+      category: "general"
+    },
+    {
+      question: "Jakie są godziny otwarcia?",
+      answer: "Nasz obiekt jest otwarty od poniedziałku do piątku od 5:00 do 23:00, a w weekendy od 7:00 do 21:00. Członkowie premium mają dostęp 24/7 za pomocą swojego breloka.",
+      category: "general"
+    },
+    {
+      question: "Czy macie parking?",
+      answer: "Tak, oferujemy bezpłatny parking do 3 godzin dla wszystkich członków w naszym podziemnym garażu. Członkowie premium otrzymują nieograniczony bezpłatny parking.",
+      category: "general"
+    },
+    {
+      question: "Czy są prysznice i szatnie?",
+      answer: "Nasz obiekt posiada przestronne szatnie z premium prysznicami, bezpłatnymi kosmetykami, suszarkami do włosów i bezpiecznymi szafkami. Usługa ręcznikowa jest zapewniona dla członków premium.",
+      category: "general"
+    },
+    {
+      question: "Czy macie biuro rzeczy znalezionych?",
+      answer: "Tak, nasze biuro rzeczy znalezionych znajduje się przy recepcji. Przedmioty są przechowywane przez 30 dni, zanim zostaną przekazane lokalnym organizacjom charytatywnym. Wartościowe przedmioty są zabezpieczone w sejfie naszego biura.",
+      category: "general"
+    },
+    {
+      question: "Czy obowiązuje dress code?",
+      answer: "Prosimy, aby członkowie nosili odpowiednią odzież sportową i czyste, zakryte obuwie sportowe. Koszulki muszą być noszone przez cały czas, z wyjątkiem wyznaczonych stref sauny.",
+      category: "general"
     }
   ],
   social: [
@@ -194,7 +275,7 @@ export const pl = {
     armwrestling: { name: 'Armwrestling', id: 4 }
   },
   footer: {
-    quickLinks: "Szybkie Linki",
+    quickLinks: "Nawigacja",
     followUs: "Obserwuj Nas",
     address: "Adres",
     addressText: "Trakt św. Wojciecha 243,\n80-058 Gdańsk",
@@ -204,5 +285,16 @@ export const pl = {
   common: {
     description: "Profesjonalny obiekt treningowy łączący sporty siłowe i sztuki walki. Dołącz do naszej społeczności oddanych sportowców i doświadcz treningu na najwyższym poziomie."
   },
-  homebutton: "O Klubie"
+  marquee: {
+    items: [
+      "HUSARZ",
+      "SIŁA & WALKA",
+      "TRENING PERSONALNY",
+      "BOKS",
+      "MMA",
+      "KICKBOXING"
+    ]
+  },
+  homebutton: "O Klubie",
+  seeDetails: "Zobacz Szczegóły"
 };
