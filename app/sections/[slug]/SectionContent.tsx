@@ -145,7 +145,7 @@ export default function SectionContent({ section }: SectionContentProps) {
                     >
                         <div
                         ref={imageRef}
-                        className="relative w-full h-full">
+                        className="relative w-full h-full aspect-square">
                             <Image
                                 src={translatedSection.image}
                                 alt={translatedSection.title}

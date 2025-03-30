@@ -440,7 +440,7 @@ const Coaches = () => {
                                         style={{
                                             width: `calc((100% - ${(getVisibleCards() - 1) * getSpacing()}px) / ${getVisibleCards()})`,
                                             height: maxCardHeight > 0 ? `${maxCardHeight}px` : 'auto',
-                                            minWidth: isMobile ? '85%' : '250px' // Używamy stanu zamiast window.innerWidth
+                                            minWidth: isMobile ? '85%' : '350px' // Używamy stanu zamiast window.innerWidth
                                         }}
                                         data-coach-id={index % translations.coaches.length}
                                     >
