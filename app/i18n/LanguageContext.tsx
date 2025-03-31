@@ -32,15 +32,37 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const [translations, setTranslations] = useState<Translations>(pl);
 
   useEffect(() => {
-    // Check if there's a saved language preference in localStorage
+    // Najpierw sprawdź parametr URL lang (ma najwyższy priorytet)
+    const getLanguageFromURL = (): Language | null => {
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+        if (langParam === 'en' || langParam === 'pl') {
+          return langParam as Language;
+        }
+      }
+      return null;
+    };
+
+    const urlLanguage = getLanguageFromURL();
+    
+    // Następnie sprawdź localStorage, jeśli nie ma parametru URL
     const savedLanguage = localStorage.getItem('language') as Language | null;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'pl')) {
-      setLanguageState(savedLanguage);
-      setTranslations(savedLanguage === 'en' ? en : pl);
+    
+    // Ustal język - kolejność: URL > localStorage > domyślny 'pl'
+    const detectedLanguage = urlLanguage || 
+                            (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'pl') ? savedLanguage : 'pl');
+    
+    setLanguageState(detectedLanguage);
+    setTranslations(detectedLanguage === 'en' ? en : pl);
+    
+    // Aktualizuj localStorage, jeśli język pochodzi z URL
+    if (urlLanguage && urlLanguage !== savedLanguage) {
+      localStorage.setItem('language', urlLanguage);
     }
     
-    // Set the html lang attribute to match the current language
-    document.documentElement.lang = language;
+    // Ustaw atrybut lang w HTML
+    document.documentElement.lang = detectedLanguage;
   }, []);
 
   const setLanguage = (newLanguage: Language) => {
