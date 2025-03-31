@@ -129,7 +129,7 @@ const Hero = () => {
                 tl.fromTo(
                     ctaButtonRef.current,
                     { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8 },
+                    { y: 0, opacity: 1, duration: 0.2 },
                     1.4
                 );
             }
@@ -150,7 +150,7 @@ const Hero = () => {
     }, [translations]);
 
     return (
-        <section id='home' ref={containerRef} className=" w-full flex items-center justify-center pt-20 md:pt-24 overflow-hidden">
+        <section id='home' ref={containerRef} className=" w-full flex items-center justify-center pt-20 md:pt-24">
             <div className="px-2 md:px-8 h-full w-full">
                 <div className="h-full border border-border rounded-3xl p-8 bg-card relative overflow-hidden">
                     {/* Full-width image container with parallax effect */}

@@ -109,8 +109,8 @@ const FAQ = () => {
             tl.fromTo(
                 faqItemsLeft,
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
-                "-=0.6"
+                { y: 0, opacity: 1, duration: 0.2, stagger: 0.1 },
+                "-=0.2"
             );
         }
         
@@ -120,8 +120,8 @@ const FAQ = () => {
             tl.fromTo(
                 faqItemsRight,
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
-                "-=0.6"
+                { y: 0, opacity: 1, duration: 0.2, stagger: 0.1 },
+                "-=0.2"
             );
         }
     }, [translations]);
