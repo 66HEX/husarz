@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from '@/app/libs/gsap/SplitText';
@@ -17,7 +17,9 @@ const AboutUs = () => {
     const headingsRef = useRef<(HTMLHeadingElement | null)[]>([]);
     const paragraphsRef = useRef<(HTMLParagraphElement | null)[]>([]);
     const imageRef = useRef(null);
+    const imageContainerRef = useRef(null);
     const cardRef = useRef(null);
+    const contentContainerRef = useRef(null);
     const { translations } = useLanguage();
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -26,6 +28,21 @@ const AboutUs = () => {
         if (!imageLoaded) return;
 
         try {
+            // Tworzenie efektu sticky dla obrazu przy użyciu GSAP ScrollTrigger
+            if (imageContainerRef.current && contentContainerRef.current) {
+                ScrollTrigger.create({
+                    trigger: contentContainerRef.current,
+                    start: "top top",
+                    endTrigger: contentContainerRef.current,
+                    end: "bottom+=200 bottom",
+                    pin: imageContainerRef.current,
+                    pinSpacing: false,
+                    pinReparent: false,
+                    anticipatePin: 1,
+                    markers: false, // Ustaw na true podczas debugowania
+                });
+            }
+
             // Title and description text splits
             const titleSplit = new SplitText(titleRef.current, { type: "lines" });
             const descSplit = new SplitText(descRef.current, { type: "lines" });
@@ -189,7 +206,15 @@ const AboutUs = () => {
         } catch (error) {
             console.error("Animation initialization error:", error);
         }
-    }, [translations, imageLoaded]); // Dodaj imageLoaded jako zależność
+    }, [translations, imageLoaded]);
+
+    // Czyszczenie ScrollTrigger przy odmontowaniu komponentu
+    useEffect(() => {
+        return () => {
+            // Zabija wszystkie ScrollTriggery przy odmontowaniu komponentu
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
 
     const handleImageLoad = () => {
         console.log("Image loaded successfully");
@@ -202,11 +227,12 @@ const AboutUs = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                     {/* Image container - left column */}
                     <div
-                        className="h-[50vh] md:h-[70vh] rounded-3xl overflow-hidden md:sticky md:top-24 border border-border"
+                        ref={imageContainerRef}
+                        className="h-[50vh] md:h-[70vh] rounded-3xl overflow-hidden border border-border"
                     >
                         <div
                             ref={imageRef}
-                            className="relative w-full h-full opacity-0"> {/* Początkowe opacity ustawione na 0 */}
+                            className="relative w-full h-full opacity-0">
                             <Image
                                 src="/grey.png"
                                 alt={translations.about.title}
@@ -216,8 +242,6 @@ const AboutUs = () => {
                                 onLoad={handleImageLoad}
                                 onError={(e) => {
                                     console.error("Image failed to load:", e);
-                                    // Możesz ustawić obraz zastępczy lub nadal wywołać handleImageLoad,
-                                    // aby animacje uruchomiły się nawet bez obrazu
                                     setImageLoaded(true);
                                 }}
                             />
@@ -225,7 +249,7 @@ const AboutUs = () => {
                     </div>
 
                     {/* Content container - right column */}
-                    <div>
+                    <div ref={contentContainerRef}>
                         <div
                             ref={cardRef}
                             className="bg-card border border-border rounded-3xl p-6 md:p-8"
